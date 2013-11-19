@@ -60,7 +60,7 @@
             $this->devMode = true;
         }
 
-        $basePath = $this->modx->getOption('ce.core_path', null, $this->modx->getOption('core_path') . 'components/' . $this->package . '/');
+        $basePath = $this->modx->getOption('ce.core_path', null, $this->modx->getOption('core_path') . 'components/classextender/');
         $this->modelPath = $basePath . 'model/';
 
     }
