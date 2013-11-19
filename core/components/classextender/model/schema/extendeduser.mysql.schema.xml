@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="extendeduser" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_">
+<model package="extendeduser" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
     <!-- extend the modUser class -->
     <object class="extUser" extends="modUser">
         <composite alias="Data" local="id" class="userData" foreign="userdata_id" cardinality="one" owner="local"/>
