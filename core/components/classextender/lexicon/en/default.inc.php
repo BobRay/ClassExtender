@@ -34,3 +34,7 @@
  * @package classextender
  **/
 
+
+
+/* Used in classextender.snippet.php */
+$_lang['ce.finished'] = 'Finished!';

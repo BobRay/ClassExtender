@@ -90,7 +90,7 @@ $ce->generateClassFiles();
 $ce->createTables();
 $ce->add_extension_package();
 
-return '<h3>' . $modx->lexicon('ce.finished~~Finished!')
+return '<h3>' . $modx->lexicon('ce.finished')
     . '</h3>';
 
 // $modx->removeExtensionPackage('packageName');
