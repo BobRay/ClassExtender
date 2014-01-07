@@ -29,10 +29,36 @@ $snippets[1] = $modx->newObject('modSnippet');
 $snippets[1]->fromArray(array (
   'id' => 1,
   'property_preprocess' => false,
+  'name' => 'UserSearchForm',
+  'description' => 'Search for Forum Members by Category',
+  'properties' => 
+  array (
+  ),
+), '', true, true);
+$snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/usersearchform.snippet.php'));
+
+$snippets[2] = $modx->newObject('modSnippet');
+$snippets[2]->fromArray(array (
+  'id' => 2,
+  'property_preprocess' => false,
   'name' => 'ClassExtender',
   'description' => 'Extend a MODX class',
   'properties' => NULL,
 ), '', true, true);
-$snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/classextender.snippet.php'));
+$snippets[2]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/classextender.snippet.php'));
+
+$snippets[3] = $modx->newObject('modSnippet');
+$snippets[3]->fromArray(array (
+  'id' => 3,
+  'property_preprocess' => false,
+  'name' => 'GetExtUsers',
+  'description' => 'Show user information',
+), '', true, true);
+$snippets[3]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/getextusers.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.getextusers.snippet.php';
+$snippets[3]->setProperties($properties);
+unset($properties);
 
 return $snippets;

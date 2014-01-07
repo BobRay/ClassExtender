@@ -54,6 +54,16 @@ if($object->xpdo) {
                   'parent' => 0,
                   'template' => 'default',
                 ),
+                1 =>  array (
+                  'pagetitle' => 'Forum Members',
+                  'parent' => 0,
+                  'template' => 'default',
+                ),
+                2 =>  array (
+                  'pagetitle' => 'Forum Member Search',
+                  'parent' => 0,
+                  'template' => 'default',
+                ),
             );
 
             if (is_array($intersects)) {
