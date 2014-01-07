@@ -16,7 +16,7 @@ $components = array(
     'packageName' => 'ClassExtender',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'ClassExtender project for MyComponent extra',
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     'release' => 'beta1',
     'author' => 'Bob Ray',
     'email' => '<http://bobsguides.com>',
@@ -173,11 +173,53 @@ $components = array(
                 'category' => 'ClassExtender',
                 'description' => 'Extend a MODX class',
             ),
+            'GetExtUsers' => array(
+                'category' => 'ClassExtender',
+                'description' => 'Show user information',
+            ),
+
+            'UserSearchForm' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Show users selected by category',
+            ),
 
         ),
         'plugins' => array(
+            'ExtraUserFields' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Add and process extra fields in Create/Edit User form',
+            ),
+            'ExtraResourceFields' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Add and process extra fields in Create/Edit Resource form',
+            ),
         ),
         'chunks' => array(
+            'ExtraUserFields' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtraUserFields',
+            ),
+            'ExtraResourceFields' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtraResourceFields',
+            ),
+            'ExtUserOuterTpl' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtUserOuterTpl',
+            ),
+            'ExtUserInnerTpl' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtUserInnerTpl',
+            ),
+            'ExtUserRowTpl' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtUserRowTpl',
+            ),
+            'ExtUserSearchFormTpl' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtUserSearchFormTpl',
+            ),
+
 
         ),
         'templates' => array(
@@ -195,6 +237,20 @@ $components = array(
     /* Array of Resource pagetitles for your Extra; All other fields optional.
        You can set any resource field here */
     'resources' => array(
+        'Forum Members' => array( /* example with other fields */
+            'pagetitle'   => 'Forum Members',
+            'alias'       => 'forum-members',
+            'template'    => 'default',
+            'richtext'    => false,
+            'published'   => false,
+        ),
+        'Forum Member Search' => array( /* example with other fields */
+            'pagetitle' => 'Forum Member Search',
+            'alias'     => 'form-member-search',
+            'template'  => 'default',
+            'richtext'  => false,
+            'published' => false,
+        ),
     ),
 
 
@@ -398,6 +454,7 @@ $components = array(
         'snippets',
         'chunks',
         'resources',
+        'plugins',
 //        'menus'
     ),
     /*  Array  of resources to process. You can specify specific resources
@@ -410,6 +467,8 @@ $components = array(
 
     'exportResources' => array(
         'ClassExtender',
+        'Forum Members',
+        'Forum Member Search',
     ),
     /* Array of resource parent IDs to get children of. */
     'parents' => array(),
