@@ -1,9 +1,9 @@
-
 <div class="x-form-item x-tab-item">
     <label class="x-form-item-label" style="width:auto; font-weight:bold; float:none; font-size:12px">First Name</label>
 
     <div class="x-form-item x-tab-item">
-        <input type="text" name="firstName" value="[[+firstName]]" class="x-form-text x-form-field"/>
+        <input type="text" name="firstName" value="[[+firstName]]" class="x-form-text x-form-field"
+                onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
     </div>
 </div>
 
@@ -11,7 +11,8 @@
     <label class="x-form-item-label" style="width:auto; font-weight:bold; float:none; font-size:12px">Last Name</label>
 
     <div class="x-form-item x-tab-item">
-        <input type="text" name="lastName" value="[[+lastName]]" class="x-form-text x-form-field"/>
+        <input type="text" name="lastName" value="[[+lastName]]" class="x-form-text x-form-field"
+                onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
     </div>
 </div>
 
@@ -19,7 +20,8 @@
     <label class="x-form-item-label" style="width:auto; font-weight:bold; float:none; font-size:12px">Title</label>
 
     <div class="x-form-item x-tab-item">
-        <input type="text" name="title" value="[[+title]]" class="x-form-text x-form-field"/>
+        <input type="text" name="title" value="[[+title]]" class="x-form-text x-form-field"
+                onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
     </div>
 </div>
 
@@ -27,7 +29,8 @@
     <label class="x-form-item-label" style="width:auto; font-weight:bold; float:none; font-size:12px">Company</label>
 
     <div class="x-form-item x-tab-item">
-        <input type="text" name="company" value="[[+company]]" class="x-form-text x-form-field"/>
+        <input type="text" name="company" value="[[+company]]" class="x-form-text x-form-field"
+                onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
     </div>
 </div>
 
@@ -35,16 +38,18 @@
     <label class="x-form-item-label" style="width:auto; font-weight:bold; float:none; font-size:12px">
         Category 1<span style="margin-left:163px;">Other (specify)</span></label>
 
-<div class="x-form-clear-left"></div>
+    <div class="x-form-clear-left"></div>
     <div class="x-form-element" style="display:inline; float:none;">
-        <select id="category1" style="height:32px; display:inline; float:left;" type="text" name="category1" value="[[+category1]]" class="x-form-text x-form-field modx-combo"/>
+        <select id="category1" style="height:32px; display:inline; float:left;" type="text" name="category1" value="[[+category1]]"
+                class="x-form-text x-form-field modx-combo" onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
         [[+categories1]]
         </select>
 
-    <div class="x-form-item x-tab-item" style="display:inline; width:100px; float:left; margin-left:10px">
-        <input type="text" name="category1_Other" value="[[+category1_Other]]" style="width:300px;" class="x-form-text x-form-field"/>
+        <div class="x-form-item x-tab-item" style="display:inline; width:100px; float:left; margin-left:10px">
+            <input type="text" name="category1_Other" value="[[+category1_Other]]" style="width:300px;" class="x-form-text x-form-field"
+                    onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="x-form-item x-tab-item">
@@ -54,12 +59,13 @@
     <div class="x-form-clear-left"></div>
     <div class="x-form-element" style="display:inline; float:none;">
         <select id="category2" style="height:32px; display:inline; float:left;" type="text" name="category2" value="[[+category2]]"
-                class="x-form-text x-form-field modx-combo"/>
+                class="x-form-text x-form-field modx-combo" onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
         [[+categories2]]
         </select>
 
         <div class="x-form-item x-tab-item" style="display:inline; width:100px; float:left; margin-left:10px">
-            <input type="text" name="category2_Other" value="[[+category2_Other]]" style="width:300px;" class="x-form-text x-form-field"/>
+            <input type="text" name="category2_Other" value="[[+category2_Other]]" style="width:300px;" class="x-form-text x-form-field"
+                    onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
         </div>
     </div>
 </div>
@@ -71,13 +77,13 @@
     <div class="x-form-clear-left"></div>
     <div class="x-form-element" style="display:inline; float:none;">
         <select id="category3" style="height:32px; display:inline; float:left;" type="text" name="category3" value="[[+category3]]"
-                class="x-form-text x-form-field modx-combo"/>
+                class="x-form-text x-form-field modx-combo" onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
         [[+categories3]]
         </select>
 
         <div class="x-form-item x-tab-item" style="display:inline; width:100px; float:left; margin-left:10px">
-            <input type="text" name="category3_Other" value="[[+category3_Other]]" style="width:300px;" class="x-form-text x-form-field"/>
+            <input type="text" name="category3_Other" value="[[+category3_Other]]" style="width:300px;" class="x-form-text x-form-field"
+                    onClick="Ext.getCmp('modx-panel-user').markDirty();"/>
         </div>
     </div>
 </div>
-
