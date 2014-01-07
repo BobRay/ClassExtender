@@ -1,5 +1,13 @@
 Changelog for ClassExtender
 
+ClassExtender 1.0.1
+---------------------------------
+Added GetExtUsers snippet
+Added UserSearchForm snippet
+Added Tpl chunks for search and list
+
+
+
 ClassExtender 1.0.0
 ---------------------------------
 Initial Version
