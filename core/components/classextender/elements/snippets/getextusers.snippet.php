@@ -167,14 +167,13 @@ if (! $count) {
 $i = 0;
 $outer = $modx->getChunk($outerTpl);
 
-
 $output = '';
 $innerOutput = '';
 foreach ($users as $user) {
     $fields = $user->toArray();
     unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class'] );
     if ($user->Profile) {
-        $fields = array_merge($fields, $user->Profile->toArray());
+        $fields = array_merge($user->Profile->toArray(), $fields);
     }
     if ($user->Data) {
         $fields['category1'] = !empty($fields['category1_other'])
@@ -190,7 +189,7 @@ foreach ($users as $user) {
             : isset($fields['category3'])
                 ? $fields['category3']
                 : '';
-        $fields = array_merge($fields, $user->Data->toArray());
+        $fields = array_merge($user->Data->toArray(), $fields);
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
