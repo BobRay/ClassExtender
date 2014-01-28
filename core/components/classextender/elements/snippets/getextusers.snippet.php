@@ -139,22 +139,18 @@ $rowTpl = $modx->getOption('extUserRowTpl', $sp, 'extUserRowTpl');
 
 
 $c = $modx->newQuery($userClass);
-
-$c->where($where);
-if (!$showInactive) {
-    $c->andCondition(array('active' => true));
-}
 $c->sortby('Data.lastName', 'ASC');
 
+/* No where clause if 'All' and showInactive */
 if ($category == 'All') {
-    if (! $showInactive) {
-        $users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}', array('active' => true));
-    } else {
-        $users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}');
+    if (!$showInactive) {
+        $c->where(array('active' => true));
     }
 } else {
-    $users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}', $c);
+    $c->where($where);
 }
+
+$users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}', $c);
 
 $count = count($users);
 
@@ -189,7 +185,7 @@ foreach ($users as $user) {
             : isset($fields['category3'])
                 ? $fields['category3']
                 : '';
-        $fields = array_merge($user->Data->toArray(), $fields);
+        $fields = array_merge($fields, $user->Data->toArray());
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
@@ -199,4 +195,4 @@ foreach ($users as $user) {
 
 $output = str_replace('[[+extUserInner]]', $innerOutput, $outer);
 
-echo $output;
+return $output;
