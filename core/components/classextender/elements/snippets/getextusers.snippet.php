@@ -172,6 +172,7 @@ foreach ($users as $user) {
         $fields = array_merge($user->Profile->toArray(), $fields);
     }
     if ($user->Data) {
+        $fields = array_merge($user->Data->toArray(), $fields);
         $fields['category1'] = !empty($fields['category1_other'])
             ? $fields['category1_other']
             : isset($fields['category1'])? $fields['category1'] : '';
@@ -185,7 +186,7 @@ foreach ($users as $user) {
             : isset($fields['category3'])
                 ? $fields['category3']
                 : '';
-        $fields = array_merge($fields, $user->Data->toArray());
+
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
@@ -195,4 +196,8 @@ foreach ($users as $user) {
 
 $output = str_replace('[[+extUserInner]]', $innerOutput, $outer);
 
-return $output;
+if (php_sapi_name() == 'cli') {
+    echo $output;
+} else {
+     return $output;
+}
