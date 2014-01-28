@@ -83,6 +83,8 @@ if (isset($_POST['submit-var']) && isset($_POST['ext-category'])) {
             // $output .= "<p>Selected: " . $category . '</p>';
         }
     }
+} else {
+    $output .= $modx->runSnippet('GetExtUsers', array('category' => 'All',  'showInactive' => '0'));
 }
 
 
