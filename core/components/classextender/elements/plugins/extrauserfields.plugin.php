@@ -38,7 +38,7 @@
  *
  **/
 
-// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+$chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
 
 $fields = array(
     'firstName'        => '',
@@ -80,33 +80,6 @@ switch ($modx->event->name) {
         $list = $modx->getChunk('UserCategories');
         $categoryList = explode(',', trim($list));
 
-/*         $categoryList = array(
-            '',
-            'Bakery/Pastry Chef',
-            'Beverage',
-            'Candy Making',
-            'Catering',
-            'Chef',
-            'Consulting',
-            'Editor/Writer',
-            'Education/Cooking School',
-            'Food Artisan/Farmer/Producer',
-            'Food Stylist',
-            'Graphic Design',
-            'Grocery/Retail',
-            'Marketing',
-            'Media/TV/Radio/Internet',
-            'Nutrition Services',
-            'Personal Chef',
-            'Product Development',
-            'Public Relations/Event Planner',
-            'Recipe Tester/Developer',
-            'Restaurant Owner',
-            'Retired',
-            'Sales Representative',
-            'Student',
-            'Wholesale Products',
-        ); */
 
         if ($data) {
             $fields['firstName'] = $data->get('firstName');
@@ -189,8 +162,8 @@ switch ($modx->event->name) {
             $user->save();
         }
 
-       // $chunk->setContent($debug . "\n" . print_r($_POST, true));
-       // $chunk->save();
+        $chunk->setContent($debug . "\n" . print_r($_POST, true));
+        $chunk->save();
         break;
 }
 return;
