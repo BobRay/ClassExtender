@@ -85,4 +85,26 @@ $chunks[6]->fromArray(array (
 ), '', true, true);
 $chunks[6]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extraresourcefields.chunk.html'));
 
+$chunks[7] = $modx->newObject('modChunk');
+$chunks[7]->fromArray(array (
+  'id' => 7,
+  'property_preprocess' => false,
+  'name' => 'ExtUserCategories',
+  'description' => 'Category list for extended user fields',
+  'properties' => 
+  array (
+  ),
+), '', true, true);
+$chunks[7]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusercategories.chunk.html'));
+
+$chunks[8] = $modx->newObject('modChunk');
+$chunks[8]->fromArray(array (
+  'id' => 8,
+  'property_preprocess' => false,
+  'name' => 'ExtUserFieldList',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[8]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extuserfieldlist.chunk.html'));
+
 return $chunks;

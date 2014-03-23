@@ -177,6 +177,10 @@ $components = array(
                 'category' => 'ClassExtender',
                 'description' => 'Show user information',
             ),
+            'ExtUserUpdateProfile' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Set placeholders for and update extended user data',
+            ),
 
             'UserSearchForm' => array(
                 'category'    => 'ClassExtender',
@@ -195,6 +199,14 @@ $components = array(
             ),
         ),
         'chunks' => array(
+            'ExtUserFieldList' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtUserFieldList',
+            ),
+            'ExtUserCategories' => array(
+               'category' => 'ClassExtender',
+               'name' => 'UserCategories',
+            ),
             'ExtraUserFields' => array(
                 'category' => 'ClassExtender',
                 'name' => 'ExtraUserFields',
