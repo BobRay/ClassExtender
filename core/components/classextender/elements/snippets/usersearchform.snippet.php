@@ -36,34 +36,11 @@
  **/
 
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
-$categoryList = array(
-    /* 'Other', */
-    'Please Select a Category',
-    'Bakery/Pastry Chef',
-    'Beverage',
-    'Candy Making',
-    'Catering',
-    'Chef',
-    'Consulting',
-    'Editor/Writer',
-    'Education/Cooking School',
-    'Food Artisan/Farmer/Producer',
-    'Food Stylist',
-    'Graphic Design',
-    'Grocery/Retail',
-    'Marketing',
-    'Media/TV/Radio/Internet',
-    'Nutrition Services',
-    'Personal Chef',
-    'Product Development',
-    'Public Relations/Event Planner',
-    'Recipe Tester/Developer',
-    'Restaurant Owner',
-    'Retired',
-    'Sales Representative',
-    'Student',
-    'Wholesale Products',
-);
+
+$list = $modx->getChunk('ExtUserCategories');
+$categoryList = explode(',', trim($list));
+array_shift($categoryList);
+array_unshift($categoryList, 'Please Select a Category');
 
 $categories = '';
 foreach ($categoryList as $category) {
