@@ -38,7 +38,7 @@
  *
  **/
 
-$chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
 
 $fields = array(
     'firstName'        => '',
@@ -77,9 +77,10 @@ switch ($modx->event->name) {
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnUserFormRender':
+        $list = $modx->getChunk('UserCategories');
+        $categoryList = explode(',', trim($list));
 
-        $categoryList = array(
-            /* 'Other', */
+/*         $categoryList = array(
             '',
             'Bakery/Pastry Chef',
             'Beverage',
@@ -105,7 +106,7 @@ switch ($modx->event->name) {
             'Sales Representative',
             'Student',
             'Wholesale Products',
-        );
+        ); */
 
         if ($data) {
             $fields['firstName'] = $data->get('firstName');
@@ -188,8 +189,8 @@ switch ($modx->event->name) {
             $user->save();
         }
 
-        $chunk->setContent($debug . "\n" . print_r($_POST, true));
-        $chunk->save();
+       // $chunk->setContent($debug . "\n" . print_r($_POST, true));
+       // $chunk->save();
         break;
 }
 return;
