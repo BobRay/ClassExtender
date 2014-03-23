@@ -77,7 +77,7 @@ switch ($modx->event->name) {
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnUserFormRender':
-        $list = $modx->getChunk('UserCategories');
+        $list = $modx->getChunk('ExtUserCategories');
         $categoryList = explode(',', trim($list));
 
 
