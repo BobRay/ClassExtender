@@ -107,6 +107,7 @@ if ($data) {
 }
   
 if ($submission) {
+    $modx->request->sanitizeRequest();
     $dirty = false;
     foreach ($fields as $key => $value) {
         if (isset($_POST[$key])) {
