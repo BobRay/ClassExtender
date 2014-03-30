@@ -201,7 +201,7 @@ $components = array(
         'chunks' => array(
             'ExtUserCategories' => array(
                'category' => 'ClassExtender',
-               'name' => 'UserCategories',
+               'name' => 'ExtUserCategories',
             ),
             'ExtraUserFields' => array(
                 'category' => 'ClassExtender',
