@@ -50,17 +50,17 @@ if($object->xpdo) {
 
             $intersects = array (
                 0 =>  array (
-                  'pagetitle' => 'ClassExtender',
-                  'parent' => 0,
+                  'pagetitle' => 'Extend modUser',
+                  'parent' => 'ClassExtender',
                   'template' => 'default',
                 ),
                 1 =>  array (
-                  'pagetitle' => 'Forum Members',
-                  'parent' => 0,
+                  'pagetitle' => 'Extend modResource',
+                  'parent' => 'ClassExtender',
                   'template' => 'default',
                 ),
                 2 =>  array (
-                  'pagetitle' => 'Forum Member Search',
+                  'pagetitle' => 'ClassExtender',
                   'parent' => 0,
                   'template' => 'default',
                 ),

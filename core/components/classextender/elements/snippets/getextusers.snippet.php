@@ -165,7 +165,17 @@ $outer = $modx->getChunk($outerTpl);
 
 $output = '';
 $innerOutput = '';
+$excludes = $modx->getOption('excludeUsers', null, '');
+
+$excludedUsers = explode(',', $excludes);
+
 foreach ($users as $user) {
+    $userId = $user->get('id');
+    if (! empty($excludedUsers)) {
+        if (in_array($userId, $excludedUsers)) {
+            continue;
+        }
+    }
     $fields = $user->toArray();
     unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class'] );
     if ($user->Profile) {
@@ -188,6 +198,7 @@ foreach ($users as $user) {
                 : '';
 
     }
+
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
     $innerOutput .= str_replace('[[+extUserRow]]', $row, $inner);

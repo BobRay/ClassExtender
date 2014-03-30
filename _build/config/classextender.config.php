@@ -245,17 +245,26 @@ $components = array(
     /* Array of Resource pagetitles for your Extra; All other fields optional.
        You can set any resource field here */
     'resources' => array(
-        'Forum Members' => array( /* example with other fields */
-            'pagetitle'   => 'Forum Members',
-            'alias'       => 'forum-members',
+        'ClassExtender' => array(
+            'pagetitle' => 'ClassExtender',
+            'alias'     => 'class-extender',
+            'template'  => 'default',
+            'richtext'  => false,
+            'published' => false,
+        ),
+        'Extend modUser' => array(
+            'pagetitle'   => 'Extend modUser',
+            'alias'       => 'extend-moduser',
             'template'    => 'default',
+            'parent'      => 'ClassExtender',
             'richtext'    => false,
             'published'   => false,
         ),
-        'Forum Member Search' => array( /* example with other fields */
-            'pagetitle' => 'Forum Member Search',
-            'alias'     => 'form-member-search',
+        'Extend modResource' => array(
+            'pagetitle' => 'Extend modResource',
+            'alias'     => 'extend-modresource',
             'template'  => 'default',
+            'parent' => 'ClassExtender',
             'richtext'  => false,
             'published' => false,
         ),
@@ -474,9 +483,9 @@ $components = array(
     'getResourcesById' => false,
 
     'exportResources' => array(
-        'ClassExtender',
-        'Forum Members',
-        'Forum Member Search',
+        'Extend modUser',
+        'Extend modResource',
+        'ClassExtender'
     ),
     /* Array of resource parent IDs to get children of. */
     'parents' => array(),

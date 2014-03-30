@@ -101,10 +101,10 @@ $chunks[8] = $modx->newObject('modChunk');
 $chunks[8]->fromArray(array (
   'id' => 8,
   'property_preprocess' => false,
-  'name' => 'ExtUserFieldList',
+  'name' => 'UserCategories',
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[8]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extuserfieldlist.chunk.html'));
+$chunks[8]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/usercategories.chunk.html'));
 
 return $chunks;
