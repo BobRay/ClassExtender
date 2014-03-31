@@ -69,25 +69,35 @@ $chunks[5] = $modx->newObject('modChunk');
 $chunks[5]->fromArray(array (
   'id' => 5,
   'property_preprocess' => false,
-  'name' => 'ExtraUserFields',
+  'name' => 'ClassExtenderForm',
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[5]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extrauserfields.chunk.html'));
+$chunks[5]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/classextenderform.chunk.html'));
 
 $chunks[6] = $modx->newObject('modChunk');
 $chunks[6]->fromArray(array (
   'id' => 6,
   'property_preprocess' => false,
-  'name' => 'ExtraResourceFields',
+  'name' => 'ExtraUserFields',
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[6]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extraresourcefields.chunk.html'));
+$chunks[6]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extrauserfields.chunk.html'));
 
 $chunks[7] = $modx->newObject('modChunk');
 $chunks[7]->fromArray(array (
   'id' => 7,
+  'property_preprocess' => false,
+  'name' => 'ExtraResourceFields',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[7]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extraresourcefields.chunk.html'));
+
+$chunks[8] = $modx->newObject('modChunk');
+$chunks[8]->fromArray(array (
+  'id' => 8,
   'property_preprocess' => false,
   'name' => 'ExtUserCategories',
   'description' => 'Category list for extended user fields',
@@ -95,16 +105,16 @@ $chunks[7]->fromArray(array (
   array (
   ),
 ), '', true, true);
-$chunks[7]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusercategories.chunk.html'));
+$chunks[8]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusercategories.chunk.html'));
 
-$chunks[8] = $modx->newObject('modChunk');
-$chunks[8]->fromArray(array (
-  'id' => 8,
+$chunks[9] = $modx->newObject('modChunk');
+$chunks[9]->fromArray(array (
+  'id' => 9,
   'property_preprocess' => false,
   'name' => 'UserCategories',
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[8]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/usercategories.chunk.html'));
+$chunks[9]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/usercategories.chunk.html'));
 
 return $chunks;

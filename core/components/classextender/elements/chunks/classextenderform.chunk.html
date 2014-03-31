@@ -1,0 +1,63 @@
+<!-- lexicon->load('classextender:form'); -->
+
+<div id="class_extender">
+<form id="class_extender_form" action="[[~[[*id]]]]" method="post">
+
+<h3>[[*pagetitle]]</h3>
+
+    <input type="hidden" name="submitVar" id="submitVar" value="submitVar"/>
+
+    <label for="ce_package_name">[[%ce_package_name_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_package_name" 
+                name="ce_package_name" value="[[+ce_package_name]]"/>
+    </label>
+
+    <br /><label for="ce_class">[[%ce_class_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_class"
+                name="ce_class" value="[[+ce_class]]"/>
+    </label>
+
+    <br /><label for="ce_parent_object">[[%ce_parent_object_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_parent_object"
+                name="ce_parent_object" value="[[+ce_parent_object]]"/>
+    </label>
+
+    <br/><label for="ce_table_prefix">[[%ce_table_prefix_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_table_prefix"
+                name="ce_table_prefix" value="[[+ce_table_prefix]]"/>
+    </label>
+
+    <br/><label for="ce_table_name">[[%ce_table_name_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_table_name"
+                name="ce_table_name" value="[[+ce_table_name]]"/>
+    </label>
+    <br/>
+    <br />
+    <fieldset>
+        <p>Create Table or Schema before submitting</p>
+        <legend>[[%ce_method_caption? &namespace=`classextender` &topic=`form`]]</legend>
+        <label><input type="radio" name="ce_method" [[+ce_table_checked]]
+                value="use_table"/> [[%ce_use_table? &namespace=`classextender` &topic=`form`]]</label>
+        <br/><label><input type="radio" name="ce_method" [[+ce_schema_checked]]
+                value="use_schema"/> [[%ce_use_schema? &namespace=`classextender` &topic=`form`]]</label>
+    </fieldset>
+
+    <fieldset>
+        <p>Register Extension Package</p>
+        <legend>[[%ce_register_caption? &namespace=`classextender` &topic=`form`]]</legend>
+        <label><input type="radio" name="ce_register" [[+ce_register_yes_checked]]
+            value="register_yes"/> [[%ce_yes? &namespace=`classextender` &topic=`form`]]</label>
+        <br/><label><input type="radio" name="ce_register" [[+ce_register_no_checked]]
+        value="register_no"/> [[%ce_no? &namespace=`classextender` &topic=`form`]]</label>
+    </fieldset>
+
+
+
+    <br />
+
+    <input id="ce_button" name="ce_submit" type="submit" value="Submit"/>
+
+
+
+</form>
+</div>

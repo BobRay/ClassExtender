@@ -199,6 +199,10 @@ $components = array(
             ),
         ),
         'chunks' => array(
+            'ClassExtenderForm' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ClassExtenderForm',
+            ),
             'ExtUserCategories' => array(
                'category' => 'ClassExtender',
                'name' => 'ExtUserCategories',

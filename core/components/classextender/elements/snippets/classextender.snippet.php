@@ -86,11 +86,17 @@ $modx->lexicon->load('classextender:default');
 $props =& $scriptProperties;
 $ce = new ClassExtender($modx, $props);
 $ce->init();
-$ce->generateClassFiles();
-$ce->createTables();
-$ce->add_extension_package();
 
-return '<h3>' . $modx->lexicon('ce.finished')
-    . '</h3>';
+$ce->process();
+
+if ($ce->hasError()) {
+    print_r($ce->getErrors(), true);
+} else {
+    return $ce->getOutput();
+}
+/*$ce->generateClassFiles();
+$ce->createTables();
+$ce->add_extension_package();*/
+
 
 // $modx->removeExtensionPackage('packageName');
