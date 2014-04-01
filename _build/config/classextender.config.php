@@ -199,6 +199,16 @@ $components = array(
             ),
         ),
         'chunks' => array(
+            'ExtUserSchema' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtUserSchema',
+                'filename' => 'extuserschema.chunk.xml'
+            ),
+            'ExtResourceSchema' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtResourceSchema',
+                'filename' => 'extresourceschema.chunk.xml'
+            ),
             'ClassExtenderForm' => array(
                 'category' => 'ClassExtender',
                 'name'     => 'ClassExtenderForm',
