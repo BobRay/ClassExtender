@@ -132,8 +132,6 @@ class ClassExtender {
             'ce_parent_object' => $this->ce_parent_object,
             'ce_table_prefix' => $this->ce_table_prefix,
             'ce_table_name' => $this->ce_table_name,
-
-
         );
         if ($this->ce_method == 'use_table') {
             $fields['ce_table_checked'] = 'checked="checked"';
@@ -158,6 +156,10 @@ class ClassExtender {
         $this->generateClassFiles();
         if ($this->ce_method == 'use_schema') {
             $this->createTables();
+        }
+
+        if ($this->ce_register) {
+            $this->addExtensionPackage();
         }
     }
 
@@ -267,9 +269,9 @@ class ClassExtender {
        your dev. path. ClassExtender will copy the package files to
        core/components/classextender/model/ */
 
-    public function add_extension_package() {
+    public function addExtensionPackage() {
         $path = '[[++core_path]]' . 'components/classextender/model/';
-        $this->modx->addExtensionPackage($this->ce_package_name, $path,
+        $this->modx->addExtensionPackage(strtolower($this->ce_package_name), $path,
             array('tablePrefix' => $this->ce_table_prefix));
     }
 
@@ -277,14 +279,14 @@ class ClassExtender {
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
         if (!$success) {
-            $this->addError($this->modx->lexicon("ce.addpackage_faile~~naddPackage failed."));
+            $this->addError($this->modx->lexicon("ce.addpackage_failed~~addPackage failed."));
 
             return;
         }
     }
 
-    public function copyDir($source, $destination) {
-        //echo "SOURCE: " . $source . "\nDESTINATION: " . $destination . "\n";
+    /*public function copyDir($source, $destination) {
+
         if (is_dir($source)) {
             if (!is_dir($destination)) {
                 mkdir($destination, $this->dirPermission, true);
@@ -313,6 +315,6 @@ class ClassExtender {
         } else {
             return false;
         }
-    }
+    }*/
 
 }
