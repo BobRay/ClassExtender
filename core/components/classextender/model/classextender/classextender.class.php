@@ -36,6 +36,7 @@ class ClassExtender {
     public $ce_table_name = '';
     public $ce_method = '';
     public $ce_register = 'Yes';
+    public $ce_schema_file;
     public $generator;
     public $modelPath;
     public $devMode = false;
@@ -107,8 +108,20 @@ class ClassExtender {
                 $this->props, 'use_schema');
             $this->ce_register = $this->modx->getOption('registerPackage',
                 $this->props, 'Yes');
+            $this->ce_schema_file = $this->modx->getOption('schemaFile',
+                $this->props, '' );
+            if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
+                $this->addError($this->modx->lexicon('ce.bad_method~~Invalid Method (must be use_table or use_schema'));
+                return;
+            }
+            if (empty($this->ce_schema_file)) {
+                $path = $this->modelPath . 'schema';
+                if (!is_dir($path)) {
+                    mkdir($path, $this->dirPermission, true);
+                }
+                $this->ce_schema_file = $path . '/' . strtolower($this->ce_package_name) . '.mysql.schema.xml';
+            }
         }
-
 
     }
 
@@ -133,8 +146,19 @@ class ClassExtender {
             $fields['ce_register_yes_checked'] = 'checked="checked"';
         }
 
-
         $this->displayForm($fields);
+
+
+        if ($this->ce_method == 'use_table') {
+            $this->generateSchema();
+        } else {
+            $this->dumpSchema();
+        }
+
+        $this->generateClassFiles();
+        if ($this->ce_method == 'use_schema') {
+            $this->createTables();
+        }
     }
 
     public function displayForm($fields) {
@@ -164,7 +188,8 @@ class ClassExtender {
         if (!is_dir($path)) {
             mkdir($path, $this->dirPermission, true);
         }
-        $file = $path . '/' . strtolower($this->ce_package_name) . '.mysql.schema.xml';
+        $file = $this->ce_schema_file;
+
         $tables = array(
             $this->ce_table_prefix . $this->ce_table_name => $this->ce_class
         );
@@ -183,15 +208,7 @@ class ClassExtender {
         if (! is_dir($path)) {
             mkdir($path, $this->dirPermission, true);
         }
-        $content = $this->modx->getChunk($schemaChunk);
-        $fp = fopen($path . '/' . strtolower($this->ce_package_name) . '.mysql.schema.xml', 'w');
-        if (!$fp) {
-            $this->addError($this->modx->lexicon('ce.could_not_open_schema_file~~Could not open schema file'));
-            return false;
-        } else {
-            fwrite($fp, $content);
-            fclose($fp);
-        }
+
         return $success;
 
 
@@ -221,11 +238,10 @@ class ClassExtender {
 
     public function generateClassFiles() {
         /** $generator xPDOGenerator */
-        $path = $this->modelPath . 'schema/';
-        $this->generator->parseSchema($path . $this->ce_package_name .
-            '.mysql.schema.xml', $this->modelPath);
-        $this->copyDir($this->modelPath, MODX_CORE_PATH .
-            'components/' . $this->ce_package_name);
+        $path = $this->ce_schema_file;
+        $this->generator->parseSchema($path, $this->modelPath . strtolower($this->ce_package_name));
+        /*$this->copyDir($this->modelPath, MODX_CORE_PATH .
+            'components/' . $this->ce_package_name);*/
 
     }
 
