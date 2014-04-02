@@ -261,6 +261,24 @@ class ClassExtender {
 
         if (!$success) {
             $this->addError($this->modx->lexicon('ce.parse_schema_failed~~parseSchema() failed'));
+        } else {
+            $classFile = $this->modelPath . $this->packageLower . '/' . $this->ce_class . '.class.php';
+            $constructor = "
+    function __construct(xPDO & \$xpdo) {
+        parent::__construct(\$xpdo);
+        \$this->set('class_key', '" . $this->ce_class . "');
+    }";
+            if (file_exists($classFile)) {
+                $content = file_get_contents($classFile);
+                if (strpos($content, 'constructor') === false) {
+                    $fp = fopen($classFile, 'w');
+                    if ($fp) {
+                        $content = str_replace('}', $constructor . "\n}", $content);
+                        fwrite($fp, $content);
+                        fclose($fp);
+                    }
+                }
+            }
         }
         return $success;
 
