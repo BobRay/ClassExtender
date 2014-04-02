@@ -308,7 +308,7 @@ class ClassExtender {
 
     public function addExtensionPackage() {
 
-        $path = '[[++core_path]]' . 'components/classextender/model/' . $this->packageLower . '/';
+        $path = '[[++core_path]]' . 'components/classextender/model/';
         $this->modx->addExtensionPackage($this->packageLower, $path,
             array('tablePrefix' => $this->ce_table_prefix));
     }
