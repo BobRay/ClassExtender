@@ -37,12 +37,17 @@ class ClassExtender {
     public $ce_method = '';
     public $ce_register = 'Yes';
     public $ce_schema_file;
+    /** @var  $generator xPDOGenerator */
     public $generator;
     public $modelPath;
     public $devMode = false;
     public $dirPermission;
     protected $output = '';
     protected $errors = array();
+    protected $fields = array();
+    protected $packageLower = '';
+    protected $objectPrefix = '';
+    protected $objectPrefixLower = '';
 
 
     function __construct(&$modx, &$config = array()) {
@@ -55,34 +60,13 @@ class ClassExtender {
         $this->output = '';
         $this->dirPermission = (int) $this->modx->getOption('dirPermission',
             $this->props, 0755);
-        $fields = array(
-            'ce_package_name',
-            'ce_class',
-            'ce_parent_object',
-            'ce_table_prefix',
-            'ce_table_name',
-        );
-        if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
-            echo '<br>POSTED<br>';
-            echo print_r($_POST, true);
-            foreach($fields as $field) {
-                if (isset($_POST[$field])) {
-                    $this->$field = $_POST[$field];
-                }
-            }
-            $this->ce_method = isset($_POST['ce_method'])
-                ? $_POST['ce_method']
-                : 'use_schema';
-
-            $this->ce_register = isset($_POST['ce_register'])
-                ? $_POST['ce_register']
-                : 'Yes';
 
             $manager = $this->modx->getManager();
             $this->generator = $manager->getGenerator();
+
             $corePath = $this->modx->getOption('ce.core_path', NULL, NULL);
 
-            /* See if we're running under MyComponent */
+
             if (!empty($corePath)) {
                 $this->devMode = true;
             }
@@ -92,24 +76,46 @@ class ClassExtender {
                 'components/classextender/');
             $this->modelPath = $basePath . 'model/';
 
-        } else {
-            echo '<br>NOT POSTED<br>';
-            $this->ce_package_name = $this->modx->getOption('package',
-                $this->props, 'extendeduser');
-            $this->ce_class = $this->modx->getOption('class',
-                $this->props, 'extUser');
-            $this->ce_parent_object = $this->modx->getOption('parentObject',
-                $this->props, 'modUser');
-            $this->ce_table_prefix = $this->modx->getOption('tablePrefix',
-                $this->props, 'ext_');
-            $this->ce_table_name = $this->modx->getOption('tableName',
-                $this->props, 'user_data');
-            $this->ce_method = $this->modx->getOption('method',
-                $this->props, 'use_schema');
-            $this->ce_register = $this->modx->getOption('registerPackage',
-                $this->props, 'Yes');
+        // *******************
+           // echo '<br>NOT POSTED<br>';
+            $this->ce_package_name = isset($_POST['package'])
+                ? $_POST['package']
+                : $this->modx->getOption('package', $this->props, 'extendeduser');
+
+            $this->packageLower = strtolower($this->ce_package_name);
+
+            $this->ce_class = isset($_POST['class'])
+                ? $_POST['class']
+                :$this->modx->getOption('class', $this->props, 'extUser');
+
+            $this->ce_parent_object = isset($_POST['parentObject'])
+                ? $_POST['parentObject']
+                :$this->modx->getOption('parentObject', $this->props, 'modUser');
+
+            /* Strip off 'mod' to produce 'User' or 'Resource' */
+
+            $this->objectPrefix = substr($this->ce_parent_object, 3);
+            $this->objectPrefixLower = strtolower($this->objectPrefix);
+
+            $this->ce_table_prefix = isset($_POST['tablePrefix'])
+                ? $_POST['tablePrefix']
+                : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
+
+            $this->ce_table_name = isset($_POST['tableName'])
+                ? $_POST['tableName']
+                : $this->modx->getOption('tableName', $this->props, 'user_data');
+
+            $this->ce_method = isset($_POST['method'])
+                ? $_POST['method']
+                : $this->modx->getOption('method', $this->props, 'use_schema');
+
+            $this->ce_register = isset($_POST['registerPackage'])
+                ? $_POST['registerPackage']
+                : $this->modx->getOption('registerPackage', $this->props, 'Yes');
+
             $this->ce_schema_file = $this->modx->getOption('schemaFile',
                 $this->props, '' );
+
             if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
                 $this->addError($this->modx->lexicon('ce.bad_method~~Invalid Method (must be use_table or use_schema'));
                 return;
@@ -119,19 +125,42 @@ class ClassExtender {
                 if (!is_dir($path)) {
                     mkdir($path, $this->dirPermission, true);
                 }
-                $this->ce_schema_file = $path . '/' . strtolower($this->ce_package_name) . '.mysql.schema.xml';
+                $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
             }
-        }
 
     }
 
     public function process() {
+
+       // $this->displayForm($fields);
+
+
+        if ($this->ce_method == 'use_table') {
+            echo '<br>Generating Schema';
+            $this->generateSchema();
+        } else {
+            $this->dumpSchema();
+        }
+
+        $this->generateClassFiles();
+            echo '<br>generating Class files';
+        if ($this->ce_method == 'use_schema') {
+            $this->createTables();
+        }
+
+        if ($this->ce_register) {
+            echo '<br>registering extension package';
+            $this->addExtensionPackage();
+        }
+    }
+
+    public function displayForm() {
         $fields = array(
-            'ce_package_name' => $this->ce_package_name,
-            'ce_class' => $this->ce_class,
+            'ce_package_name'  => $this->ce_package_name,
+            'ce_class'         => $this->ce_class,
             'ce_parent_object' => $this->ce_parent_object,
-            'ce_table_prefix' => $this->ce_table_prefix,
-            'ce_table_name' => $this->ce_table_name,
+            'ce_table_prefix'  => $this->ce_table_prefix,
+            'ce_table_name'    => $this->ce_table_name,
         );
         if ($this->ce_method == 'use_table') {
             $fields['ce_table_checked'] = 'checked="checked"';
@@ -143,28 +172,7 @@ class ClassExtender {
         } else {
             $fields['ce_register_yes_checked'] = 'checked="checked"';
         }
-
-        $this->displayForm($fields);
-
-
-        if ($this->ce_method == 'use_table') {
-            $this->generateSchema();
-        } else {
-            $this->dumpSchema();
-        }
-
-        $this->generateClassFiles();
-        if ($this->ce_method == 'use_schema') {
-            $this->createTables();
-        }
-
-        if ($this->ce_register) {
-            $this->addExtensionPackage();
-        }
-    }
-
-    public function displayForm($fields) {
-        $this->output .= $this->modx->getChunk('ClassExtenderForm', $fields);
+        return $this->modx->getChunk('ClassExtenderForm', $fields);
     }
 
     protected function addError($msg) {
@@ -185,6 +193,8 @@ class ClassExtender {
 
 
     public function generateSchema() {
+
+        echo "<br>Generating Schema File from Table";
         $success = true;
         $path = $this->modelPath . 'schema';
         if (!is_dir($path)) {
@@ -206,27 +216,30 @@ class ClassExtender {
             $success = false;
         }
 
-        $path = $this->modelPath . 'schema';
-        if (! is_dir($path)) {
-            mkdir($path, $this->dirPermission, true);
-        }
-
         return $success;
 
 
     }
 
     public function dumpSchema() {
+
         $success = true;
-        $schemaChunk = stripos($this->ce_class, 'user' !== false)
+        echo "<br>PackageLower: " . $this->packageLower;
+        $schemaChunk = 'Ext' . $this->objectPrefix . 'Schema';
+        /*$schemaChunk = strpos($this->packageLower, 'user') !== false
             ? 'ExtUserSchema'
-            : 'ExtResourceSchema';
+            : 'ExtResourceSchema';*/
+
+        echo '<br>saving schema chunk(' . $schemaChunk . ' to file ' . $this->ce_schema_file;
+
         $path = $this->modelPath . 'schema';
         if (!is_dir($path)) {
             mkdir($path, $this->dirPermission, true);
         }
         $content = $this->modx->getChunk($schemaChunk);
-        $fp = fopen($path . '/' . strtolower($this->ce_package_name) . '.mysql.schema.xml', 'w');
+
+        $fp = fopen($this->ce_schema_file, 'w');
+
         if (!$fp) {
             $success = false;
             $this->addError($this->modx->lexicon('ce.could_not_open_schema_file~~Could not open schema file'));
@@ -240,10 +253,16 @@ class ClassExtender {
 
     public function generateClassFiles() {
         /** $generator xPDOGenerator */
+        $manager = $this->modx->getManager();
+        /** @var @var $generator xPDOGenerator */
+
         $path = $this->ce_schema_file;
-        $this->generator->parseSchema($path, $this->modelPath . strtolower($this->ce_package_name));
-        /*$this->copyDir($this->modelPath, MODX_CORE_PATH .
-            'components/' . $this->ce_package_name);*/
+        $success = $this->generator->parseSchema($path, $this->modelPath);
+
+        if (!$success) {
+            $this->addError($this->modx->lexicon('ce.parse_schema_failed~~parseSchema() failed'));
+        }
+        return $success;
 
     }
 
@@ -260,18 +279,19 @@ class ClassExtender {
 
             return;
         }
-        $manager->createObjectContainer($this->ce_table_name);
+        $object = $this->objectPrefixLower . 'Data';
+        /*$object = strpos($this->packageLower, 'user') !== false? 'userData' : 'resourceData';*/
+        $success = $manager->createObjectContainer($object);
+
+        if (!  $success) {
+            $this->addError($this->modx->lexicon('ce.create_object_container_failed~~createObjectContainer() failed'));
+        }
     }
 
-    /* This only needs to be run once, but it doesn't hurt to re-run it.
-       -- Developers: note that if you're
-       using MyComponent, this references the actual core path, not
-       your dev. path. ClassExtender will copy the package files to
-       core/components/classextender/model/ */
-
     public function addExtensionPackage() {
-        $path = '[[++core_path]]' . 'components/classextender/model/';
-        $this->modx->addExtensionPackage(strtolower($this->ce_package_name), $path,
+
+        $path = '[[++core_path]]' . 'components/classextender/model/' . $this->packageLower . '/';
+        $this->modx->addExtensionPackage($this->packageLower, $path,
             array('tablePrefix' => $this->ce_table_prefix));
     }
 
@@ -284,37 +304,5 @@ class ClassExtender {
             return;
         }
     }
-
-    /*public function copyDir($source, $destination) {
-
-        if (is_dir($source)) {
-            if (!is_dir($destination)) {
-                mkdir($destination, $this->dirPermission, true);
-            }
-            $objects = scandir($source);
-            if (sizeof($objects) > 0) {
-                foreach ($objects as $file) {
-                    if ($file == "." || $file == ".." ||
-                        $file == '.git' || $file == '.svn') {
-                        continue;
-                    }
-
-                    if (is_dir($source . '/' . $file)) {
-                        $this->copyDir($source . '/' . $file,
-                            $destination . '/' . $file);
-                    } else {
-                        copy($source . '/' . $file,
-                            $destination . '/' . $file);
-                    }
-                }
-            }
-
-            return true;
-        } elseif (is_file($source)) {
-            return copy($source, $destination);
-        } else {
-            return false;
-        }
-    }*/
 
 }

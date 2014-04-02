@@ -85,15 +85,33 @@ require_once $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path'
 $modx->lexicon->load('classextender:default');
 $props =& $scriptProperties;
 $ce = new ClassExtender($modx, $props);
-$ce->init();
+if (! $ce instanceof ClassExtender) {
+    die ('Could not instantiate ClassExtender');
 
-$ce->process();
+}
+$ce->init();
+$output .= $ce->displayForm();
 
 if ($ce->hasError()) {
-    print_r($ce->getErrors(), true);
+    $output .= print_r($ce->getErrors(), true);
 } else {
-    return $ce->getOutput();
+    $output .= $ce->getOutput();
 }
+if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
+    $ce->process();
+}
+
+if ($ce->hasError()) {
+    $errors = $ce->getErrors();
+    foreach($errors as $error) {
+        $output.= "\n" . '<p class="ce_error">' . $error . '</p>';
+    }
+
+} else {
+    $output.= $ce->getOutput();
+}
+
+return $output;
 /*$ce->generateClassFiles();
 $ce->createTables();
 $ce->add_extension_package();*/
