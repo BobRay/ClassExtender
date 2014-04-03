@@ -202,15 +202,55 @@ class ClassExtender {
         }
         $file = $this->ce_schema_file;
 
-        $tables = array(
-            $this->ce_table_prefix . $this->ce_table_name => $this->ce_class
-        );
-        $xml = $this->generator->writeSchema($file, $this->ce_package_name,
-            $this->ce_parent_object, $this->ce_table_prefix, true, $tables);
+        if (file_exists($file)) {
+            unlink($file);
+        }
 
-        if ($xml) {
-            $this->modx->log(modX::LOG_LEVEL_INFO,
-                'Schema file written to ' . $file);
+        $fakePrefix = substr($this->ce_table_prefix . $this->ce_table_name, 0, -1);
+        $success = $this->generator->writeSchema($file, $this->ce_package_name,
+            $this->ce_parent_object, $fakePrefix, true);
+
+        $content = file_get_contents($file);
+
+        $prefix = $this->ce_table_prefix;
+        $objectPrefix = $this->objectPrefix;
+        $objectPrefixLower = $this->objectPrefixLower;
+
+        $pattern = '/baseClass="[a-zA-Z]+"/';
+        $replace = 'baseClass="xPDOObject" tablePrefix="' . $prefix . '"';
+        $content = preg_replace($pattern, $replace, $content);
+
+        $pattern = '/<object class=.+?>/';
+        $replace = "<object class=\"{$objectPrefixLower}Data\" table=\"{$objectPrefixLower}_data\" extends=\"xPDOSimpleObject\">";
+        $content = preg_replace($pattern, $replace, $content);
+
+        $extObject = "\t<object class=\"ext{$objectPrefix}\" extends=\"mod{$objectPrefix}\">
+        <composite alias=\"Data\" local=\"id\" class=\"{$objectPrefixLower}Data\" foreign=\"{$objectPrefixLower}data_id\"
+         cardinality=\"one\"
+         owner=\"local\"/>
+    </object>";
+
+        $content = str_replace("\t<object", $extObject . "\n\t<object", $content);
+
+        $pattern = "#<index.*</index>#s";
+        $replace = "<index alias=\"{$objectPrefixLower}data_id\" name=\"{$objectPrefixLower}data_id\" primary=\"false\" unique=\"true\" type=\"BTREE\">
+            <column key=\"{$objectPrefixLower}data_id\" length=\"\" collation=\"A\" null=\"false\"/>
+        </index>
+        <aggregate alias=\"{$objectPrefix}\" class= \"mod{$objectPrefix}\" local=\"{$objectPrefixLower}data_id\" foreign=\"id\" cardinality=\"one\" owner=\"foreign\"/>";
+
+        $content = preg_replace($pattern, $replace, $content);
+
+        $fp = fopen($file, 'w');
+        if ($fp) {
+            fwrite($fp, $content);
+            fclose($fp);
+        } else {
+            echo "Could not open file for writing";
+        }
+
+
+        if ($success) {
+            echo 'Schema file written to ' . $file;
         } else {
             $this->addError($this->modx->lexicon('ce.error_writing_schema_file~~Error writing schema file'));
             $success = false;
@@ -256,6 +296,8 @@ class ClassExtender {
         $manager = $this->modx->getManager();
         /** @var @var $generator xPDOGenerator */
 
+        $dir = $this->modelPath . $this->packageLower;
+        $this->rrmdir($dir);
         $path = $this->ce_schema_file;
         $success = $this->generator->parseSchema($path, $this->modelPath);
 
@@ -270,7 +312,7 @@ class ClassExtender {
     }";
             if (file_exists($classFile)) {
                 $content = file_get_contents($classFile);
-                if (strpos($content, 'constructor') === false) {
+                if (strpos($content, 'construct') === false) {
                     $fp = fopen($classFile, 'w');
                     if ($fp) {
                         $content = str_replace('}', $constructor . "\n}", $content);
@@ -329,6 +371,24 @@ class ClassExtender {
                  array('class_key' => $this->ce_class),
                  array('class_key' => 'modDocument')
         );
+    }
+
+    public function rrmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir . "/" . $object) == "dir") {
+                        $this->rrmdir($dir . "/" . $object);
+                    } else {
+                        unlink($dir . "/" . $object);
+                    }
+                }
+            }
+            reset($objects);
+            rmdir($dir);
+        }
+
     }
 
 }
