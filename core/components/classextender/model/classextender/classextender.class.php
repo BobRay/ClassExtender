@@ -78,18 +78,18 @@ class ClassExtender {
 
         // *******************
            // echo '<br>NOT POSTED<br>';
-            $this->ce_package_name = isset($_POST['package'])
-                ? $_POST['package']
+            $this->ce_package_name = isset($_POST['ce_package'])
+                ? $_POST['ce_package']
                 : $this->modx->getOption('package', $this->props, 'extendeduser');
 
             $this->packageLower = strtolower($this->ce_package_name);
 
-            $this->ce_class = isset($_POST['class'])
-                ? $_POST['class']
+            $this->ce_class = isset($_POST['ce_class'])
+                ? $_POST['ce_class']
                 :$this->modx->getOption('class', $this->props, 'extUser');
 
-            $this->ce_parent_object = isset($_POST['parentObject'])
-                ? $_POST['parentObject']
+            $this->ce_parent_object = isset($_POST['ce_parent_object'])
+                ? $_POST['ce_parent_object']
                 :$this->modx->getOption('parentObject', $this->props, 'modUser');
 
             /* Strip off 'mod' to produce 'User' or 'Resource' */
@@ -97,20 +97,20 @@ class ClassExtender {
             $this->objectPrefix = substr($this->ce_parent_object, 3);
             $this->objectPrefixLower = strtolower($this->objectPrefix);
 
-            $this->ce_table_prefix = isset($_POST['tablePrefix'])
-                ? $_POST['tablePrefix']
+            $this->ce_table_prefix = isset($_POST['ce_table_pefix'])
+                ? $_POST['ce_table_prefix']
                 : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
 
-            $this->ce_table_name = isset($_POST['tableName'])
-                ? $_POST['tableName']
+            $this->ce_table_name = isset($_POST['ce_table_name'])
+                ? $_POST['ce_table_name']
                 : $this->modx->getOption('tableName', $this->props, 'user_data');
 
-            $this->ce_method = isset($_POST['method'])
-                ? $_POST['method']
+            $this->ce_method = isset($_POST['ce_method'])
+                ? $_POST['ce_method']
                 : $this->modx->getOption('method', $this->props, 'use_schema');
 
-            $this->ce_register = isset($_POST['registerPackage'])
-                ? $_POST['registerPackage']
+            $this->ce_register = isset($_POST['ce_register'])
+                ? $_POST['ce_register']
                 : $this->modx->getOption('registerPackage', $this->props, 'Yes');
 
             $this->ce_schema_file = $this->modx->getOption('schemaFile',
@@ -321,6 +321,14 @@ class ClassExtender {
 
             return;
         }
+    }
+
+    public function UpdateClassKey() {
+        $this->modx->updateCollection(
+             'modResource',
+                 array('class_key' => $this->ce_class),
+                 array('class_key' => 'modDocument')
+        );
     }
 
 }
