@@ -1,9 +1,9 @@
 <?php
 /**
- * en default topic lexicon file for ClassExtender extra
+ * en:properties.inc.php topic lexicon file for ClassExtender extra
  *
  * Copyright 2013 by Bob Ray <http://bobsguides.com>
- * Created on 11-10-2013
+ * Created on 04-03-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
@@ -24,7 +24,7 @@
 /**
  * Description
  * -----------
- * en default topic lexicon strings
+ * en:properties.inc.php topic lexicon strings
  *
  * Variables
  * ---------
@@ -36,14 +36,11 @@
 
 
 
-/* Used in classextender.snippet.php */
-$_lang['ce.finished'] = 'Finished!';
 
-/* Used in classextender.class.php */
-$_lang['ce.bad_method'] = 'Invalid Method (must be use_table or use_schema)';
-$_lang['ce.error_writing_schema_file'] = 'Error writing schema file';
-$_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
-$_lang['ce.parse_schema_failed'] = 'parseSchema() failed';
-$_lang['ce.addpackage_failed'] = 'addPackage failed';
-$_lang['ce.getmanager_failed'] = 'getManager failed';
-$_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
+
+/* Used in properties.getextusers.snippet.php */
+$_lang['ce.show_inactive_users'] = 'Show inactive users in list; default: No';
+$_lang['ce.class_for_user_object'] = 'Class for user object';
+$_lang['ce.outer_tpl'] = 'Name of outer Tpl chunk to use for user listing; default: extUserOuterTpl';
+$_lang['ce.inner_tpl'] = 'Name of inner Tpl chunk to use for user listing; default: extUserInnerTpl.';
+$_lang['ce.row_tpl'] = 'Name of row Tpl chunk to use for user listing -- displays individual user data; default: extUserRowTpl';

@@ -117,7 +117,7 @@ class ClassExtender {
                 $this->props, '' );
 
             if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
-                $this->addError($this->modx->lexicon('ce.bad_method~~Invalid Method (must be use_table or use_schema'));
+                $this->addError($this->modx->lexicon('ce.bad_method'));
                 return;
             }
             if (empty($this->ce_schema_file)) {
@@ -252,7 +252,7 @@ class ClassExtender {
         if ($success) {
             echo 'Schema file written to ' . $file;
         } else {
-            $this->addError($this->modx->lexicon('ce.error_writing_schema_file~~Error writing schema file'));
+            $this->addError($this->modx->lexicon('ce.error_writing_schema_file'));
             $success = false;
         }
 
@@ -282,7 +282,7 @@ class ClassExtender {
 
         if (!$fp) {
             $success = false;
-            $this->addError($this->modx->lexicon('ce.could_not_open_schema_file~~Could not open schema file'));
+            $this->addError($this->modx->lexicon('ce.could_not_open_schema_file'));
         } else {
             fwrite($fp, $content);
             fclose($fp);
@@ -302,7 +302,7 @@ class ClassExtender {
         $success = $this->generator->parseSchema($path, $this->modelPath);
 
         if (!$success) {
-            $this->addError($this->modx->lexicon('ce.parse_schema_failed~~parseSchema() failed'));
+            $this->addError($this->modx->lexicon('ce.parse_schema_failed'));
         } else {
             $classFile = $this->modelPath . $this->packageLower . '/' . $this->ce_class . '.class.php';
             $constructor = "
@@ -330,12 +330,12 @@ class ClassExtender {
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
         if (!$success) {
-            $this->addError($this->modx->lexicon("ce.addpackage_failed~~addPackage failed."));
+            $this->addError($this->modx->lexicon("ce.addpackage_failed"));
             return;
         }
         $manager = $this->modx->getManager();
         if (!$manager) {
-            $this->addError($this->modx->lexicon("ce.getmanager_failed~~getManager failed."));
+            $this->addError($this->modx->lexicon("ce.getmanager_failed"));
 
             return;
         }
@@ -344,7 +344,7 @@ class ClassExtender {
         $success = $manager->createObjectContainer($object);
 
         if (!  $success) {
-            $this->addError($this->modx->lexicon('ce.create_object_container_failed~~createObjectContainer() failed'));
+            $this->addError($this->modx->lexicon('ce.create_object_container_failed'));
         }
     }
 
@@ -359,7 +359,7 @@ class ClassExtender {
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
         if (!$success) {
-            $this->addError($this->modx->lexicon("ce.addpackage_failed~~addPackage failed."));
+            $this->addError($this->modx->lexicon("ce.addpackage_failed"));
 
             return;
         }

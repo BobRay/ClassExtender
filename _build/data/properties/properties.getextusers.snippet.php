@@ -16,7 +16,7 @@ $properties = array (
   'showInactive' => 
   array (
     'name' => 'showInactive',
-    'desc' => 'Show inactive users in list; default: No',
+    'desc' => 'ce.show_inactive_users',
     'type' => 'combo-boolean',
     'options' => 
     array (
@@ -28,7 +28,7 @@ $properties = array (
   'userClass' => 
   array (
     'name' => 'userClass',
-    'desc' => 'Class for user object',
+    'desc' => 'ce.class_for_user_object',
     'type' => 'textfield',
     'options' => 
     array (
@@ -40,7 +40,7 @@ $properties = array (
   'extUserouterTpl' => 
   array (
     'name' => 'extUserouterTpl',
-    'desc' => 'Name of outer Tpl chunk to use for user listing; default: extUserOuterTpl',
+    'desc' => 'ce.outer_tpl',
     'type' => 'textfield',
     'options' => 
     array (
@@ -52,7 +52,7 @@ $properties = array (
   'extUserinnerTpl' => 
   array (
     'name' => 'extUserinnerTpl',
-    'desc' => 'Name of inner Tpl chunk to use for user listing; default: extUserInnerTpl.',
+    'desc' => 'ce.inner_tpl',
     'type' => 'textfield',
     'options' => 
     array (
@@ -64,7 +64,7 @@ $properties = array (
   'extUserRowTpl' => 
   array (
     'name' => 'extUserRowTpl',
-    'desc' => 'Name of row Tpl chunk to use for user listing -- displays individual user data; default: extUserRowTpl',
+    'desc' => 'ce.row_tpl',
     'type' => 'textfield',
     'options' => 
     array (

@@ -34,9 +34,9 @@
  * @package classextender
  **/
 
-$modx->lexicon->load('login:updateprofile');
+$modx->lexicon->load('updateprofile');
 
-$submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn'] == $modx->lexicon('login.update_profile'));
+$submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn'] == $modx->lexicon('ce.update_profile'));
 
 
 $data = null;
