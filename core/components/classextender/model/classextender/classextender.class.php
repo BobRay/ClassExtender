@@ -38,6 +38,7 @@ class ClassExtender {
     public $ce_table_name = '';
     public $ce_method = '';
     public $ce_register = 'Yes';
+    public $ce_update_class_key = 'No';
     public $ce_schema_file;
     /** @var  $generator xPDOGenerator */
     public $generator;
@@ -99,7 +100,7 @@ class ClassExtender {
             $this->objectPrefix = substr($this->ce_parent_object, 3);
             $this->objectPrefixLower = strtolower($this->objectPrefix);
 
-            $this->ce_table_prefix = isset($_POST['ce_table_pefix'])
+            $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
                 ? $_POST['ce_table_prefix']
                 : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
 
@@ -112,8 +113,12 @@ class ClassExtender {
                 : $this->modx->getOption('method', $this->props, 'use_schema');
 
             $this->ce_register = isset($_POST['ce_register'])
-                ? $_POST['ce_register']
-                : $this->modx->getOption('registerPackage', $this->props, 'Yes');
+                ? $_POST['ce_register'] === 'ce_register_yes'
+                : $this->modx->getOption('registerPackage', $this->props, true);
+
+            $this->ce_update_class_key = isset($_POST['ce_update_class_key'])
+                ? $_POST['ce_update_class_key'] === 'ce_update_class_key_yes'
+                : $this->modx->getOption('updateClassKey', $this->props, false);
 
             $this->ce_schema_file = $this->modx->getOption('schemaFile',
                 $this->props, '' );
@@ -154,6 +159,12 @@ class ClassExtender {
             echo '<br>registering extension package';
             $this->addExtensionPackage();
         }
+
+        if ($this->ce_update_class_key) {
+            echo '<br>Updating class_key of existing objects';
+            $this->updateClassKey();
+
+        }
     }
 
     public function displayForm() {
@@ -169,10 +180,15 @@ class ClassExtender {
         } else {
             $fields['ce_schema_checked'] = 'checked="checked"';
         }
-        if ($this->ce_register == 'register_no') {
-            $fields['ce_register_no_checked'] = 'checked="checked"';
-        } else {
+        if ($this->ce_register) {
             $fields['ce_register_yes_checked'] = 'checked="checked"';
+        } else {
+            $fields['ce_register_no_checked'] = 'checked="checked"';
+        }
+        if ($this->ce_update_class_key) {
+            $fields['ce_update_class_key_yes_checked'] = 'checked="checked"';
+        } else {
+            $fields['ce_update_class_key_no_checked'] = 'checked="checked"';
         }
         return $this->modx->getChunk('ClassExtenderForm', $fields);
     }
@@ -410,12 +426,23 @@ class ClassExtender {
         }
     }
 
-    public function UpdateClassKey() {
-        $this->modx->updateCollection(
-             'modResource',
-                 array('class_key' => $this->ce_class),
-                 array('class_key' => 'modDocument')
-        );
+    public function updateClassKey() {
+        switch($this->objectPrefix) {
+            case 'Resource':
+                $this->modx->updateCollection(
+                     'modResource',
+                         array('class_key' => $this->ce_class),
+                         array('class_key' => 'modDocument')
+                );
+            break;
+
+            case 'User':
+                $this->modx->updateCollection(
+                    'modUser',
+                       array('class_key' => $this->ce_class),
+                       array('class_key' => 'modUser')
+                );
+        }
     }
 
     public function rrmdir($dir) {

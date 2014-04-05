@@ -37,6 +37,10 @@
 
 
 /* Used in classextenderform.chunk.html */
+$_lang['ce_create_table_or_schema'] = 'You must create the DB table or the schema chunk before submitting';
+$_lang['ce_register_extension_package_desc'] = 'Registered extension packages will be loaded automatically on every page load';
+$_lang['ce_update_class_key_desc'] = 'Update all existing objects with new class_key';
+$_lang['ce_update_class_key_caption'] = 'Update class_key';
 $_lang['ce_package_name_caption'] = 'Package Name';
 $_lang['ce_class_caption'] = 'Class';
 $_lang['ce_parent_object_caption'] = 'Parent Object';

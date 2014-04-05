@@ -34,8 +34,8 @@
     <br/>
     <br />
     <fieldset>
-        <p>Create Table or Schema before submitting</p>
         <legend>[[%ce_method_caption? &namespace=`classextender` &topic=`form`]]</legend>
+        <p>[[%ce_create_table_or_schema? &namespace=`classextender` &topic=`form`]]</p>
         <label><input type="radio" name="ce_method" [[+ce_table_checked]]
                 value="use_table"/> [[%ce_use_table? &namespace=`classextender` &topic=`form`]]</label>
         <br/><label><input type="radio" name="ce_method" [[+ce_schema_checked]]
@@ -43,12 +43,23 @@
     </fieldset>
 
     <fieldset>
-        <p>Register Extension Package</p>
+
         <legend>[[%ce_register_caption? &namespace=`classextender` &topic=`form`]]</legend>
+        <p>[[%ce_register_extension_package_desc? &namespace=`classextender` &topic=`form`]]</p>
         <label><input type="radio" name="ce_register" [[+ce_register_yes_checked]]
             value="register_yes"/> [[%ce_yes? &namespace=`classextender` &topic=`form`]]</label>
         <br/><label><input type="radio" name="ce_register" [[+ce_register_no_checked]]
         value="register_no"/> [[%ce_no? &namespace=`classextender` &topic=`form`]]</label>
+    </fieldset>
+
+    <fieldset>
+
+        <legend>[[%ce_update_class_key_caption? &namespace=`classextender` &topic=`form`]]</legend>
+        <p>[[%ce_update_class_key_desc? &namespace=`classextender` &topic=`form`]]</p>
+        <label><input type="radio" name="ce_update_class_key" [[+ce_update_class_key_yes_checked]]
+            value="ce_update_class_key_yes"/> [[%ce_yes? &namespace=`classextender` &topic=`form`]]</label>
+        <br/><label><input type="radio" name="ce_update_class_key" [[+ce_update_class_key_no_checked]]
+        value="ce_update_class_key_no"/> [[%ce_no? &namespace=`classextender` &topic=`form`]]</label>
     </fieldset>
 
 
