@@ -21,6 +21,8 @@
  *
  * @package classextender
  */
+
+/* $modx->lexicon->load('classextender:default'); */
 class ClassExtender {
     /** @var $modx modX */
     public $modx;
@@ -305,17 +307,22 @@ class ClassExtender {
             $this->addError($this->modx->lexicon('ce.parse_schema_failed'));
         } else {
             $classFile = $this->modelPath . $this->packageLower . '/' . $this->ce_class . '.class.php';
-            $constructor = "
-    function __construct(xPDO & \$xpdo) {
-        parent::__construct(\$xpdo);
-        \$this->set('class_key', '" . $this->ce_class . "');
-    }";
+            $inserts = $this->getConstructorText();
+
+            if ($this->objectPrefix === 'Resource') {
+                $inserts .= $this->getResourceOverrides();
+                $this->createControllers();
+            }
+
+
+
             if (file_exists($classFile)) {
                 $content = file_get_contents($classFile);
+                /* don't add if we've done it already */
                 if (strpos($content, 'construct') === false) {
                     $fp = fopen($classFile, 'w');
                     if ($fp) {
-                        $content = str_replace('}', $constructor . "\n}", $content);
+                        $content = str_replace('}', $inserts . "\n}", $content);
                         fwrite($fp, $content);
                         fclose($fp);
                     }
@@ -323,6 +330,44 @@ class ClassExtender {
             }
         }
         return $success;
+
+    }
+
+    public function createControllers() {
+
+    }
+    public function getConstructorText() {
+       return  "\n
+    function __construct(xPDO & \$xpdo) {
+        parent::__construct(\$xpdo);
+        \$this->set('class_key', '" . $this->ce_class . "');
+        \$this->showInContextMenu = true;
+    }\n";
+
+    }
+
+    public function getResourceOverrides() {
+
+        $overRides = "\n    public static function getControllerPath(xPDO &\$modx) {
+            return \$modx->getOption('ce.core_path', NULL, \$modx->getOption('core_path') .
+             'components/classextender/') . 'controllers/';\n
+    }\n";
+
+    $overRides .= "\n    public function getContextMenuText() {
+        \$this->xpdo->lexicon->load('classextender:default');
+        return array(
+            'text_create' => \$this->xpdo->lexicon('ce.extResource'),
+            'text_create_here' => \$this->xpdo->lexicon('ce.ext_resource_create_here'),
+        );
+    }\n";
+
+    $overRides .= "\n    public function getResourceTypeName() {
+        \$this->xpdo->lexicon->load('classextender:default');
+        return \$this->xpdo->lexicon('ce.extResource');
+    }\n";
+
+    return $overRides;
+
 
     }
 

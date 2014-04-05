@@ -40,6 +40,8 @@
 $_lang['ce.finished'] = 'Finished!';
 
 /* Used in classextender.class.php */
+$_lang['ce.extResource'] = 'extResource';
+$_lang['ce.ext_resource_create_here'] = 'Create extResource here';
 $_lang['ce.bad_method'] = 'Invalid Method (must be use_table or use_schema)';
 $_lang['ce.error_writing_schema_file'] = 'Error writing schema file';
 $_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
