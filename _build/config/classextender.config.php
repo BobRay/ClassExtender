@@ -300,9 +300,10 @@ $components = array(
      * Set to hasAssets = false to skip.
      * Empty js and/or css files will be created.
      */
-    'hasAssets' => false,
+    'hasAssets' => true,
 
     'assetsDirs' => array(
+        'css' => true,
     ),
     /* minify any JS files */
     'minifyJS' => false,

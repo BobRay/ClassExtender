@@ -61,79 +61,86 @@ class ClassExtender {
 
     public function init() {
         $this->output = '';
+
+        $cssFile = $this->modx->getOption('ce.assets_url', $this->props,
+                MODX_ASSETS_URL . 'components/subscribe/') . 'css/classextender.css';
+
+        $this->modx->regClientCSS($cssFile);
+
+
         $this->dirPermission = (int) $this->modx->getOption('dirPermission',
             $this->props, 0755);
 
-            $manager = $this->modx->getManager();
-            $this->generator = $manager->getGenerator();
+        $manager = $this->modx->getManager();
+        $this->generator = $manager->getGenerator();
 
-            $corePath = $this->modx->getOption('ce.core_path', NULL, NULL);
+        $corePath = $this->modx->getOption('ce.core_path', NULL, NULL);
 
 
-            if (!empty($corePath)) {
-                $this->devMode = true;
-            }
+        if (!empty($corePath)) {
+            $this->devMode = true;
+        }
 
-            $basePath = $this->modx->getOption('ce.core_path', NULL,
-                $this->modx->getOption('core_path') .
-                'components/classextender/');
-            $this->modelPath = $basePath . 'model/';
+        $basePath = $this->modx->getOption('ce.core_path', NULL,
+            $this->modx->getOption('core_path') .
+            'components/classextender/');
+        $this->modelPath = $basePath . 'model/';
 
         // *******************
            // echo '<br>NOT POSTED<br>';
-            $this->ce_package_name = isset($_POST['ce_package'])
-                ? $_POST['ce_package']
-                : $this->modx->getOption('package', $this->props, 'extendeduser');
+        $this->ce_package_name = isset($_POST['ce_package'])
+            ? $_POST['ce_package']
+            : $this->modx->getOption('package', $this->props, 'extendeduser');
 
-            $this->packageLower = strtolower($this->ce_package_name);
+        $this->packageLower = strtolower($this->ce_package_name);
 
-            $this->ce_class = isset($_POST['ce_class'])
-                ? $_POST['ce_class']
-                :$this->modx->getOption('class', $this->props, 'extUser');
+        $this->ce_class = isset($_POST['ce_class'])
+            ? $_POST['ce_class']
+            :$this->modx->getOption('class', $this->props, 'extUser');
 
-            $this->ce_parent_object = isset($_POST['ce_parent_object'])
-                ? $_POST['ce_parent_object']
-                :$this->modx->getOption('parentObject', $this->props, 'modUser');
+        $this->ce_parent_object = isset($_POST['ce_parent_object'])
+            ? $_POST['ce_parent_object']
+            :$this->modx->getOption('parentObject', $this->props, 'modUser');
 
-            /* Strip off 'mod' to produce 'User' or 'Resource' */
+        /* Strip off 'mod' to produce 'User' or 'Resource' */
 
-            $this->objectPrefix = substr($this->ce_parent_object, 3);
-            $this->objectPrefixLower = strtolower($this->objectPrefix);
+        $this->objectPrefix = substr($this->ce_parent_object, 3);
+        $this->objectPrefixLower = strtolower($this->objectPrefix);
 
-            $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
-                ? $_POST['ce_table_prefix']
-                : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
+        $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
+            ? $_POST['ce_table_prefix']
+            : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
 
-            $this->ce_table_name = isset($_POST['ce_table_name'])
-                ? $_POST['ce_table_name']
-                : $this->modx->getOption('tableName', $this->props, 'user_data');
+        $this->ce_table_name = isset($_POST['ce_table_name'])
+            ? $_POST['ce_table_name']
+            : $this->modx->getOption('tableName', $this->props, 'user_data');
 
-            $this->ce_method = isset($_POST['ce_method'])
-                ? $_POST['ce_method']
-                : $this->modx->getOption('method', $this->props, 'use_schema');
+        $this->ce_method = isset($_POST['ce_method'])
+            ? $_POST['ce_method']
+            : $this->modx->getOption('method', $this->props, 'use_schema');
 
-            $this->ce_register = isset($_POST['ce_register'])
-                ? $_POST['ce_register'] === 'ce_register_yes'
-                : $this->modx->getOption('registerPackage', $this->props, true);
+        $this->ce_register = isset($_POST['ce_register'])
+            ? $_POST['ce_register'] === 'ce_register_yes'
+            : $this->modx->getOption('registerPackage', $this->props, true);
 
-            $this->ce_update_class_key = isset($_POST['ce_update_class_key'])
-                ? $_POST['ce_update_class_key'] === 'ce_update_class_key_yes'
-                : $this->modx->getOption('updateClassKey', $this->props, false);
+        $this->ce_update_class_key = isset($_POST['ce_update_class_key'])
+            ? $_POST['ce_update_class_key'] === 'ce_update_class_key_yes'
+            : $this->modx->getOption('updateClassKey', $this->props, false);
 
-            $this->ce_schema_file = $this->modx->getOption('schemaFile',
-                $this->props, '' );
+        $this->ce_schema_file = $this->modx->getOption('schemaFile',
+            $this->props, '' );
 
-            if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
-                $this->addError($this->modx->lexicon('ce.bad_method'));
-                return;
+        if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
+            $this->addError($this->modx->lexicon('ce.bad_method'));
+            return;
+        }
+        if (empty($this->ce_schema_file)) {
+            $path = $this->modelPath . 'schema';
+            if (!is_dir($path)) {
+                mkdir($path, $this->dirPermission, true);
             }
-            if (empty($this->ce_schema_file)) {
-                $path = $this->modelPath . 'schema';
-                if (!is_dir($path)) {
-                    mkdir($path, $this->dirPermission, true);
-                }
-                $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
-            }
+            $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
+        }
 
     }
 

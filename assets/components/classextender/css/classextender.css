@@ -1,0 +1,43 @@
+/**
+ * CSS file for ClassExtender extra
+ *
+ * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Created on 04-07-2014
+ *
+ * @package classextender
+ */
+
+div#class_extender {
+    font-family: arial, Helvetica, sans-serif;
+    font-size:12pt;
+    width: 40%;
+    padding:30px;
+    margin-top:60px;
+    margin-left: auto;
+    margin-right: auto;
+    border:1px solid black;
+    border-radius:10px;
+    background-color: #d3d3d3;
+}
+
+form#class_extender_form fieldset {
+    padding-top: 0;
+    margin-top:0;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    background-color:#efefef;
+}
+
+form#class_extender_form input {
+    width:8em;
+    padding-left:5px;
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+form#class_extender_form legend {
+    padding: 3px 10px;
+    background-color: #efefef;
+    border-radius: 10px;
+    border: 1px solid black;
+}
