@@ -29,7 +29,7 @@ form#class_extender_form fieldset {
 }
 
 form#class_extender_form input {
-    width:8em;
+    width:10em;
     padding-left:5px;
     margin-bottom:15px;
     border-radius:10px;
@@ -40,4 +40,12 @@ form#class_extender_form legend {
     background-color: #efefef;
     border-radius: 10px;
     border: 1px solid black;
+}
+
+p.ce_error {
+    color: #c80000;
+}
+
+p.ce_success {
+    color:green;
 }
