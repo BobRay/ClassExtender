@@ -86,35 +86,25 @@ $modx->lexicon->load('classextender:default');
 $props =& $scriptProperties;
 $ce = new ClassExtender($modx, $props);
 if (! $ce instanceof ClassExtender) {
-    die ('Could not instantiate ClassExtender');
+    die ($this->modx->lexicon('ce.no_class_extender'));
 
 }
 $ce->init();
 $output .= $ce->displayForm();
 
 if ($ce->hasError()) {
-    $output .= print_r($ce->getErrors(), true);
+    $modx->setPlaceholder('ce_results', $ce->getOutput());
+    return;
 } else {
-    $output .= $ce->getOutput();
+    $cm = $modx->getCacheManager();
+    $cm->refresh();
+
 }
+
 if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
     $ce->process();
 }
 
-if ($ce->hasError()) {
-    $errors = $ce->getErrors();
-    foreach($errors as $error) {
-        $output.= "\n" . '<p class="ce_error">' . $error . '</p>';
-    }
-
-} else {
-    $output.= $ce->getOutput();
-}
+$modx->setPlaceholder('ce_results', $ce->getOutput());
 
 return $output;
-/*$ce->generateClassFiles();
-$ce->createTables();
-$ce->add_extension_package();*/
-
-
-// $modx->removeExtensionPackage('packageName');

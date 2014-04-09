@@ -37,15 +37,31 @@
 
 
 /* Used in classextender.snippet.php */
+$_lang['ce.no_class_extender'] = 'Could not instantiate ClassExtender';
 $_lang['ce.finished'] = 'Finished!';
 
 /* Used in classextender.class.php */
+$_lang['ce.no_schema'] = 'Schema file not found';
+$_lang['ce.no_table'] = 'Database Table not found: ';
+$_lang['ce.generating_schema'] = 'Generating Schema';
+$_lang['ce.Generating_class_files'] = 'Generating Class files';
+$_lang['ce.registering_extension_package'] = 'Registering extension package';
+$_lang['ce.updating_class_key'] = 'Updating class_key of existing objects';
+$_lang['ce.deleting_schema'] = 'Deleting old schema file';
+$_lang['ce.no_file_write'] = 'Could not open file for writing: ';
+$_lang['ce.new_schema_written'] = 'New schema file written';
+$_lang['ce.schema_parsed'] = 'Schema parsed';
+$_lang['ce.table_created'] = 'Table created';
+$_lang['ce.extension_package_registered'] = 'Extension package registered';
+$_lang['ce.class_key_updated'] = 'class_key field updated';
+$_lang['ce.old_class_files_removed'] = 'Old class and map files removed';
 $_lang['ce.extResource'] = 'extResource';
 $_lang['ce.ext_resource_create_here'] = 'Create extResource here';
-$_lang['ce.bad_method'] = 'Invalid Method (must be use_table or use_schema)';
+$_lang['ce.bad_method'] = 'Method must be use_schema or use_table';
 $_lang['ce.error_writing_schema_file'] = 'Error writing schema file';
 $_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
-$_lang['ce.parse_schema_failed'] = 'parseSchema() failed';
-$_lang['ce.addpackage_failed'] = 'addPackage failed';
-$_lang['ce.getmanager_failed'] = 'getManager failed';
+$_lang['ce.parse_schema_failed'] = 'parse_schema() failed';
+$_lang['ce.addpackage_failed'] = 'addPackage() failed';
+$_lang['ce.getmanager_failed'] = 'getManager() failed';
 $_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
+$_lang['ce.saving_schema'] = 'Saving schema';
