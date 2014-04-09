@@ -192,10 +192,12 @@ $components = array(
             'ExtraUserFields' => array(
                 'category'    => 'ClassExtender',
                 'description' => 'Add and process extra fields in Create/Edit User form',
+                'disabled' => true,
             ),
             'ExtraResourceFields' => array(
                 'category'    => 'ClassExtender',
                 'description' => 'Add and process extra fields in Create/Edit Resource form',
+                'disabled' => true,
             ),
         ),
         'chunks' => array(

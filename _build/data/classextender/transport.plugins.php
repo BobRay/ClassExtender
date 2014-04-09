@@ -32,7 +32,7 @@ $plugins[1]->fromArray(array (
   'name' => 'ExtraResourceFields',
   'description' => 'Add and process extra fields in Create/Edit Resource form',
   'properties' => NULL,
-  'disabled' => false,
+  'disabled' => true,
 ), '', true, true);
 $plugins[1]->setContent(file_get_contents($sources['source_core'] . '/elements/plugins/extraresourcefields.plugin.php'));
 
@@ -45,7 +45,7 @@ $plugins[2]->fromArray(array (
   'properties' => 
   array (
   ),
-  'disabled' => false,
+  'disabled' => true,
 ), '', true, true);
 $plugins[2]->setContent(file_get_contents($sources['source_core'] . '/elements/plugins/extrauserfields.plugin.php'));
 
