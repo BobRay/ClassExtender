@@ -31,10 +31,36 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            /* [[+code]] */
             break;
 
         case xPDOTransport::ACTION_UNINSTALL:
+            $modx->updateCollection(
+                       'modResource',
+                           array('class_key' => 'modDocument'),
+                           array('class_key' => 'extResource')
+            );
+            $modx->updateCollection(
+                       'modUser',
+                           array('class_key' => 'modUser'),
+                           array('class_key' => 'extUser')
+            );
+            $cm = $modx->getCacheManager();
+            $cm->refresh();
+            $modx->removeExtensionPackage('extendeduser');
+            $modx->removeExtensionPackage('extendedresource');
+
+            $pages = array(
+                 'ClassExtender',
+                 'Extend modResource',
+                 'Extend modUser',
+            );
+            foreach ($pages as $page) {
+                $resource = $modx->getObject('modResource', array('pagetitle' => $page));
+                if ($resource) {
+                    $resource->remove();
+                }
+            }
+
             break;
     }
 }
