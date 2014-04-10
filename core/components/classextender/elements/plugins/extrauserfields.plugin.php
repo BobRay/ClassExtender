@@ -89,11 +89,6 @@ switch ($modx->event->name) {
             $fields['category1'] = $data->get('category1');
             $fields['category2'] = $data->get('category2');
             $fields['category3'] = $data->get('category3');
-            $fields['category1_Other'] = $data->get('category1_Other');
-            $fields['category2_Other'] = $data->get('category2_Other');
-            $fields['category3_Other'] = $data->get('category3_Other');
-
-
 
             foreach ($fields as $key => $field) {
                 if (empty($field)) {
@@ -123,6 +118,7 @@ switch ($modx->event->name) {
 
         $extraFields = $modx->getChunk('ExtraUserFields', $fields);
 
+        /* Add our custom fields to the Create/Edit User form */
         $modx->event->output($extraFields);
         break;
     case 'OnUserFormSave':
