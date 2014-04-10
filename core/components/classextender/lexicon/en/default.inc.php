@@ -42,9 +42,9 @@ $_lang['ce.no_class_extender'] = 'Could not instantiate ClassExtender';
 
 /* Used in classextender.class.php */
 $_lang['ce.no_schema'] = 'Schema file not found';
-$_lang['ce.no_table'] = 'Database Table not found: ';
-$_lang['ce.generating_schema'] = 'Generating Schema';
-$_lang['ce.generating_class_files'] = 'Generating Class files';
+$_lang['ce.no_table'] = 'Database table not found: ';
+$_lang['ce.generating_schema'] = 'Generating schema';
+$_lang['ce.generating_class_files'] = 'Generating class and map files';
 $_lang['ce.updating_class_key'] = 'Updating class_key of existing objects';
 $_lang['ce.deleting_schema'] = 'Deleting old schema file';
 $_lang['ce.no_file_write'] = 'Could not open file for writing: ';
