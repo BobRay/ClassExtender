@@ -167,7 +167,6 @@ class ClassExtender {
 
 
         if ($this->ce_method == 'use_table') {
-            $this->addOutput($this->modx->lexicon('ce.generating_schema'));
            if(! $this->generateSchema()) {
                return;
            }
@@ -176,11 +175,11 @@ class ClassExtender {
                 return;
             }
         }
-
+        $this->addOutput($this->modx->lexicon('ce.Generating_class_files'));
         if (!$this->generateClassFiles()) {
             return;
         };
-        $this->addOutput($this->modx->lexicon('ce.Generating_class_files'));
+
         if ($this->ce_method == 'use_schema') {
             if (!$this->createTables()) {
                 return;
@@ -188,7 +187,6 @@ class ClassExtender {
         }
 
         if ($this->ce_register) {
-            $this->addOutput($this->modx->lexicon('ce.registering_extension_package'));
             $this->addExtensionPackage();
         }
 
@@ -347,7 +345,12 @@ class ClassExtender {
     public function generateClassFiles() {
 
         $dir = $this->modelPath . $this->packageLower;
-        $this->rrmdir($dir);
+
+        if (is_dir($dir)) {
+            $this->rrmdir($dir);
+            $this->addOutput(
+                 $this->modx->lexicon('ce.old_class_files_removed'));
+        }
         $path = $this->ce_schema_file;
         $success = $this->generator->parseSchema($path, $this->modelPath);
 
@@ -488,10 +491,6 @@ class ClassExtender {
             }
             reset($objects);
             rmdir($dir);
-            $this->addOutput(
-                $this->modx->lexicon('ce.old_class_files_removed'));
         }
-
     }
-
 }
