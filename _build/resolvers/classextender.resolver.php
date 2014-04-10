@@ -57,9 +57,23 @@ if ($object->xpdo) {
             foreach ($pages as $page) {
                 $resource = $modx->getObject('modResource', array('pagetitle' => $page));
                 if ($resource) {
-                    $resource->remove();
+                    @$resource->remove();
                 }
             }
+
+            $table = 'ext_resource_data';
+            $sql = "DROP TABLE IF EXISTS $table ";
+            $results = $modx->query($sql);
+            while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
+            };
+            
+            $table = 'ext_user_data';
+            $sql = "DROP TABLE IF EXISTS $table";
+            $results = $modx->query($sql);
+            while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
+            };
+
+
 
             break;
     }
