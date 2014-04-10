@@ -175,7 +175,7 @@ class ClassExtender {
                 return;
             }
         }
-        $this->addOutput($this->modx->lexicon('ce.Generating_class_files'));
+        $this->addOutput($this->modx->lexicon('ce.generating_class_files'));
         if (!$this->generateClassFiles()) {
             return;
         };
