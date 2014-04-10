@@ -12,11 +12,8 @@
         <field key="company" dbtype="varchar" precision="100" phptype="string" null="true"/>
         <field key="registrationDate" dbtype="datetime" phptype="datetime"/>
         <field key="category1" dbtype="varchar" precision="100" phptype="string" null="true"/>
-        <field key="category1_Other" dbtype="varchar" precision="100" phptype="string" null="true"/>
         <field key="category2" dbtype="varchar" precision="100" phptype="string" null="true"/>
-        <field key="category2_Other" dbtype="varchar" precision="100" phptype="string" null="true"/>
         <field key="category3" dbtype="varchar" precision="100" phptype="string" null="true"/>
-        <field key="category3_Other" dbtype="varchar" precision="100" phptype="string" null="true"/>
 
         <index alias="userdata_id" name="userdata_id" primary="false" unique="true" type="BTREE">
             <column key="userdata_id" length="" collation="A" null="false"/>
