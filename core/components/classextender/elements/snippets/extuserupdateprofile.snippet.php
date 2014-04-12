@@ -85,17 +85,17 @@ if ($data) {
     $categories1 = $categories2 = $categories3 = '';
     foreach ($categoryList as $cat) {
         $selected = $cat == $fields['category1']
-            ? 'selected="selected "'
+            ? 'selected="selected" '
             : ' ';
         $categories1 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
 
         $selected = $cat == $fields['category2']
-            ? 'selected="selected "'
+            ? 'selected="selected" '
             : ' ';
         $categories2 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
 
         $selected = $cat == $fields['category3']
-            ? 'selected="selected "'
+            ? 'selected="selected" '
             : ' ';
         $categories3 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
     }
