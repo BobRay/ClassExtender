@@ -33,3 +33,95 @@
  *
  * @package classextender
  **/
+
+// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+
+$fields = array(
+    'name' => '',
+    'color' => '',
+    'breed' => '',
+    'age' => '',
+);
+
+$data = null;
+if (isset($resource) && ($resource instanceof  modResource)) {
+    if ($resource instanceof extResource) {
+        $data = $resource->getOne('Data');
+    } else {
+        $resource->set('class_key', 'extResource');
+        $resource->save();
+        $resource = $modx->getObject('extResource', $resource->get('id'));
+    }
+}
+/* @var $data resourceData */
+
+
+if (!$data) {
+    $data = $modx->newObject('resourceData');
+}
+
+
+switch ($modx->event->name) {
+    case 'OnCodFormPrerender':
+        /* if you want to add custom scripts, css, etc, register them here */
+        break;
+    case 'OnDocFormRender':
+        if ($data) {
+            $fields['name'] = $data->get('name');
+            $fields['color'] = $data->get('color');
+            $fields['breed'] = $data->get('breed');
+            $fields['age'] = $data->get('age');
+
+            foreach ($fields as $key => $field) {
+                if (empty($field)) {
+                    $fields[$key] = '';
+                }
+            }
+
+        }
+
+        /* now do the HTML */
+
+        $extraFields = $modx->getChunk('ExtraResourceFields', $fields);
+
+        /* Add our custom fields to the Create/Edit Resource form */
+        $modx->event->output($extraFields);
+        break;
+    case 'OnDocFormSave':
+        /* do processing logic here. */
+        /* @var $resource extResource */
+        if (!$data) {
+            $modx->log(modX::LOG_LEVEL_ERROR, '[ExtraResourceFields] No Data object');
+            return;
+        }
+        if (!$resource) {
+            $modx->log(modX::LOG_LEVEL_ERROR, '[ExtraResourceFields] No Resource object');
+            return;
+        }
+        $fields = array_keys($fields);
+        $postKeys = array_keys($_POST);
+        $dirty = false;
+        foreach($fields as $field) {
+            if (in_array($field, $postKeys)) {
+                // $debug .= "\nIn Array" . $field;
+                if ($_POST[$field] != $data->get($field)) {
+                    // $debug .= "\nDirty" . $field;
+                    if (empty($_POST[$field])) {
+                        $_POST[$field] = '';
+                    }
+                    $data->set($field, $_POST[$field]);
+                    $dirty = true;
+                }
+            }
+        }
+
+        if ($dirty) {
+            $resource->addOne($data);
+            $resource->save();
+        }
+
+        // $chunk->setContent($debug . "\n" . print_r($_POST, true));
+        // $chunk->save();
+        break;
+}
+return;
