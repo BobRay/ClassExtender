@@ -59,7 +59,7 @@ $prefix = $modx->getOption('prefix', $sp, '');
 if ($userId != null) {
     $user = $modx->getObject('extUser', $userId);
     if (! $user) {
-        return $modx->lexicon('ce.user_not_found~~User not found');
+        return $modx->lexicon('ce.user_not_found');
     }
 } else {
     $user = $modx->user;

@@ -56,7 +56,7 @@ $prefix = $modx->getOption('prefix', $sp, '');
 if ($resourceId != NULL) {
     $resource = $modx->getObject('extResource', $resourceId);
     if (!$resource) {
-        return $modx->lexicon('ce.resource_not_found~~Resource not found');
+        return $modx->lexicon('ce.resource_not_found');
     }
 } else {
     $resource = $modx->resource;
