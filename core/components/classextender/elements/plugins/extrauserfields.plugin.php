@@ -41,16 +41,14 @@
 // $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
 
 /* Define extra fields */
-$fields = array(
-    'firstName'        => '',
-    'lastName'         => '',
-    'title'            => '',
-    'company'          => '',
-    'registrationDate' => 0,
-    'category1'        => '',
-    'category2'        => '',
-    'category3'        => '',
-);
+
+/* Get Field names from temp. object */
+$obj = $modx->newObject('userData');
+if ($obj) {
+    $fields = $obj->toArray();
+}
+
+unset($obj);
 
 $data = null;
 

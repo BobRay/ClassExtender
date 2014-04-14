@@ -35,13 +35,12 @@
  **/
 
 // $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
-
-$fields = array(
-    'name' => '',
-    'color' => '',
-    'breed' => '',
-    'age' => '',
-);
+/* Get Field names from temp. object */
+$obj = $modx->newObject('resourceData');
+if ($obj) {
+    $fields = $obj->toArray();
+}
+unset($obj);
 
 $data = null;
 
