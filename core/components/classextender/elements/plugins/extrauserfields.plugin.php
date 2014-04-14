@@ -48,11 +48,8 @@ $fields = array(
     'company'          => '',
     'registrationDate' => 0,
     'category1'        => '',
-    'category1_Other'  => '',
     'category2'        => '',
-    'category2_Other'  => '',
     'category3'        => '',
-    'category3_Other'  => '',
 );
 
 $data = null;
