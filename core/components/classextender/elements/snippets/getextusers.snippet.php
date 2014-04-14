@@ -34,87 +34,26 @@
  * @package classextender
  **/
 
-/* Assume these are false until we know otherwise */
-$cliMode = false;
-$outsideModx = false;
+/* Load extendeduser package if not registered in
+   extension_packages System Setting */
 
-/* Set a user (set to actual username) */
-$myUserName = 'JoeBlow';
+$modx->lexicon->load('classextender:default');
 
-/* Instantiate MODX if necessary */
-if (!isset($modx)) {
-    $outsideModx = true;
+if (! class_exists('extUser')) {
+    $package = 'extendeduser';
+    $prefix = 'ext_';
+    $basePath = $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/' . $package . '/');
 
-    /* Set path to MODX core directory */
-    if (!defined('MODX_CORE_PATH')) {
-        /* be sure this has a trailing slash */
-        define('MODX_CORE_PATH', 'c:/xampp/htdocs/addons/core/');
-    }
-    /* get the MODX class file */
-    require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
+    $modelPath = $basePath . 'model/';
 
-    /* instantiate the $modx object */
-    $modx = new modX();
-    if (!$modx) {
-        echo 'Could not create MODX class';
-    }
-    /* initialize MODX and set current context */
-    $modx->initialize('web');
-    // or $modx->initialize('mgr');
-
-    /* load the error handler */
-    $modx->getService('error', 'error.modError', '', '');
-
-    /* Make sure there's a request */
-    $modx->getRequest();
-
-    /* Set up logging */
-    $modx->setLogLevel(xPDO::LOG_LEVEL_INFO);
-
-    /* Check for CLI mode and set log target */
-    if (php_sapi_name() == 'cli') {
-        $cliMode = true;
-        $modx->setLogTarget('ECHO');
-    } else {
-        $modx->setLogTarget('HTML');
-    }
-
-    /* Set $modx->resource, request, and $modx->user */
-
-    /* Set $modx->resource to home page */
-    $homeId = $modx->getOption('site_start');
-    $homeResource = $modx->getObject('modResource', $homeId);
-
-    if ($homeResource instanceof modResource) {
-        $modx->resource = $homeResource;
-    } else {
-        die('No Resource');
-    }
-
-    /* set $modx->user */
-    $myUser = $modx->getObject('modUser', array('username' => $myUserName));
-    if ($myUser instanceof modUser) {
-        $modx->user = $myUser;
-    } else {
-        die('No User');
+    $success = $modx->addPackage($package, $modelPath, $prefix);
+    if (!$success) {
+        return $modx->lexicon('ce.addpackage_failed');
     }
 }
 
-/* Use this next section if the ClassExtender package
-   is not registered in the extension_packages System
-   Setting */
 
-/* $package = 'extendeduser';
-$prefix = 'ext_';
-$basePath = $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/' . $package . '/');
 
-$modelPath = $basePath . 'model/';
-
-$success = $modx->addPackage($package, $modelPath, $prefix);
-if (!$success) {
-    return "\naddPackage failed.";
-    return;
-}*/
 /* @var $scriptProperties array */
 $scriptProperties = isset($scriptProperties)? $scriptProperties : array();
 $sp = $scriptProperties;
