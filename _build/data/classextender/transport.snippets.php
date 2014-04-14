@@ -51,24 +51,54 @@ $snippets[3] = $modx->newObject('modSnippet');
 $snippets[3]->fromArray(array (
   'id' => 3,
   'property_preprocess' => false,
-  'name' => 'ClassExtender',
-  'description' => 'Extend a MODX class',
+  'name' => 'SetUserPlaceholders',
+  'description' => 'Set placeholders for extra user fields',
   'properties' => NULL,
 ), '', true, true);
-$snippets[3]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/classextender.snippet.php'));
+$snippets[3]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/setuserplaceholders.snippet.php'));
 
 $snippets[4] = $modx->newObject('modSnippet');
 $snippets[4]->fromArray(array (
   'id' => 4,
   'property_preprocess' => false,
+  'name' => 'SetResourcePlaceholders',
+  'description' => 'Set placeholders for extra resource fields',
+  'properties' => NULL,
+), '', true, true);
+$snippets[4]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/setresourceplaceholders.snippet.php'));
+
+$snippets[5] = $modx->newObject('modSnippet');
+$snippets[5]->fromArray(array (
+  'id' => 5,
+  'property_preprocess' => false,
+  'name' => 'ClassExtender',
+  'description' => 'Extend a MODX class',
+  'properties' => NULL,
+), '', true, true);
+$snippets[5]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/classextender.snippet.php'));
+
+$snippets[6] = $modx->newObject('modSnippet');
+$snippets[6]->fromArray(array (
+  'id' => 6,
+  'property_preprocess' => false,
   'name' => 'GetExtUsers',
   'description' => 'Show user information',
 ), '', true, true);
-$snippets[4]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/getextusers.snippet.php'));
+$snippets[6]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/getextusers.snippet.php'));
 
 
 $properties = include $sources['data'].'properties/properties.getextusers.snippet.php';
-$snippets[4]->setProperties($properties);
+$snippets[6]->setProperties($properties);
 unset($properties);
+
+$snippets[7] = $modx->newObject('modSnippet');
+$snippets[7]->fromArray(array (
+  'id' => 7,
+  'property_preprocess' => false,
+  'name' => 'GetExtResources',
+  'description' => 'Show resource information',
+  'properties' => NULL,
+), '', true, true);
+$snippets[7]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/getextresources.snippet.php'));
 
 return $snippets;

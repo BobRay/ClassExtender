@@ -177,6 +177,19 @@ $components = array(
                 'category' => 'ClassExtender',
                 'description' => 'Show user information',
             ),
+            'GetExtResources' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Show resource information',
+            ),
+
+            'SetUserPlaceholders' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Set placeholders for extra user fields',
+            ),
+            'SetResourcePlaceholders' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Set placeholders for extra resource fields',
+            ),
             'ExtUserUpdateProfile' => array(
                 'category'    => 'ClassExtender',
                 'description' => 'Set placeholders for and update extended user data',
