@@ -247,7 +247,7 @@ class ClassExtender {
 
     public function generateSchema() {
 
-        $this->addOutput("ce.generating_schema");
+        $this->addOutput($this->modx->lexicon("ce.generating_schema"));
         $path = $this->modelPath . 'schema';
         if (!is_dir($path)) {
             mkdir($path, $this->dirPermission, true);
