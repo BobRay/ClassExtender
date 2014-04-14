@@ -252,6 +252,19 @@ $components = array(
                 'category' => 'ClassExtender',
                 'name'     => 'ExtUserRowTpl',
             ),
+            'ExtResourceOuterTpl' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtResourceOuterTpl',
+            ),
+            'ExtResourceInnerTpl' => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtResourceInnerTpl',
+            ),
+            'ExtResourceRowTpl'   => array(
+                'category' => 'ClassExtender',
+                'name'     => 'ExtResourceRowTpl',
+            ),
+            
             'ExtUserSearchFormTpl' => array(
                 'category' => 'ClassExtender',
                 'name' => 'ExtUserSearchFormTpl',

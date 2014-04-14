@@ -119,22 +119,52 @@ $chunks[10] = $modx->newObject('modChunk');
 $chunks[10]->fromArray(array (
   'id' => 10,
   'property_preprocess' => false,
+  'name' => 'ExtResourceOuterTpl',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[10]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extresourceoutertpl.chunk.html'));
+
+$chunks[11] = $modx->newObject('modChunk');
+$chunks[11]->fromArray(array (
+  'id' => 11,
+  'property_preprocess' => false,
+  'name' => 'ExtResourceInnerTpl',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[11]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extresourceinnertpl.chunk.html'));
+
+$chunks[12] = $modx->newObject('modChunk');
+$chunks[12]->fromArray(array (
+  'id' => 12,
+  'property_preprocess' => false,
+  'name' => 'ExtResourceRowTpl',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[12]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extresourcerowtpl.chunk.html'));
+
+$chunks[13] = $modx->newObject('modChunk');
+$chunks[13]->fromArray(array (
+  'id' => 13,
+  'property_preprocess' => false,
   'name' => 'ExtUserCategories',
   'description' => 'Category list for extended user fields',
   'properties' => 
   array (
   ),
 ), '', true, true);
-$chunks[10]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusercategories.chunk.html'));
+$chunks[13]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusercategories.chunk.html'));
 
-$chunks[11] = $modx->newObject('modChunk');
-$chunks[11]->fromArray(array (
-  'id' => 11,
+$chunks[14] = $modx->newObject('modChunk');
+$chunks[14]->fromArray(array (
+  'id' => 14,
   'property_preprocess' => false,
   'name' => 'UserCategories',
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[11]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/usercategories.chunk.html'));
+$chunks[14]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/usercategories.chunk.html'));
 
 return $chunks;

@@ -64,3 +64,12 @@ $_lang['ce.addpackage_failed'] = 'addPackage() failed';
 $_lang['ce.getmanager_failed'] = 'getManager() failed';
 $_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
 $_lang['ce.saving_schema'] = 'Saving schema';
+
+/* Used in getextresources.snippet.php */
+$_lang['ce.no_resources_found'] = 'No Resources Found';
+
+/* Used in setresourceplaceholders.snippet.php */
+$_lang['ce.resource_not_found'] = 'Resource not found';
+
+/* Used in setuserplaceholders.snippet.php */
+$_lang['ce.user_not_found'] = 'User not found';
