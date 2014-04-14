@@ -135,8 +135,4 @@ foreach ($users as $user) {
 
 $output = str_replace('[[+extUserInner]]', $innerOutput, $outer);
 
-if (php_sapi_name() == 'cli') {
-    echo $output;
-} else {
-     return $output;
-}
+return $output;
