@@ -38,8 +38,9 @@
  *
  **/
 
-$chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
 
+/* Define extra fields */
 $fields = array(
     'firstName'        => '',
     'lastName'         => '',
@@ -55,6 +56,8 @@ $fields = array(
 );
 
 $data = null;
+
+/* Make sure we have an extUser object to work with */
 if (isset($user) && ($user instanceof  modUser)) {
     if ($user instanceof extUser) {
         $data = $user->getOne('Data');
@@ -66,7 +69,7 @@ if (isset($user) && ($user instanceof  modUser)) {
 }
 /* @var $data userData */
 
-
+/* Create related object if it doesn't exist */
 if (!$data) {
     $data = $modx->newObject('userData');
 }
@@ -77,25 +80,26 @@ switch ($modx->event->name) {
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnUserFormRender':
-        $list = $modx->getChunk('ExtUserCategories');
-        $categoryList = explode(',', trim($list));
+
+
 
 
         if ($data) {
-            $fields['firstName'] = $data->get('firstName');
-            $fields['lastName'] = $data->get('lastName');
-            $fields['title'] = $data->get('title');
-            $fields['company'] = $data->get('company');
-            $fields['category1'] = $data->get('category1');
-            $fields['category2'] = $data->get('category2');
-            $fields['category3'] = $data->get('category3');
-
-            foreach ($fields as $key => $field) {
-                if (empty($field)) {
-                    $fields[$key] = '';
-                }
+            /* Set fields with values from DB (if any) */
+            foreach ($fields as $key => $value) {
+                $dbValue = $data->get($key);
+                /* Make sure there are no null values */
+                $dbValue = $dbValue === null? '' : $dbValue;
+                $fields[$key] = $dbValue;
             }
 
+            /* Get the categories for dropdown from the chunk
+               - delete if not needed */
+            $list = $modx->getChunk('ExtUserCategories');
+            $categoryList = array();
+            if (!empty ($list)) {
+                $categoryList = explode(',', trim($list));
+            }
             $categories1 = $categories2 = $categories3 = '';
             foreach ($categoryList as $cat) {
                 $selected = $cat == $fields['category1']? 'selected="selected "': ' ';
@@ -106,16 +110,14 @@ switch ($modx->event->name) {
 
                 $selected = $cat == $fields['category3'] ? 'selected="selected "' : ' ';
                 $categories3 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-
-
             }
             $fields['categories1'] = $categories1;
             $fields['categories2'] = $categories2;
             $fields['categories3'] = $categories3;
+            /* End of categories section */
         }
 
-        /* now do the HTML */
-
+        /* Now do the HTML */
         $extraFields = $modx->getChunk('ExtraUserFields', $fields);
 
         /* Add our custom fields to the Create/Edit User form */
@@ -135,11 +137,13 @@ switch ($modx->event->name) {
         $fields = array_keys($fields);
         $postKeys = array_keys($_POST);
         $dirty = false;
+        /* If $_POST values don't match DB value,
+           update field and set dirty flag */
         foreach($fields as $field) {
             if (in_array($field, $postKeys)) {
-                $debug .= "\nIn Array" . $field;
+               //  $debug .= "\nIn Array" . $field;
                 if ($_POST[$field] != $data->get($field)) {
-                    $debug .= "\nDirty" . $field;
+                  //  $debug .= "\nDirty" . $field;
                     if (empty($_POST[$field])) {
                         $_POST[$field] = '';
                     }
@@ -148,18 +152,23 @@ switch ($modx->event->name) {
                 }
             }
         }
+
+        /* Set registration date to today - delete if not needed */
         $rDate = $data->get('registrationDate');
         if (empty($rDate)) {
             $dirty = true;
             $data->set('registrationDate', strtotime(date('Y-m-d')));
         }
+        /* End of registration date section */
+
+        /* Save the data, if necessary */
         if ($dirty) {
             $user->addOne($data);
             $user->save();
         }
 
-        $chunk->setContent($debug . "\n" . print_r($_POST, true));
-        $chunk->save();
+        // $chunk->setContent($debug . "\n" . print_r($_POST, true));
+        // $chunk->save();
         break;
 }
 return;

@@ -44,6 +44,8 @@ $fields = array(
 );
 
 $data = null;
+
+/* Make sure we have an extResource object to work with */
 if (isset($resource) && ($resource instanceof  modResource)) {
     if ($resource instanceof extResource) {
         $data = $resource->getOne('Data');
@@ -62,22 +64,20 @@ if (!$data) {
 
 
 switch ($modx->event->name) {
-    case 'OnCodFormPrerender':
+    case 'OnDocFormPrerender':
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnDocFormRender':
         if ($data) {
-            $fields['name'] = $data->get('name');
-            $fields['color'] = $data->get('color');
-            $fields['breed'] = $data->get('breed');
-            $fields['age'] = $data->get('age');
-
-            foreach ($fields as $key => $field) {
-                if (empty($field)) {
-                    $fields[$key] = '';
-                }
+            /* Set fields with values from DB (if any) */
+            foreach ($fields as $key => $value) {
+                $dbValue = $data->get($key);
+                /* Make sure there are no null values */
+                $dbValue = $dbValue === NULL
+                    ? ''
+                    : $dbValue;
+                $fields[$key] = $dbValue;
             }
-
         }
 
         /* now do the HTML */
