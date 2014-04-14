@@ -70,18 +70,36 @@ if ($object->xpdo) {
 
             $intersects = array (
                 0 =>  array (
+                  'pluginid' => 'ExtraResourceFields',
+                  'event' => 'OnDocFormPrerender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                1 =>  array (
+                  'pluginid' => 'ExtraResourceFields',
+                  'event' => 'OnDocFormRender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                2 =>  array (
+                  'pluginid' => 'ExtraResourceFields',
+                  'event' => 'OnDocFormSave',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                3 =>  array (
                   'pluginid' => 'ExtraUserFields',
                   'event' => 'OnUserFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
-                1 =>  array (
+                4 =>  array (
                   'pluginid' => 'ExtraUserFields',
                   'event' => 'OnUserFormRender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
-                2 =>  array (
+                5 =>  array (
                   'pluginid' => 'ExtraUserFields',
                   'event' => 'OnUserFormSave',
                   'priority' => '0',
