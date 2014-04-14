@@ -62,9 +62,12 @@ $sp = $scriptProperties;
 $resourceClass = $modx->getOption('resourceClass', $sp, 'extResource');
 
 $where = $modx->getOption('where', $sp, array());
+$where = !empty($where)
+    ? $modx->fromJSON($where)
+    : array();
 
-$sortBy = $modx->getOption('sortby', 'pagetitle');
-$sortDir = $modx->getOption('sortdir', 'ASC');
+$sortBy = $modx->getOption('sortby', $sp, 'pagetitle');
+$sortDir = $modx->getOption('sortdir', $sp, 'ASC');
 
 $outerTpl = $modx->getOption('extResourceOuterTpl', $sp, 'extResourceOuterTpl');
 $innerTpl = $modx->getOption('extResourceInnerTpl', $sp, 'extResourceInnerTpl');
@@ -79,7 +82,7 @@ if (! empty($where)) {
 }
 
 
-$resources = $modx->getCollectionGraph($resourceClass, '"Data":{}}', $c);
+$resources = $modx->getCollectionGraph($resourceClass, '{"Data":{}}', $c);
 
 $count = count($resources);
 

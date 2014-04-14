@@ -73,3 +73,6 @@ $_lang['ce.resource_not_found'] = 'Resource not found';
 
 /* Used in setuserplaceholders.snippet.php */
 $_lang['ce.user_not_found'] = 'User not found';
+
+/* Used in getextusers.snippet.php */
+$_lang['ce.no_users_found'] = 'No Users Found';

@@ -59,42 +59,29 @@ $scriptProperties = isset($scriptProperties)? $scriptProperties : array();
 $sp = $scriptProperties;
 
 $userClass = $modx->getOption('userClass', $sp, 'extUser' );
-$category = $modx->getOption('category', $sp, 'All');
-$showInactive = $modx->getOption('showInactive', $sp, false);
 
-
-$where = $modx->getOption('where', $sp, array(
-     array(
-         'Data.category1:='    => $category,
-         'OR:Data.category2:=' => $category,
-         'OR:Data.category3:=' => $category,
-     ),
-));
+$where = $modx->getOption('where', $sp, array());
+$where = !empty($where)
+    ? $modx->fromJSON($where)
+    : array();
 
 $outerTpl = $modx->getOption('extUserOuterTpl', $sp, 'extUserOuterTpl');
 $innerTpl = $modx->getOption('extUserInnerTpl', $sp, 'extUserInnerTpl');
 $rowTpl = $modx->getOption('extUserRowTpl', $sp, 'extUserRowTpl');
-
+$sortBy = $modx->getOption('sortby', $sp, 'username');
+$sortDir = $modx->getOption('sortdir', $sp, 'ASC');
 
 
 $c = $modx->newQuery($userClass);
-$c->sortby('Data.lastName', 'ASC');
-
-/* No where clause if 'All' and showInactive */
-if ($category == 'All') {
-    if (!$showInactive) {
-        $c->where(array('active' => true));
-    }
-} else {
-    $c->where($where);
-}
+$c->sortby($sortBy, $sortDir);
+$c->where($where);
 
 $users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}', $c);
 
 $count = count($users);
 
 if (! $count) {
-    return 'No Users Found in category';
+    return $modx->lexicon('ce.no_users_found');
 
 }
 
@@ -112,20 +99,6 @@ foreach ($users as $user) {
     }
     if ($user->Data) {
         $fields = array_merge($user->Data->toArray(), $fields);
-        $fields['category1'] = !empty($fields['category1_other'])
-            ? $fields['category1_other']
-            : isset($fields['category1'])? $fields['category1'] : '';
-        $fields['category2'] = !empty($fields['category2_other'])
-            ? $fields['category2_other']
-            : isset($fields['category2'])
-                ? $fields['category2']
-                : '';
-        $fields['category3'] = !empty($fields['category3_other'])
-            ? $fields['category3_other']
-            : isset($fields['category3'])
-                ? $fields['category3']
-                : '';
-
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
