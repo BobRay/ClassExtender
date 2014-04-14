@@ -59,28 +59,29 @@ if ((!$data) && $user) {
     $user->addOne($data);
 }
 
-$list = $modx->getChunk('ExtUserCategories');
-$categoryList = explode(',', trim($list));
+$fields = array(
+    'firstName'        => '',
+    'lastName'         => '',
+    'title'            => '',
+    'company'          => '',
+    'category1'        => '',
+    'category2'        => '',
+    'category3'        => '',
+);
 
-$fields = array();
 if ($data) {
-    $fields['firstName'] = $data->get('firstName');
-    $fields['lastName'] = $data->get('lastName');
-    $fields['title'] = $data->get('title');
-    $fields['company'] = $data->get('company');
-    $fields['category1'] = $data->get('category1');
-    $fields['category2'] = $data->get('category2');
-    $fields['category3'] = $data->get('category3');
-    $fields['category1_Other'] = $data->get('category1_Other');
-    $fields['category2_Other'] = $data->get('category2_Other');
-    $fields['category3_Other'] = $data->get('category3_Other');
-
-
-    foreach ($fields as $key => $field) {
-        if (empty($field)) {
-            $fields[$key] = '';
-        }
+    /* Set fields with values from DB (if any) */
+    foreach ($fields as $key => $value) {
+        $dbValue = $data->get($key);
+        /* Make sure there are no null values */
+        $dbValue = $dbValue === NULL
+            ? ''
+            : $dbValue;
+        $fields[$key] = $dbValue;
     }
+    /* Handle categories - remove if not needed */
+    $list = $modx->getChunk('ExtUserCategories');
+    $categoryList = explode(',', trim($list));
 
     $categories1 = $categories2 = $categories3 = '';
     foreach ($categoryList as $cat) {
@@ -103,6 +104,7 @@ if ($data) {
     $modx->setPlaceholder('categories1', $categories1);
     $modx->setPlaceholder('categories2', $categories2);
     $modx->setPlaceholder('categories3', $categories3);
+    /* End Category section */
     
 }
   
