@@ -56,8 +56,8 @@ if (isset($_POST['submit-var']) && isset($_POST['ext-category'])) {
         if ($_POST['ext-category'] !== 'Please Select a Category') {
             $category = $_POST['ext-category'];
             $fields = array_merge($scriptProperties, array('category' => $category));
+            $fields['where'] = '{"Data.category1:=":"' . $category . '","OR:Data.category2:=":"' . $category . '","OR:Data.category3:=":"' . $category . '"}';
             $output .= $modx->runSnippet('GetExtUsers', $fields);
-            // $output .= "<p>Selected: " . $category . '</p>';
         }
     }
 } else {
