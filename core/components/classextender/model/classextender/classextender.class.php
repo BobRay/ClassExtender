@@ -51,6 +51,7 @@ class ClassExtender {
     protected $objectPrefix = '';
     protected $objectPrefixLower = '';
     protected $hasError = false;
+    protected $schemaChunk = '';
 
 
     function __construct(&$modx, &$config = array()) {
@@ -105,6 +106,8 @@ class ClassExtender {
 
         $this->objectPrefix = substr($this->ce_parent_object, 3);
         $this->objectPrefixLower = strtolower($this->objectPrefix);
+
+        $this->schemaChunk = 'Ext' . $this->objectPrefix . 'Schema';
 
         $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
             ? $_POST['ce_table_prefix']
@@ -259,7 +262,8 @@ class ClassExtender {
                 $this->addOutput($this->modx->lexicon('ce.deleting_schema'));
             }
         }
-
+        /* Use table name, missing its last letter,
+           as a prefix to find the table */
         $fakePrefix = substr($this->ce_table_prefix . $this->ce_table_name, 0, -1);
         $success = $this->generator->writeSchema($file, $this->ce_package_name,
             $this->ce_parent_object, $fakePrefix, true);
@@ -298,6 +302,14 @@ class ClassExtender {
         if ($fp) {
             $success = fwrite($fp, $content);
             fclose($fp);
+            /* Update chunk with generated schema */
+            if ($success) {
+                $chunk = $this->modx->getObject('modChunk', $this->schemaChunk);
+                if ($chunk) {
+                    $chunk->setContent($content);
+                    $chunk->save();
+                }
+            }
         } else {
             $this->addOutput($this->modx->lexicon("ce.no_file_write")
                 . $file, true);
@@ -319,15 +331,14 @@ class ClassExtender {
     public function dumpSchema() {
 
         $success = true;
-        // echo "<br>PackageLower: " . $this->packageLower;
-        $schemaChunk = 'Ext' . $this->objectPrefix . 'Schema';
+
         $this->addOutput($this->modx->lexicon('ce.saving_schema'));
 
         $path = $this->modelPath . 'schema';
         if (!is_dir($path)) {
             mkdir($path, $this->dirPermission, true);
         }
-        $content = $this->modx->getChunk($schemaChunk);
+        $content = $this->modx->getChunk($this->schemaChunk);
 
         $fp = fopen($this->ce_schema_file, 'w');
 
