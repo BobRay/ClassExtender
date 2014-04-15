@@ -16,5 +16,6 @@ Edit the schema file to match the extra user or resource fields you want to stor
 The extra user and/or resource fields are in an object called Data (in their own custom table):
 
 $user->getOne('Data');
-$resource->getOne('Data');
+
+$resource->getOne('Data'); 
 
