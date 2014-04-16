@@ -73,9 +73,13 @@ $snippets[5]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ClassExtender',
   'description' => 'Extend a MODX class',
-  'properties' => NULL,
 ), '', true, true);
 $snippets[5]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/classextender.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.classextender.snippet.php';
+$snippets[5]->setProperties($properties);
+unset($properties);
 
 $snippets[6] = $modx->newObject('modSnippet');
 $snippets[6]->fromArray(array (
