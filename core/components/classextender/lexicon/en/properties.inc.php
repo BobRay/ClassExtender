@@ -39,7 +39,6 @@
 
 
 /* Used in properties.getextusers.snippet.php */
-$_lang['ce.show_inactive_users'] = 'Show inactive users in list; default: No';
 $_lang['ce.class_for_user_object'] = 'Class for user object';
 $_lang['ce.outer_tpl'] = 'Name of outer Tpl chunk to use for user listing; default: extUserOuterTpl';
 $_lang['ce.inner_tpl'] = 'Name of inner Tpl chunk to use for user listing; default: extUserInnerTpl.';
