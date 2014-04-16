@@ -13,39 +13,15 @@
 
 
 $properties = array (
-  'showInactive' => 
+  'extUserRowTpl' => 
   array (
-    'name' => 'showInactive',
-    'desc' => 'ce.show_inactive_users',
-    'type' => 'combo-boolean',
-    'options' => 
-    array (
-    ),
-    'value' => false,
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'userClass' => 
-  array (
-    'name' => 'userClass',
-    'desc' => 'ce.class_for_user_object',
+    'name' => 'extUserRowTpl',
+    'desc' => 'ce.row_tpl',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUser',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'extUserouterTpl' => 
-  array (
-    'name' => 'extUserouterTpl',
-    'desc' => 'ce.outer_tpl',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => 'extUserOuterTpl',
+    'value' => 'extUserRowTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
@@ -61,15 +37,27 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extUserRowTpl' => 
+  'extUserouterTpl' => 
   array (
-    'name' => 'extUserRowTpl',
-    'desc' => 'ce.row_tpl',
+    'name' => 'extUserouterTpl',
+    'desc' => 'ce.outer_tpl',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUserRowTpl',
+    'value' => 'extUserOuterTpl',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'userClass' => 
+  array (
+    'name' => 'userClass',
+    'desc' => 'ce.class_for_user_object',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => 'extUser',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
