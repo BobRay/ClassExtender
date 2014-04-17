@@ -1,9 +1,9 @@
 <?php
 /**
- * Properties file for GetExtUsers snippet
+ * Properties file for GetExtResources snippet
  *
  * Copyright 2013 by Bob Ray <http://bobsguides.com>
- * Created on 01-07-2014
+ * Created on 04-16-2014
  *
  * @package classextender
  * @subpackage build
@@ -13,87 +13,87 @@
 
 
 $properties = array (
-  'extUserInnerTpl' => 
+  'extResourceInnerTpl' => 
   array (
-    'name' => 'extUserInnerTpl',
-    'desc' => 'ce.inner_tpl',
+    'name' => 'extResourceInnerTpl',
+    'desc' => 'ce.get_ext_resources_inner_tpl_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUserInnerTpl',
+    'value' => 'ExtResourceInnerTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extUserOuterTpl' => 
+  'extResourceOuterTpl' => 
   array (
-    'name' => 'extUserOuterTpl',
-    'desc' => 'ce.outer_tpl',
+    'name' => 'extResourceOuterTpl',
+    'desc' => 'ce.get_ext_resources_outer_tpl_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUserOuterTpl',
+    'value' => 'ExtResourceOuterTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extUserRowTpl' => 
+  'extResourceRowTpl' => 
   array (
-    'name' => 'extUserRowTpl',
-    'desc' => 'ce.row_tpl',
+    'name' => 'extResourceRowTpl',
+    'desc' => 'ce.get_ext_resources_row_tpl_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUserRowTpl',
+    'value' => 'ExtResourceRowTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'userClass' => 
+  'resourceClass' => 
   array (
-    'name' => 'userClass',
-    'desc' => 'ce.class_for_user_object',
+    'name' => 'resourceClass',
+    'desc' => 'cd.resource_class_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'extUser',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'where' => 
-  array (
-    'name' => 'where',
-    'desc' => 'ce.get_ext_users_where',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => '',
+    'value' => 'extResource',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
   'sortby' => 
   array (
     'name' => 'sortby',
-    'desc' => 'ce.get_ext_users_sortby_desc',
+    'desc' => 'ce.get_ext_resources_sortby_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'username',
+    'value' => 'pagetitle',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
   'sortdir' => 
   array (
     'name' => 'sortdir',
-    'desc' => 'ce.get_ext_users_sortdir_desc',
+    'desc' => 'ce.get_ext_resources_sortdir_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
     'value' => 'ASC',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'where' => 
+  array (
+    'name' => 'where',
+    'desc' => 'ce.get_ext_resources_where_desc',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => '',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),

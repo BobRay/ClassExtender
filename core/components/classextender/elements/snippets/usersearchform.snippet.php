@@ -35,6 +35,13 @@
  * @package classextender
  **/
 
+/* Properties
+ *
+ * @property &extFormTpl textfield -- Tpl chunk to use for user
+ * search form; Default: ExtUserSearchFormTpl.
+ */
+
+
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
 
 $list = $modx->getChunk('ExtUserCategories');

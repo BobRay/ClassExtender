@@ -31,11 +31,13 @@ $snippets[1]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'UserSearchForm',
   'description' => 'Search for Forum Members by Category',
-  'properties' => 
-  array (
-  ),
 ), '', true, true);
 $snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/usersearchform.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.usersearchform.snippet.php';
+$snippets[1]->setProperties($properties);
+unset($properties);
 
 $snippets[2] = $modx->newObject('modSnippet');
 $snippets[2]->fromArray(array (
@@ -53,9 +55,13 @@ $snippets[3]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'SetUserPlaceholders',
   'description' => 'Set placeholders for extra user fields',
-  'properties' => NULL,
 ), '', true, true);
 $snippets[3]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/setuserplaceholders.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.setuserplaceholders.snippet.php';
+$snippets[3]->setProperties($properties);
+unset($properties);
 
 $snippets[4] = $modx->newObject('modSnippet');
 $snippets[4]->fromArray(array (
@@ -63,9 +69,13 @@ $snippets[4]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'SetResourcePlaceholders',
   'description' => 'Set placeholders for extra resource fields',
-  'properties' => NULL,
 ), '', true, true);
 $snippets[4]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/setresourceplaceholders.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.setresourceplaceholders.snippet.php';
+$snippets[4]->setProperties($properties);
+unset($properties);
 
 $snippets[5] = $modx->newObject('modSnippet');
 $snippets[5]->fromArray(array (
@@ -101,8 +111,12 @@ $snippets[7]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'GetExtResources',
   'description' => 'Show resource information',
-  'properties' => NULL,
 ), '', true, true);
 $snippets[7]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/getextresources.snippet.php'));
+
+
+$properties = include $sources['data'].'properties/properties.getextresources.snippet.php';
+$snippets[7]->setProperties($properties);
+unset($properties);
 
 return $snippets;

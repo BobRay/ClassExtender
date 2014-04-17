@@ -151,7 +151,8 @@ Get All resources where the breed is 'poodle':
 
 <p>The getExtResources snippet will not select or display Template Variables (TVs). Adding generic TV capability would have made the snippet quite slow and would defeat the purpose of moving TV data into the extra fields. If you absolutely need TVs, it will be much more efficient to modify the getExtResources snippet code to display the particular TVs you need, and searching or sorting by TVs is a bad idea to begin with.</p>
 
-<p>There are two other utility snippets: ExtUserUpdateProfile and UserSearchForm. The first shows how to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. The second (UserSearchForm) serves as an example of how to search for users by category. It's likely that either snippet will need to be modified to be of any user other than as an example. </p>
+<p>There are two other utility snippets: ExtUserUpdateProfile and UserSearchForm. The first shows how to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. In simple cases, you may be able to just add the fields to the Update Profile page and add a tag for the snippet on the page. The second (UserSearchForm) serves as an example of how to search for users by category. Either snippet may need to be modified to be of any user other than as an example. </p>
+        
         
 <h3>Extending Other MODX Objects</h3>
 
@@ -169,4 +170,207 @@ Get All resources where the breed is 'poodle':
 
 <p>ClassExtender will be of limited use with Articles, since Articles itself extends <code>modResource</code>. ClassExtender will still work with non-Articles resources, but not with your blog posts. The Discuss extra extends <code>modUser</code>, but as far as I can tell, it keeps separate tables and will work side-by-side with ClassExtender.</p>
 
+<h3>ClassExtender Snippet Properties</h3>
 
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>package</td>
+        <td>Name of the package being created (e.g., extendeduser, extendedresource)</td>
+        <td>empty</td>
+    </tr>
+    <tr>
+        <td>class</td>
+        <td>Name of class being created (e.g., extUser, extResource)</td>
+        <td>empty</td>
+    </tr>
+    <tr>
+        <td>parentObject</td>
+        <td>Class that the object being created extends (e.g., modUser, modResource)</td>
+        <td>empty</td>
+    </tr>
+    <tr>
+        <td>tablePrefix</td>
+        <td>Table prefix for new DB table</td>
+        <td>ext_</td>
+    </tr>
+    <tr>
+        <td>tableName</td>
+        <td>Name for DB table without the prefix (e.g., user_data, resource_data)</td>
+        <td>empty</td>
+    </tr>
+    <tr>
+        <td>method</td>
+        <td>Method to use for creating class and map files; must be use_table or user_schema</td>
+        <td>use_schema</td>
+    </tr>
+    <tr>
+        <td>registerPackage</td>
+        <td>If set (recommended), package will be registered in the extension_packages System Setting and will be available on every page
+            load
+        </td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>updateClassKey</td>
+        <td>If set, the class_key field for all existing objects will be updated when the class is created -- leave this set to No and use
+            the form to update the class_keys
+        </td>
+        <td>No</td>
+    </tr>
+</table>
+
+<h3>GetExtUsers Snippet Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>extUserInnerTpl</td>
+        <td>Name of inner Tpl chunk to use for user listing</td>
+        <td>extUserInnerTpl</td>
+    </tr>
+    <tr>
+        <td>extUserOuterTpl</td>
+        <td>Name of outer Tpl chunk to use for user listing</td>
+        <td>extUserOuterTpl</td>
+    </tr>
+    <tr>
+        <td>extUserRowTpl</td>
+        <td>Name of row Tpl chunk to use for user listing -- displays individual user data</td>
+        <td>extUserRowTpl</td>
+    </tr>
+    <tr>
+        <td>userClass</td>
+        <td>Class for user object</td>
+        <td>extUser</td>
+    </tr>
+    <tr>
+        <td>where</td>
+        <td>JSON string containing query criteria</td>
+        <td>empty</td>
+    </tr>
+    <tr>
+        <td>sortby</td>
+        <td>Field to sort by (e.g., username, Profile.fullname, Data.lastname)</td>
+        <td>username</td>
+    </tr>
+    <tr>
+        <td>sortdir</td>
+        <td>Direction to sort in (ASC, DESC)</td>
+        <td>ASC</td>
+    </tr>
+</table>
+
+<h3>GetExtResources Snippet Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>extResourceInnerTpl</td>
+        <td>Name of inner Tpl chunk</td>
+        <td>ExtResourceInnerTpl</td>
+    </tr>
+    <tr>
+        <td>extResourceOuterTpl</td>
+        <td>Name of outer Tpl chunk</td>
+        <td>ExtResourceOuterTpl</td>
+    </tr>
+    <tr>
+        <td>extResourceRowTpl</td>
+        <td>Name of row Tpl chunk</td>
+        <td>ExtResourceRowTpl</td>
+    </tr>
+    <tr>
+        <td>resourceClass</td>
+        <td>Name of extended resource class</td>
+        <td>extResource</td>
+    </tr>
+    <tr>
+        <td>sortby</td>
+        <td>Field to sort by (e.g., pagetitle, Data.somefield)</td>
+        <td>pagetitle</td>
+    </tr>
+    <tr>
+        <td>sortdir</td>
+        <td>Direction to sort in (ASC, DESC)</td>
+        <td>ASC</td>
+    </tr>
+    <tr>
+        <td>where</td>
+        <td>JSON string with search criteria</td>
+        <td>empty</td>
+    </tr>
+</table>
+
+<h3>SetUserPlaceholders Snippet Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>userId</td>
+        <td>User ID</td>
+        <td>empty (defaults to current user)</td>
+    </tr>
+    <tr>
+        <td>prefix</td>
+        <td>Prefix for placeholders</td>
+        <td>empty</td>
+    </tr>
+</table>
+
+<h3>SetResourcePlaceholders Snippet Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>resourceId</td>
+        <td>ID of resource to set placeholders from</td>
+        <td>empty (defaults to current resource)</td>
+    </tr>
+    <tr>
+        <td>prefix</td>
+        <td>Prefix for placeholders</td>
+        <td>empty</td>
+    </tr>
+</table>
+
+<h3>UserSearchForm Snippet Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>extFormTpl</td>
+        <td>Tpl chunk to use for user search form</td>
+        <td>ExtUserSearchFormTpl</td>
+    </tr>
+</table>
