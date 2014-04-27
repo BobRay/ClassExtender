@@ -73,7 +73,8 @@ if ($object->xpdo) {
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
             };
 
-
+            $cm = $modx->getCacheManager();
+            $cm->refresh();
 
             break;
     }
