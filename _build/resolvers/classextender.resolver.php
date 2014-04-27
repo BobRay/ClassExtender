@@ -44,8 +44,7 @@ if ($object->xpdo) {
                            array('class_key' => 'modUser'),
                            array('class_key' => 'extUser')
             );
-            $cm = $modx->getCacheManager();
-            $cm->refresh();
+
             $modx->removeExtensionPackage('extendeduser');
             $modx->removeExtensionPackage('extendedresource');
 
