@@ -38,7 +38,6 @@
 
 /* Used in classextenderform.chunk.html */
 $_lang['ce_create_table_or_schema'] = 'You must create the DB table or the schema chunk before submitting';
-$_lang['ce_register_extension_package_desc'] = 'Registered extension packages will be loaded automatically on every page load';
 $_lang['ce_update_class_key_desc'] = 'Update all existing objects with new class_key';
 $_lang['ce_update_class_key_caption'] = 'Update class_key';
 $_lang['ce_package_name_caption'] = 'Package Name';
@@ -49,6 +48,5 @@ $_lang['ce_table_name_caption'] = 'Table Name';
 $_lang['ce_method_caption'] = 'Method';
 $_lang['ce_use_table'] = 'Use Table';
 $_lang['ce_use_schema'] = 'Use Schema';
-$_lang['ce_register_caption'] = 'Register Extension Package';
 $_lang['ce_yes'] = 'Yes';
 $_lang['ce_no'] = 'No';

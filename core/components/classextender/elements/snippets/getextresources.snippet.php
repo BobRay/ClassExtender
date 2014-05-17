@@ -34,24 +34,12 @@
  * @package classextender
  **/
 
-/* Load extendedresource package if not registered in
-   extension_packages System Setting */
+/* The extendedresource package should be pre-loaded
+   due to being registered in the extension_packages
+   System Setting */
+
 
 $modx->lexicon->load('classextender:default');
-
-if (!class_exists('extResource')) {
-    $package = 'extendedresource';
-    $prefix = 'ext_';
-    $basePath = $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/' . $package . '/');
-
-    $modelPath = $basePath . 'model/';
-
-    $success = $modx->addPackage($package, $modelPath, $prefix);
-    if (!$success) {
-        return $modx->lexicon('ce.addpackage_failed');
-    }
-}
-
 
 /* @var $scriptProperties array */
 $scriptProperties = isset($scriptProperties)

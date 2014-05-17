@@ -34,23 +34,7 @@
  * @package classextender
  **/
 
-/* Load extendeduser package if not registered in
-   extension_packages System Setting */
-
 $modx->lexicon->load('classextender:default');
-
-if (!class_exists('extUser')) {
-    $package = 'extendeduser';
-    $prefix = 'ext_';
-    $basePath = $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/' . $package . '/');
-
-    $modelPath = $basePath . 'model/';
-
-    $success = $modx->addPackage($package, $modelPath, $prefix);
-    if (!$success) {
-        return $modx->lexicon('ce.addpackage_failed');
-    }
-}
 
 $sp = $scriptProperties;
 $userId = $modx->getOption('userId', $sp, null);

@@ -85,18 +85,6 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'registerPackage' => 
-  array (
-    'name' => 'registerPackage',
-    'desc' => 'ce.register_package_desc',
-    'type' => 'combo-boolean',
-    'options' => 
-    array (
-    ),
-    'value' => true,
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
   'updateClassKey' => 
   array (
     'name' => 'updateClassKey',

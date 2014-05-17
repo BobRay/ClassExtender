@@ -54,7 +54,7 @@ $_lang['ce.parent_object_desc'] = 'Class that the object being created extends (
 $_lang['ce.table_prefix_desc'] = 'Table prefix for new DB table; default: ext_';
 $_lang['ce.table_name_desc'] = 'Name for DB table without the prefix (e.g., user_data, resource_data); default: empty';
 $_lang['ce.method_desc'] = 'Method to use for creating class and map files; must be use_table or user_schema; default: user_schema';
-$_lang['ce.register_package_desc'] = 'If set (recommended), package will be registered in the extension_packages System Setting and will be available on every page load; default: Yes';
+
 $_lang['ce.update_class_key_desc'] = 'If set, the class_key field for all existing objects will be updated when the class is created -- leave this set to No and use the form to update the class_keys; default: No';
 
 /* Used in properties.getextresources.snippet.php */

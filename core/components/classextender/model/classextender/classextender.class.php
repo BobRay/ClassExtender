@@ -37,7 +37,6 @@ class ClassExtender {
     public $ce_table_prefix = '';
     public $ce_table_name = '';
     public $ce_method = '';
-    public $ce_register = 'ce_register_yes';
     public $ce_update_class_key = 'ce_update_class_key_no';
     public $ce_schema_file;
     /** @var  $generator xPDOGenerator */
@@ -121,10 +120,6 @@ class ClassExtender {
             ? $_POST['ce_method']
             : $this->modx->getOption('method', $this->props, 'use_schema');
 
-        $this->ce_register = isset($_POST['ce_register'])
-            ? $_POST['ce_register'] === 'ce_register_yes'
-            : $this->modx->getOption('registerPackage', $this->props, true);
-
         $this->ce_update_class_key = isset($_POST['ce_update_class_key'])
             ? $_POST['ce_update_class_key'] === 'ce_update_class_key_yes'
             : $this->modx->getOption('updateClassKey', $this->props, false);
@@ -189,9 +184,8 @@ class ClassExtender {
             }
         }
 
-        if ($this->ce_register) {
-            $this->addExtensionPackage();
-        }
+        $this->addExtensionPackage();
+
 
         if ($this->ce_update_class_key) {
             $this->addOutput($this->modx->lexicon('ce.updating_class_key'));
@@ -213,11 +207,7 @@ class ClassExtender {
         } else {
             $fields['ce_schema_checked'] = 'checked="checked"';
         }
-        if ($this->ce_register) {
-            $fields['ce_register_yes_checked'] = 'checked="checked"';
-        } else {
-            $fields['ce_register_no_checked'] = 'checked="checked"';
-        }
+
         if ($this->ce_update_class_key) {
             $fields['ce_update_class_key_yes_checked'] = 'checked="checked"';
         } else {
@@ -463,6 +453,8 @@ class ClassExtender {
     public function addExtensionPackage() {
 
         $path = '[[++core_path]]' . 'components/classextender/model/';
+        /* Clear existing registration so it can be updated */
+        $this->modx->removeExtensionPackage($this->packageLower);
         $this->modx->addExtensionPackage($this->packageLower, $path,
             array('tablePrefix' => $this->ce_table_prefix));
         $this->addOutput($this->modx->lexicon('ce.extension_package_registered'));

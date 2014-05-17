@@ -21,7 +21,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <h3>Overview</h3>
 
-<p>We'll cover this in more detail below, but the basic process for extending either object is to modify the example object schema chunk to meet your needs or create the table you want, then view either the &quot;Extend modUser&quot; resource or the &quot;Extend modResource&quot; resource. That will present you with a form that, when submitted, will do all the work for you. It will create the class and map files, (optionally) register the extension package, and (optionally) update the class key of all existing objects in the database. Once that's done, all that's left is to modify the chunk used to display the extra fields in the Create/Edit Resource or User panel in the Manager, and enable the plugin that displays them. If any of your fields require special handling (e.g., a date field that should be set to today's date), you'll also have to modify the plugin to handle that.</p>
+<p>We'll cover this in more detail below, but the basic process for extending either object is to modify the example object schema chunk to meet your needs or create the table you want, then view either the &quot;Extend modUser&quot; resource or the &quot;Extend modResource&quot; resource. That will present you with a form that, when submitted, will do all the work for you. It will create the class and map files, register the extension package, and (optionally) update the class key of all existing objects in the database. Once that's done, all that's left is to modify the chunk used to display the extra fields in the Create/Edit Resource or User panel in the Manager, and enable the plugin that displays them. If any of your fields require special handling (e.g., a date field that should be set to today's date), you'll also have to modify the plugin to handle that.</p>
 
 <h3>Schema or Table?</h3>
 
@@ -52,7 +52,6 @@ Go to System | Package Management on the main menu in the MODX Manager and click
     <li>Go to Reports | Error Log and clear the Error Log</li>
     <li>View the &quot;Extend modUser&quot; resource</li>
     <li>Select either the &quot;Use Schema&quot; (the default) or &quot;Use Table&quot; radio option</li>
-    <li>Choose whether to register the extension package (recommended) or not</li>
     <li>*DO NOT* select the option to update the <code>class_key</code> of existing objects</li>
     <li>Click on Submit</li>
     <li>Once the process is completed, select the option to update the <code>class_key</code> and click on Submit again</li>
@@ -65,8 +64,8 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 </ol>
 
 <p>Why do you submit twice? This is very important. If you update the <code>class_key</code> on the first pass, you may be temporarily locked out of the Manager, since the necessary class and map files are not available and MODX won't find your user record. If you forget and this happens, manually delete all files in the <code>core/cache</code> directory, and reload the page in your browser. In some cases, you may also need to clear your browser cache and cookies.</p>
-        
-<p>Once you've completed the steps above, you should see your extra fields on the Create/Edit User panel and they should be saved to the <code>ext_user_data</code> table in the database.</p>        
+
+<p>Once you've completed the steps above, you should see your extra fields on the Create/Edit User panel and they should be saved to the <code>ext_user_data</code> table in the database.</p>
         
 
 <h3>Extending modResource</h3>
@@ -78,7 +77,6 @@ Go to System | Package Management on the main menu in the MODX Manager and click
     <li>Go to Reports | Error Log and clear the Error Log</li>
     <li>View the &quot;Extend modResource&quot; resource</li>
     <li>Select either the &quot;Use Schema&quot; (the default) or &quot;Use Table&quot; radio option</li>
-    <li>Choose whether to register the extension package (recommended) or not</li>
     <li>*DO NOT* select the option to update the <code>class_key</code> of existing objects</li>
     <li>Click on Submit</li>
     <li>Once the process is completed, select the option to update the <code>class_key</code> and click on Submit again</li>
@@ -90,9 +88,15 @@ Go to System | Package Management on the main menu in the MODX Manager and click
     
 </ol>
 
-<p>Why do you submit twice? This is very important. If you update the <code>class_key</code> on the first pass, your resources will disappear from the Resource tree, since the necessary class and map files are not available and the code that renders the tree won't find them. If you forget and this happens, manually delete all files in the <code>core/cache</code> directory, and reload the page in your browser. In some cases, you may also need to clear your browser cache and cookies.</p>
+<p>Why do you submit twice? This is very important. If you update the <code>class_key</code> on the first pass, your resources will disappear from the Resource tree, since the necessary class and map files are not available and the code that renders the tree won't find them. This means that you can't run ClassExtender again. If you forget and this happens, manually delete all files in the <code>core/cache</code> directory, and reload the page in your browser. In some cases, you may also need to clear your browser cache and cookies.</p>
         
 <p>Once you've completed the steps above, you should see your extra fields on the Create/Edit Resource panel and they should be saved to the <code>ext_resource_data</code> table in the database.</p>
+
+<h3>Using Your Extended Class</h3>
+
+<p>Because the packages for either extended class are registered in the <code>extension_packages</code> System Setting, they will be available on every page load (including Manager pages). This means there is almost never a need to call <code>addPackage()</code> or <code>loadClass()</code> for them.</p>
+
+<p>Once you have run ClassExtender for an extended class, you can call any xPDO method that uses the class anywhere in MODX (though you may need to clear the cache once). The only situation where you would need to load the class or package explicitly might be for part of a CMP (e.g., a connector or processor) or code to be run outside of MODX where there is no request. In those cases, you should call <code>addPackage()</code>, <code>loadClass()</code>, or <code>$modx->getService()</code> as appropriate.</p>
 
 <h3>Troubleshooting</h3>
 
@@ -100,8 +104,9 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>Since ClassExtender is altering basic MODX classes, things can temporarily get a little strange. If you forget the advice above about making two passes to create your extended class, resources may disappear from the tree or users may disappear from the user grid. *DON'T PANIC* &mdash; nothing is gone. Sometimes just clearing the cache and reloading the page will solve things, but usually it's necessary to delete all files in the <code>core/cache</code> directory. Once you do that, everything should be back to normal.</p>
 
-<p>If you uninstall ClassExtender, under certain circumstances the Manager may get confused and continue trying to load the class (which is no longer there). You'll see a message saying it can't find the action file no matter what you try to do. Again, the solution is to delete all files in the
-<code>core/cache</code> directory.</p>
+<p>In the worst case, if you have made a mistake in the ClassExtender form fields, you can edit the database directly and revert the <code>class_key</code> of a resource or user back to <code>modResource</code> or <code>modUser</code>. You can also uninstall ClassExtender, which will revert all the <code>class_key</code> fields for you.</p>
+
+<p>If you uninstall ClassExtender, under certain circumstances the Manager may get confused and continue trying to load the class (which is no longer there). You'll see a message saying it can't find the action file no matter what you try to do. Again, the solution is to delete all files in the <code>core/cache</code> directory.</p>
         
 
 <h3>Utilities</h3>
@@ -160,7 +165,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>Similarly, for Resource criteria, regular resource fields should have no prefix (e.g., <code>pagetitle</code>), and your extra fields should be prefixed with <code>Data.</code> (e.g., <code>Data.breed</code>).</p>
 
-<p>With the getExtResource snippet, you can use all standard resource fields and all fields in the Data tables as placeholders in the Tpl chunks.</p>
+<p>With the getExtResources snippet, you can use all standard resource fields and all fields in the Data tables as placeholders in the Tpl chunks.</p>
 
 <p>The getExtResources snippet will not select or display Template Variables (TVs). Adding generic TV capability would have made the snippet quite slow and would defeat the purpose of moving TV data into the extra fields. If you absolutely need TVs, it will be much more efficient to modify the getExtResources snippet code to display the particular TVs you need, and searching or sorting by TVs is a bad idea to begin with.</p>
 
@@ -173,7 +178,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
         
 <h3>Uninstalling ClassExtender</h3>
         
-<p>Important: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any extended classes. The class and map files, the namespace, and any database tables will be removed during the uninstall.</p>
+<p><b>Important</b>: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any extended classes. The class and map files, the namespace, and any database tables will be removed during the uninstall.</p>
 
 <p>When you uninstall ClassExtender, you'll see some error messages in red. This is normal. There will also be some spurious error messages in the MODX Error Log.</p>
 
@@ -224,13 +229,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
         <td>Method to use for creating class and map files; must be use_table or user_schema</td>
         <td>use_schema</td>
     </tr>
-    <tr>
-        <td>registerPackage</td>
-        <td>If set (recommended), package will be registered in the extension_packages System Setting and will be available on every page
-            load
-        </td>
-        <td>1</td>
-    </tr>
+
     <tr>
         <td>updateClassKey</td>
         <td>If set, the class_key field for all existing objects will be updated when the class is created -- leave this set to No and use
@@ -239,6 +238,8 @@ Go to System | Package Management on the main menu in the MODX Manager and click
         <td>No</td>
     </tr>
 </table>
+
+
 
 <h3>GetExtUsers Snippet Properties</h3>
 
