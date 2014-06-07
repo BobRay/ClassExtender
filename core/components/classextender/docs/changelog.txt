@@ -1,5 +1,10 @@
 Changelog for ClassExtender
 
+ClassExtender 1.1.1
+---------------------------------
+Workaround for missing extension_packages System Setting
+
+
 ClassExtender 1.1.0
 ---------------------------------
 Removed option to not register ext. package
