@@ -44,9 +44,12 @@ if ($object->xpdo) {
                            array('class_key' => 'modUser'),
                            array('class_key' => 'extUser')
             );
-
-            $modx->removeExtensionPackage('extendeduser');
-            $modx->removeExtensionPackage('extendedresource');
+            $setting = $modx->getObject('modSystemSetting',
+                array('key' => 'extension_packages'));
+            if (! empty($setting)) {
+                $modx->removeExtensionPackage('extendeduser');
+                $modx->removeExtensionPackage('extendedresource');
+            }
 
             $pages = array(
                  'ClassExtender',

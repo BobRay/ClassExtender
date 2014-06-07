@@ -184,7 +184,7 @@ class ClassExtender {
             }
         }
 
-        $this->addExtensionPackage();
+        $this->registerExtensionPackage();
 
 
         if ($this->ce_update_class_key) {
@@ -450,11 +450,15 @@ class ClassExtender {
         return $success;
     }
 
-    public function addExtensionPackage() {
+    public function registerExtensionPackage() {
 
         $path = '[[++core_path]]' . 'components/classextender/model/';
         /* Clear existing registration so it can be updated */
-        $this->modx->removeExtensionPackage($this->packageLower);
+        $setting = $this->modx->getObject('modSystemSetting',
+            array('key' => 'extension_packages'));
+        if (! empty($setting)) {
+            $this->modx->removeExtensionPackage($this->packageLower);
+        }
         $this->modx->addExtensionPackage($this->packageLower, $path,
             array('tablePrefix' => $this->ce_table_prefix));
         $this->addOutput($this->modx->lexicon('ce.extension_package_registered'));
