@@ -74,6 +74,20 @@ if ($object->xpdo) {
             $results = $modx->query($sql);
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
             };
+            /* Remove modExtensionPackage objects in 2.3 */
+            if (class_exists('modExtensionPackage')) {
+                /** @var $rec xPDOObject */
+                $recs = $modx->getCollection('modExtensionPackage',
+                    array('namespace' => 'extendeduser'));
+                foreach ($recs as $rec) {
+                    $rec->remove();
+                }
+                $recs = $modx->getCollection('modExtensionPackage',
+                    array('namespace' => 'extendedresource'));
+                foreach ($recs as $rec) {
+                    $rec->remove();
+                }
+            }
 
             $cm = $modx->getCacheManager();
             $cm->refresh();
