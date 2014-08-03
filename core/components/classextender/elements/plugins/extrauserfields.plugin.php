@@ -41,7 +41,7 @@
 // $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
 
 /* Define extra fields */
-
+$fields = array();
 /* Get Field names from temp. object */
 $obj = $modx->newObject('userData');
 if ($obj) {
@@ -54,19 +54,16 @@ $data = null;
 
 /* Make sure we have an extUser object to work with */
 if (isset($user) && ($user instanceof  modUser)) {
-    if ($user instanceof extUser) {
-        $data = $user->getOne('Data');
-    } else {
-        $user->set('class_key', 'extUser');
-        $user->save();
-        $user = $modx->getObject('extUser', $user->get('id'));
-    }
+    $extUser = $modx->newObject('extUser');
+    $extUser->fromArray($user->toArray(), "", true, true);
+    $data = $extUser->getOne('Data');
 }
 /* @var $data userData */
 
 /* Create related object if it doesn't exist */
 if (!$data) {
     $data = $modx->newObject('userData');
+    $data->set('userdata_id', $user->get('id'));
 }
 
 
@@ -158,8 +155,7 @@ switch ($modx->event->name) {
 
         /* Save the data, if necessary */
         if ($dirty) {
-            $user->addOne($data);
-            $user->save();
+            $data->save();
         }
 
         // $chunk->setContent($debug . "\n" . print_r($_POST, true));

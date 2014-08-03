@@ -93,13 +93,16 @@ class ClassExtender {
 
         $this->packageLower = strtolower($this->ce_package_name);
 
-        $this->ce_class = isset($_POST['ce_class'])
-            ? $_POST['ce_class']
-            :$this->modx->getOption('class', $this->props, 'extUser');
-
         $this->ce_parent_object = isset($_POST['ce_parent_object'])
             ? $_POST['ce_parent_object']
-            :$this->modx->getOption('parentObject', $this->props, 'modUser');
+            : $this->modx->getOption('parentObject', $this->props, 'modUser');
+
+        $this->ce_class = isset($_POST['ce_class'])
+            ? $_POST['ce_class']
+            :$this->modx->getOption('class', $this->props,
+                str_replace('mod', 'ext',$this->ce_parent_object));
+
+
 
         /* Strip off 'mod' to produce 'User' or 'Resource' */
 
@@ -393,10 +396,10 @@ class ClassExtender {
        return  "\n
     function __construct(xPDO & \$xpdo) {
         parent::__construct(\$xpdo);
-        \$this->set('class_key', '" . $this->ce_class . "');
-        \$this->showInContextMenu = true;
-    }\n";
+        \$this->set('class_key'," .  $this->ce_class . ");
 
+    }\n";
+       /*         \$this->showInContextMenu = true; */
     }
 
     public function getResourceOverrides() {
@@ -499,5 +502,15 @@ class ClassExtender {
             reset($objects);
             rmdir($dir);
         }
+    }
+
+    public function convertToClass($class) {
+        /** @var $this xPDOObject */
+        $fields = $this->toArray();
+        $fields['class_key'] = $class;
+        $obj = $this->modx->newObject($class);
+        $obj->fromArray($fields, "", true, true);
+
+        return $obj; /* return &$obj; ? */
     }
 }
