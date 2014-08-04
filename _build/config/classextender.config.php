@@ -206,11 +206,43 @@ $components = array(
                 'category'    => 'ClassExtender',
                 'description' => 'Add and process extra fields in Create/Edit User form',
                 'disabled' => true,
+                'events' => array(
+                    'OnUserFormRender' => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnUserFormPreRender' => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnUserFormSave' => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnUserRemove' => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                ),
             ),
             'ExtraResourceFields' => array(
                 'category'    => 'ClassExtender',
                 'description' => 'Add and process extra fields in Create/Edit Resource form',
                 'disabled' => true,
+                'events' => array(
+                    'OnUserFormRender'    => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnUserFormPreRender' => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnUserFormSave'      => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                ),
             ),
         ),
         'chunks' => array(
@@ -227,10 +259,6 @@ $components = array(
             'ClassExtenderForm' => array(
                 'category' => 'ClassExtender',
                 'name'     => 'ClassExtenderForm',
-            ),
-            'ExtUserCategories' => array(
-               'category' => 'ClassExtender',
-               'name' => 'ExtUserCategories',
             ),
             'ExtraUserFields' => array(
                 'category' => 'ClassExtender',

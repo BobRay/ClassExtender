@@ -43,38 +43,32 @@
 /* Define extra fields */
 $fields = array();
 /* Get Field names from temp. object */
-$obj = $modx->newObject('userData');
-if ($obj) {
-    $fields = $obj->toArray();
-}
 
-unset($obj);
-
-$data = null;
 
 /* Make sure we have an extUser object to work with */
 if (isset($user) && ($user instanceof  modUser)) {
-    $extUser = $modx->newObject('extUser');
-    $extUser->fromArray($user->toArray(), "", true, true);
-    $data = $extUser->getOne('Data');
+    $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
+
+    // $extUser = $modx->newObject('extUser');
+    // $extUser->fromArray($user->toArray(), "", true, true);
+    // $data = $extUser->getOne('Data');
 }
 /* @var $data userData */
 
 /* Create related object if it doesn't exist */
 if (!$data) {
     $data = $modx->newObject('userData');
-    $data->set('userdata_id', $user->get('id'));
 }
 
+if ($data) {
+    $fields = $data->toArray();
+}
 
 switch ($modx->event->name) {
     case 'OnUserFormPrerender':
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnUserFormRender':
-
-
-
 
         if ($data) {
             /* Set fields with values from DB (if any) */
@@ -84,29 +78,6 @@ switch ($modx->event->name) {
                 $dbValue = $dbValue === null? '' : $dbValue;
                 $fields[$key] = $dbValue;
             }
-
-            /* Get the categories for dropdown from the chunk
-               - delete if not needed */
-            $list = $modx->getChunk('ExtUserCategories');
-            $categoryList = array();
-            if (!empty ($list)) {
-                $categoryList = explode(',', trim($list));
-            }
-            $categories1 = $categories2 = $categories3 = '';
-            foreach ($categoryList as $cat) {
-                $selected = $cat == $fields['category1']? 'selected="selected "': ' ';
-                $categories1 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-
-                $selected = $cat == $fields['category2'] ? 'selected="selected "' : ' ';
-                $categories2 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-
-                $selected = $cat == $fields['category3'] ? 'selected="selected "' : ' ';
-                $categories3 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-            }
-            $fields['categories1'] = $categories1;
-            $fields['categories2'] = $categories2;
-            $fields['categories3'] = $categories3;
-            /* End of categories section */
         }
 
         /* Now do the HTML */
@@ -115,6 +86,8 @@ switch ($modx->event->name) {
         /* Add our custom fields to the Create/Edit User form */
         $modx->event->output($extraFields);
         break;
+
+
     case 'OnUserFormSave':
         /* do processing logic here. */
         /* @var $user extUser */
@@ -126,6 +99,7 @@ switch ($modx->event->name) {
             $modx->log(modX::LOG_LEVEL_ERROR, '[ExtraUserFields] No User object');
             return;
         }
+        $data->set('userdata_id', $user->get('id'));
         $fields = array_keys($fields);
         $postKeys = array_keys($_POST);
         $dirty = false;
@@ -158,8 +132,12 @@ switch ($modx->event->name) {
             $data->save();
         }
 
-        // $chunk->setContent($debug . "\n" . print_r($_POST, true));
-        // $chunk->save();
+        break;
+    case 'OnUserRemove':
+        $extData = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
+        if ($extData) {
+            $extData->remove();
+        }
         break;
 }
 return;

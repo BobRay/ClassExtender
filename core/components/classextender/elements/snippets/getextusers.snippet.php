@@ -45,7 +45,7 @@ $modx->lexicon->load('classextender:default');
 $scriptProperties = isset($scriptProperties)? $scriptProperties : array();
 $sp = $scriptProperties;
 
-$userClass = $modx->getOption('userClass', $sp, 'extUser' );
+$userClass = $modx->getOption('userClass', $sp, 'userData' );
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)

@@ -41,15 +41,14 @@ $userId = $modx->getOption('userId', $sp, null);
 $prefix = $modx->getOption('prefix', $sp, '');
 
 if ($userId != null) {
-    $user = $modx->getObject('extUser', $userId);
+    $data = $modx->getObject('userData', $userId);
     if (! $user) {
         return $modx->lexicon('ce.user_not_found');
     }
 } else {
     $user = $modx->user;
+    $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
 }
-
-$data = $user->getOne('Data');
 
 if ($data) {
     $modx->toPlaceholders($data, $prefix);
