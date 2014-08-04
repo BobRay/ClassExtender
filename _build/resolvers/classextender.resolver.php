@@ -31,6 +31,17 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
+            /* Set class keys back to original values */
+            $modx->updateCollection(
+                 'modResource',
+                     array('class_key' => 'modDocument'),
+                     array('class_key' => 'extResource')
+            );
+            $modx->updateCollection(
+                 'modUser',
+                     array('class_key' => 'modUser'),
+                     array('class_key' => 'extUser')
+            );
             break;
 
         case xPDOTransport::ACTION_UNINSTALL:
