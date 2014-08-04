@@ -260,6 +260,7 @@ $components = array(
                 'category' => 'ClassExtender',
                 'name'     => 'ClassExtenderForm',
             ),
+
             'ExtraUserFields' => array(
                 'category' => 'ClassExtender',
                 'name' => 'ExtraUserFields',

@@ -70,38 +70,44 @@ if ($object->xpdo) {
 
             $intersects = array (
                 0 =>  array (
-                  'pluginid' => 'ExtraUserFields',
+                  'pluginid' => 'ExtraResourceFields',
                   'event' => 'OnUserFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 1 =>  array (
-                  'pluginid' => 'ExtraUserFields',
+                  'pluginid' => 'ExtraResourceFields',
                   'event' => 'OnUserFormRender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 2 =>  array (
-                  'pluginid' => 'ExtraUserFields',
+                  'pluginid' => 'ExtraResourceFields',
                   'event' => 'OnUserFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 3 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormPrerender',
+                  'pluginid' => 'ExtraUserFields',
+                  'event' => 'OnUserFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 4 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormRender',
+                  'pluginid' => 'ExtraUserFields',
+                  'event' => 'OnUserFormRender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 5 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormSave',
+                  'pluginid' => 'ExtraUserFields',
+                  'event' => 'OnUserFormSave',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                6 =>  array (
+                  'pluginid' => 'ExtraUserFields',
+                  'event' => 'OnUserRemove',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
