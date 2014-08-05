@@ -16,5 +16,6 @@
             <column key="userdata_id" length="" collation="A" null="false"/>
         </index>
         <aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Profile" class="modUser" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>
     </object>
 </model>

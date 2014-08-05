@@ -28,6 +28,7 @@
  *
  * Variables
  * ---------
+ *
  * @var $modx modX
  * @var $scriptProperties array
  *
@@ -42,10 +43,12 @@ $modx->lexicon->load('classextender:default');
 
 
 /* @var $scriptProperties array */
-$scriptProperties = isset($scriptProperties)? $scriptProperties : array();
+$scriptProperties = isset($scriptProperties)
+    ? $scriptProperties
+    : array();
 $sp = $scriptProperties;
 
-$userClass = $modx->getOption('userClass', $sp, 'userData' );
+$userClass = $modx->getOption('userClass', $sp, 'userData');
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)
@@ -63,11 +66,11 @@ $c = $modx->newQuery($userClass);
 $c->sortby($sortBy, $sortDir);
 $c->where($where);
 
-$users = $modx->getCollectionGraph($userClass, '{"Profile":{},"Data":{}}', $c);
+$users = $modx->getCollectionGraph($userClass, '{"Profile":{},"User":{}}', $c);
 
 $count = count($users);
 
-if (! $count) {
+if (!$count) {
     return $modx->lexicon('ce.no_users_found');
 
 }
@@ -80,12 +83,12 @@ $output = '';
 $innerOutput = '';
 foreach ($users as $user) {
     $fields = $user->toArray();
-    unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class'] );
+    unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class']);
     if ($user->Profile) {
         $fields = array_merge($user->Profile->toArray(), $fields);
     }
-    if ($user->Data) {
-        $fields = array_merge($user->Data->toArray(), $fields);
+    if ($user->User) {
+        $fields = array_merge($user->User->toArray(), $fields);
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
