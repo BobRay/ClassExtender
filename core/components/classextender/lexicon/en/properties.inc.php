@@ -42,14 +42,14 @@
 $_lang['ce.get_ext_users_where'] = 'JSON string containing query criteria; default: empty';
 $_lang['ce.get_ext_users_sortby_desc'] = 'Field to sort by (e.g., username, Profile.fullname, Data.lastname); default: username';
 $_lang['ce.get_ext_users_sortdir_desc'] = 'Direction to sort in (ASC, DESC); default: ASC';
-$_lang['ce.class_for_user_object'] = 'Class for user object';
+$_lang['ce.class_for_user_data_object'] = 'Class for extended data table (not the user object); default: userData';
 $_lang['ce.outer_tpl'] = 'Name of outer Tpl chunk to use for user listing; default: extUserOuterTpl';
 $_lang['ce.inner_tpl'] = 'Name of inner Tpl chunk to use for user listing; default: extUserInnerTpl.';
 $_lang['ce.row_tpl'] = 'Name of row Tpl chunk to use for user listing -- displays individual user data; default: extUserRowTpl';
 
 /* Used in properties.classextender.snippet.php */
 $_lang['ce.package_desc'] = 'Name of the package being created (e.g., extendeduser, extendedresource); default: empty';
-$_lang['ce.class_desc'] = 'Name of class being created (e.g.,   extUser, extResource); default: empty';
+$_lang['ce.class_desc'] = 'Name of class being created (e.g., extUser, extResource); default: empty';
 $_lang['ce.parent_object_desc'] = 'Class that the object being created extends (e.g., modUser, modResource); default: empty';
 $_lang['ce.table_prefix_desc'] = 'Table prefix for new DB table; default: ext_';
 $_lang['ce.table_name_desc'] = 'Name for DB table without the prefix (e.g., user_data, resource_data); default: empty';

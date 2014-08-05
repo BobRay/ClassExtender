@@ -38,7 +38,7 @@
 
 /* Used in classextenderform.chunk.html */
 $_lang['ce_create_table_or_schema'] = 'You must create the DB table or the schema chunk before submitting';
-$_lang['ce_update_class_key_desc'] = 'Update all existing objects with new class_key';
+$_lang['ce_update_class_key_desc'] = 'Update all existing objects with new class_key (not recommended unless they are different users from regular users';
 $_lang['ce_update_class_key_caption'] = 'Update class_key';
 $_lang['ce_package_name_caption'] = 'Package Name';
 $_lang['ce_class_caption'] = 'Class';

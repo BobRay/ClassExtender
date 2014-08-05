@@ -73,10 +73,10 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'userClass' => 
+  'userDataClass' => 
   array (
-    'name' => 'userClass',
-    'desc' => 'ce.class_for_user_object',
+    'name' => 'userDataClass',
+    'desc' => 'ce.class_for_user_data_object',
     'type' => 'textfield',
     'options' => 
     array (
