@@ -49,30 +49,6 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'userClass' => 
-  array (
-    'name' => 'userClass',
-    'desc' => 'ce.class_for_user_object',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => 'extUser',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'where' => 
-  array (
-    'name' => 'where',
-    'desc' => 'ce.get_ext_users_where',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => '',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
   'sortby' => 
   array (
     'name' => 'sortby',
@@ -94,6 +70,30 @@ $properties = array (
     array (
     ),
     'value' => 'ASC',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'userClass' => 
+  array (
+    'name' => 'userClass',
+    'desc' => 'ce.class_for_user_object',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => 'userData',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'where' => 
+  array (
+    'name' => 'where',
+    'desc' => 'ce.get_ext_users_where',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => '',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
