@@ -2,7 +2,7 @@
 /**
  * SetUserPlaceholders snippet for ClassExtender extra
  *
- * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2013-2014 by Bob Ray <http://bobsguides.com>
  * Created on 04-13-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -28,6 +28,7 @@
  *
  * Variables
  * ---------
+ *
  * @var $modx modX
  * @var $scriptProperties array
  *
@@ -37,19 +38,34 @@
 $modx->lexicon->load('classextender:default');
 
 $sp = $scriptProperties;
-$userId = $modx->getOption('userId', $sp, null);
+$userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
+$dataClass = $modx->getOption('dataClass', $sp, 'userData');
 
-if ($userId != null) {
-    $data = $modx->getObject('userData', $userId);
-    if (! $user) {
-        return $modx->lexicon('ce.user_not_found');
-    }
+$c = $modx->newQuery($dataClass);
+
+
+if (!empty($userId)) {
+    $c->where(array('userdata_id' => $userId));
 } else {
-    $user = $modx->user;
-    $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
+    $c->where(array('userdata_id' => $modx->user->get('id')));
+}
+
+$data = $modx->getObjectGraph($dataClass, '{"Profile":{},"User":{}}', $c);
+
+if (!$data) {
+    return $modx->lexicon('ce.user_not_found');
 }
 
 if ($data) {
     $modx->toPlaceholders($data, $prefix);
 }
+if ($data->Profile) {
+    $modx->toPlaceholders($data->Profile, $prefix);
+}
+
+if ($data->User) {
+    $modx->toPlaceholders($data->User, $prefix);
+}
+
+return '';
