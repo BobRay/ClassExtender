@@ -2,7 +2,7 @@
 /**
  * ExtraUserFields plugin for ClassExtender extra
  *
- * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2013-2014 by Bob Ray <http://bobsguides.com>
  * Created on 12-10-2013
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -38,20 +38,12 @@
  *
  **/
 
-// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
-
 /* Define extra fields */
 $fields = array();
-/* Get Field names from temp. object */
-
 
 /* Make sure we have an extUser object to work with */
 if (isset($user) && ($user instanceof  modUser)) {
     $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
-
-    // $extUser = $modx->newObject('extUser');
-    // $extUser->fromArray($user->toArray(), "", true, true);
-    // $data = $extUser->getOne('Data');
 }
 /* @var $data userData */
 
@@ -103,16 +95,16 @@ switch ($modx->event->name) {
         $fields = array_keys($fields);
         $postKeys = array_keys($_POST);
         $dirty = false;
-        /* If $_POST values don't match DB value,
-           update field and set dirty flag */
+
         foreach($fields as $field) {
             if (in_array($field, $postKeys)) {
-               //  $debug .= "\nIn Array" . $field;
-                if ($_POST[$field] != $data->get($field)) {
-                  //  $debug .= "\nDirty" . $field;
-                    if (empty($_POST[$field])) {
-                        $_POST[$field] = '';
-                    }
+                /* Convert NULL to '', but preserve '0' */
+                if (empty($_POST[$field]) && ($_POST[$field] !== '0')) {
+                    $_POST[$field] = '';
+                }
+                /* If $_POST values don't match DB value,
+                   update field and set dirty flag */
+                if ($_POST[$field] !== $data->get($field)) {
                     $data->set($field, $_POST[$field]);
                     $dirty = true;
                 }
@@ -140,4 +132,4 @@ switch ($modx->event->name) {
         }
         break;
 }
-return;
+return '';
