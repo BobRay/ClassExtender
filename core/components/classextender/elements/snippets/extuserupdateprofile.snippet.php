@@ -41,73 +41,38 @@ $submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn']
 
 $data = null;
 $user = null;
-if (isset($modx->user) && ($modx->user instanceof modUser)) {
-    $user =& $modx->user;
-    if ($user instanceof extUser) {
-        $data = $user->getOne('Data');
-    } else {
-        $user->set('class_key', 'extUser');
-        $user->save();
-        $user = $modx->getObject('extUser', $user->get('id'));
-    }
-}
+$fields = array();
+
 /* @var $data userData */
 
-
-if ((!$data) && $user) {
-    $data = $modx->newObject('userData');
-    $user->addOne($data);
+if (isset($modx->user) && ($modx->user instanceof modUser)) {
+    $user =& $modx->user;
+    $data = $modx->getObject('userData',
+        array('userdata_id' => $modx->user->get('id')));
+    if ($data) {
+        $fields = $data->toArray();
+    } else {
+        $data = $modx->newObject('userData');
+        if ($data) {
+            $fields = $data->toArray();
+        }
+    }
 }
 
-$fields = array(
-    'firstName'        => '',
-    'lastName'         => '',
-    'title'            => '',
-    'company'          => '',
-    'category1'        => '',
-    'category2'        => '',
-    'category3'        => '',
-);
-
-if ($data) {
-    /* Set fields with values from DB (if any) */
-    foreach ($fields as $key => $value) {
-        $dbValue = $data->get($key);
-        /* Make sure there are no null values */
-        $dbValue = $dbValue === NULL
-            ? ''
-            : $dbValue;
-        $fields[$key] = $dbValue;
-    }
-    /* Handle categories - remove if not needed */
-    $list = $modx->getChunk('ExtUserCategories');
-    $categoryList = explode(',', trim($list));
-
-    $categories1 = $categories2 = $categories3 = '';
-    foreach ($categoryList as $cat) {
-        $selected = $cat == $fields['category1']
-            ? 'selected="selected" '
-            : ' ';
-        $categories1 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-
-        $selected = $cat == $fields['category2']
-            ? 'selected="selected" '
-            : ' ';
-        $categories2 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-
-        $selected = $cat == $fields['category3']
-            ? 'selected="selected" '
-            : ' ';
-        $categories3 .= "\n<option " . $selected . "value=\"" . $cat . '">' . $cat . '</option>';
-    }
-
-    $modx->setPlaceholder('categories1', $categories1);
-    $modx->setPlaceholder('categories2', $categories2);
-    $modx->setPlaceholder('categories3', $categories3);
-    /* End Category section */
-    
+if (! is_array($data) || empty($data)) {
+    return '';
 }
-  
+
+/* Convert any nulls to '' */
+if (!empty($fields)) {
+    foreach($fields as $key => $value) {
+        if (empty($value) && ($value !== '0')) {
+            $fields[$key] = '';
+        }
+    }
+    $modx->setPlaceholders($fields);
+}
+
 if ($submission) {
     $modx->request->sanitizeRequest();
     $dirty = false;
@@ -121,7 +86,7 @@ if ($submission) {
     }
 
     if ($dirty) {
-        $user->save();
+        $data->save();
     }
 }
 

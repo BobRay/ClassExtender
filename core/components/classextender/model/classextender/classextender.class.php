@@ -403,8 +403,9 @@ class ClassExtender {
     }
 
     public function getResourceOverrides() {
+        $overRides = '';
 
-        $overRides = "\n    public static function getControllerPath(xPDO &\$modx) {
+ /*       $overRides = "\n    public static function getControllerPath(xPDO &\$modx) {
             return \$modx->getOption('ce.core_path', NULL, \$modx->getOption('core_path') .
              'components/classextender/') . 'controllers/';\n
     }\n";
@@ -420,7 +421,7 @@ class ClassExtender {
     $overRides .= "\n    public function getResourceTypeName() {
         \$this->xpdo->lexicon->load('classextender:default');
         return \$this->xpdo->lexicon('ce.extResource');
-    }\n";
+    }\n";*/
 
     return $overRides;
 
