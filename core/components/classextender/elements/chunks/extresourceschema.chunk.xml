@@ -14,6 +14,6 @@
         <index alias="resourcedata_id" name="resourcedata_id" primary="false" unique="true" type="BTREE">
             <column key="resourcedata_id" length="" collation="A" null="false"/>
         </index>
-        <aggregate alias="Resource" class= "modResource" local="resourcedata_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Resource" class="modResource" local="resourcedata_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
 </model>

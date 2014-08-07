@@ -504,14 +504,4 @@ class ClassExtender {
             rmdir($dir);
         }
     }
-
-    public function convertToClass($class) {
-        /** @var $this xPDOObject */
-        $fields = $this->toArray();
-        $fields['class_key'] = $class;
-        $obj = $this->modx->newObject($class);
-        $obj->fromArray($fields, "", true, true);
-
-        return $obj; /* return &$obj; ? */
-    }
 }
