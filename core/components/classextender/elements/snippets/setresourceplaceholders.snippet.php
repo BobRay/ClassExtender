@@ -2,7 +2,7 @@
 /**
  * SetResourcePlaceholders snippet for ClassExtender extra
  *
- * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2013-2014 by Bob Ray <http://bobsguides.com>
  * Created on 04-13-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -28,6 +28,7 @@
  *
  * Variables
  * ---------
+ *
  * @var $modx modX
  * @var $scriptProperties array
  *
@@ -41,7 +42,7 @@ $resourceId = $modx->getOption('resourceId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
 
 if ($resourceId != NULL) {
-    $resource = $modx->getObject('extResource', $resourceId);
+    $resource = $modx->getObject('modResource', $resourceId);
     if (!$resource) {
         return $modx->lexicon('ce.resource_not_found');
     }
@@ -49,8 +50,13 @@ if ($resourceId != NULL) {
     $resource = $modx->resource;
 }
 
-$data = $resource->getOne('Data');
+$data = $modx->getObject('resourceData',
+    array('resourcedata_id' => $resource->get('id')));
 
 if ($data) {
     $modx->toPlaceholders($data, $prefix);
 }
+
+$modx->toPlaceholders($resource->toArray(), $prefix);
+
+return '';

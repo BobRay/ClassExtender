@@ -47,7 +47,7 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
-$resourceClass = $modx->getOption('resourceClass', $sp, 'extResource');
+$resourceClass = $modx->getOption('resourceClass', $sp, 'resourceData');
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)
@@ -70,7 +70,7 @@ if (! empty($where)) {
 }
 
 
-$resources = $modx->getCollectionGraph($resourceClass, '{"Data":{}}', $c);
+$resources = $modx->getCollectionGraph($resourceClass, '{"Resource":{}}', $c);
 
 $count = count($resources);
 
@@ -88,8 +88,8 @@ $innerOutput = '';
 foreach ($resources as $resource) {
     $fields = $resource->toArray();
 
-    if ($resource->Data) {
-        $fields = array_merge($resource->Data->toArray(), $fields);
+    if ($resource->Resource) {
+        $fields = array_merge($resource->Resource->toArray(), $fields);
     }
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);

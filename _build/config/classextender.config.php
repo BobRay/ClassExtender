@@ -230,15 +230,19 @@ $components = array(
                 'description' => 'Add and process extra fields in Create/Edit Resource form',
                 'disabled' => true,
                 'events' => array(
-                    'OnUserFormRender'    => array(
+                    'OnDocFormRender'    => array(
                         'group'       => 'plugins',
                         'propertySet' => '',
                     ),
-                    'OnUserFormPreRender' => array(
+                    'OnDocFormPreRender' => array(
                         'group'       => 'plugins',
                         'propertySet' => '',
                     ),
-                    'OnUserFormSave'      => array(
+                    'OnDocFormSave'      => array(
+                        'group'       => 'plugins',
+                        'propertySet' => '',
+                    ),
+                    'OnEmptyTrash' => array(
                         'group'       => 'plugins',
                         'propertySet' => '',
                     ),

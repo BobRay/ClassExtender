@@ -57,7 +57,7 @@ $properties = array (
     'options' => 
     array (
     ),
-    'value' => 'extResource',
+    'value' => 'resourceData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),

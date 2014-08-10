@@ -34,33 +34,24 @@
  * @package classextender
  **/
 
-// $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
-/* Get Field names from temp. object */
-$obj = $modx->newObject('resourceData');
-if ($obj) {
-    $fields = $obj->toArray();
-}
-unset($obj);
-
+$fields = array();
 $data = null;
 
-/* Make sure we have an extResource object to work with */
-if (isset($resource) && ($resource instanceof  modResource)) {
-    if ($resource instanceof extResource) {
-        $data = $resource->getOne('Data');
-    } else {
-        $resource->set('class_key', 'extResource');
-        $resource->save();
-        $resource = $modx->getObject('extResource', $resource->get('id'));
-    }
+/** @var $data xPDOObject */
+
+if ($resource && $resource instanceof modResource) {
+    $data = $modx->getObject('resourceData',
+        array('resourcedata_id' => $resource->get('id')));
 }
-/* @var $data resourceData */
 
-
-if (!$data) {
+if (! $data) {
     $data = $modx->newObject('resourceData');
 }
-
+if ($data) {
+    $fields = $data->toArray();
+} else {
+    return '';
+}
 
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
@@ -70,12 +61,10 @@ switch ($modx->event->name) {
         if ($data) {
             /* Set fields with values from DB (if any) */
             foreach ($fields as $key => $value) {
-                $dbValue = $data->get($key);
                 /* Make sure there are no null values */
-                $dbValue = $dbValue === NULL
-                    ? ''
-                    : $dbValue;
-                $fields[$key] = $dbValue;
+                if ($value === null ) {
+                    $fields[$key] = '';
+                }
             }
         }
 
@@ -87,8 +76,7 @@ switch ($modx->event->name) {
         $modx->event->output($extraFields);
         break;
     case 'OnDocFormSave':
-        /* do processing logic here. */
-        /* @var $resource extResource */
+
         if (!$data) {
             $modx->log(modX::LOG_LEVEL_ERROR, '[ExtraResourceFields] No Data object');
             return;
@@ -97,14 +85,13 @@ switch ($modx->event->name) {
             $modx->log(modX::LOG_LEVEL_ERROR, '[ExtraResourceFields] No Resource object');
             return;
         }
+        $data->set('resourcedata_id', $resource->get('id'));
         $fields = array_keys($fields);
         $postKeys = array_keys($_POST);
         $dirty = false;
         foreach($fields as $field) {
             if (in_array($field, $postKeys)) {
-                // $debug .= "\nIn Array" . $field;
                 if ($_POST[$field] != $data->get($field)) {
-                    // $debug .= "\nDirty" . $field;
                     if (empty($_POST[$field])) {
                         $_POST[$field] = '';
                     }
@@ -115,12 +102,19 @@ switch ($modx->event->name) {
         }
 
         if ($dirty) {
-            $resource->addOne($data);
-            $resource->save();
+            $data->save();
         }
 
-        // $chunk->setContent($debug . "\n" . print_r($_POST, true));
-        // $chunk->save();
+        break;
+
+    case 'OnEmptyTrash':
+        foreach($resources as $resource) {
+            $data = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id')));
+            if ($data) {
+                $data->remove();
+            }
+        }
+
         break;
 }
 return;
