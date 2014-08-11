@@ -13,10 +13,10 @@
 
 
 $properties = array (
-  'userId' => 
+  'prefix' => 
   array (
-    'name' => 'userId',
-    'desc' => 'ce.user_id_desc',
+    'name' => 'prefix',
+    'desc' => 'ce.user_prefix_desc',
     'type' => 'textfield',
     'options' => 
     array (
@@ -25,10 +25,22 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'prefix' => 
+  'userDataClass' => 
   array (
-    'name' => 'prefix',
-    'desc' => 'ce.user_prefix_desc',
+    'name' => 'userDataClass',
+    'desc' => 'ce.class_for_user_data_object',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => 'userData',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'userId' => 
+  array (
+    'name' => 'userId',
+    'desc' => 'ce.user_id_desc',
     'type' => 'textfield',
     'options' => 
     array (

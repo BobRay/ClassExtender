@@ -47,7 +47,7 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
-$resourceClass = $modx->getOption('resourceClass', $sp, 'resourceData');
+$resourceClass = $modx->getOption('resourceDataClass', $sp, 'resourceData');
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)

@@ -48,7 +48,7 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
-$userClass = $modx->getOption('userClass', $sp, 'userData');
+$userClass = $modx->getOption('userDataClass', $sp, 'userData');
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)

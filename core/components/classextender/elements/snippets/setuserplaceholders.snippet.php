@@ -40,7 +40,7 @@ $modx->lexicon->load('classextender:default');
 $sp = $scriptProperties;
 $userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
-$dataClass = $modx->getOption('dataClass', $sp, 'userData');
+$dataClass = $modx->getOption('userDataClass', $sp, 'userData');
 
 $c = $modx->newQuery($dataClass);
 

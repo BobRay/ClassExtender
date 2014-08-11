@@ -42,7 +42,6 @@ class ClassExtender {
     /** @var  $generator xPDOGenerator */
     public $generator;
     public $modelPath;
-    public $devMode = false;
     public $dirPermission;
     protected $output = array();
     protected $fields = array();
@@ -63,7 +62,7 @@ class ClassExtender {
         $this->hasError = false;
         $this->output = array();
 
-        $cssFile = $this->modx->getOption('ce.assets_url', $this->props,
+        $cssFile = $this->modx->getOption('ce.assets_url', null,
                 MODX_ASSETS_URL . 'components/classextender/') . 'css/classextender.css';
 
         $this->modx->regClientCSS($cssFile);
@@ -73,13 +72,6 @@ class ClassExtender {
 
         $manager = $this->modx->getManager();
         $this->generator = $manager->getGenerator();
-
-        $corePath = $this->modx->getOption('ce.core_path', NULL, NULL);
-
-
-        if (!empty($corePath)) {
-            $this->devMode = true;
-        }
 
         $basePath = $this->modx->getOption('ce.core_path', NULL,
             $this->modx->getOption('core_path') .
