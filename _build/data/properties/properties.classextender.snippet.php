@@ -13,58 +13,10 @@
 
 
 $properties = array (
-  'package' => 
-  array (
-    'name' => 'package',
-    'desc' => 'ce.package_desc',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => '',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
   'class' => 
   array (
     'name' => 'class',
     'desc' => 'ce.class_desc',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => '',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'parentObject' => 
-  array (
-    'name' => 'parentObject',
-    'desc' => 'ce.parent_object_desc',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => '',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'tablePrefix' => 
-  array (
-    'name' => 'tablePrefix',
-    'desc' => 'ce.table_prefix_desc',
-    'type' => 'textfield',
-    'options' => 
-    array (
-    ),
-    'value' => 'ext_',
-    'lexicon' => 'classextender:properties',
-    'area' => '',
-  ),
-  'tableName' => 
-  array (
-    'name' => 'tableName',
-    'desc' => 'ce.table_name_desc',
     'type' => 'textfield',
     'options' => 
     array (
@@ -85,15 +37,51 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'updateClassKey' => 
+  'package' => 
   array (
-    'name' => 'updateClassKey',
-    'desc' => 'ce.update_class_key_desc',
-    'type' => 'combo-boolean',
+    'name' => 'package',
+    'desc' => 'ce.package_desc',
+    'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => false,
+    'value' => '',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'parentObject' => 
+  array (
+    'name' => 'parentObject',
+    'desc' => 'ce.parent_object_desc',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => '',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'tableName' => 
+  array (
+    'name' => 'tableName',
+    'desc' => 'ce.table_name_desc',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => '',
+    'lexicon' => 'classextender:properties',
+    'area' => '',
+  ),
+  'tablePrefix' => 
+  array (
+    'name' => 'tablePrefix',
+    'desc' => 'ce.table_prefix_desc',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => 'ext_',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),

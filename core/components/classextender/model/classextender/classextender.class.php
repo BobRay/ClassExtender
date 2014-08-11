@@ -68,7 +68,6 @@ class ClassExtender {
 
         $this->modx->regClientCSS($cssFile);
 
-
         $this->dirPermission = (int) $this->modx->getOption('dirPermission',
             $this->props, 0755);
 
@@ -99,10 +98,8 @@ class ClassExtender {
 
         $this->ce_class = isset($_POST['ce_class'])
             ? $_POST['ce_class']
-            :$this->modx->getOption('class', $this->props,
-                str_replace('mod', 'ext',$this->ce_parent_object));
-
-
+            :$this->modx->getOption('class',
+                $this->props, $this->ce_parent_object);
 
         /* Strip off 'mod' to produce 'User' or 'Resource' */
 
@@ -122,10 +119,6 @@ class ClassExtender {
         $this->ce_method = isset($_POST['ce_method'])
             ? $_POST['ce_method']
             : $this->modx->getOption('method', $this->props, 'use_schema');
-
-        $this->ce_update_class_key = isset($_POST['ce_update_class_key'])
-            ? $_POST['ce_update_class_key'] === 'ce_update_class_key_yes'
-            : $this->modx->getOption('updateClassKey', $this->props, false);
 
         $this->ce_schema_file = $this->modx->getOption('schemaFile',
             $this->props, '' );
@@ -164,9 +157,6 @@ class ClassExtender {
 
     public function process() {
 
-       // $this->displayForm($fields);
-
-
         if ($this->ce_method == 'use_table') {
            if(! $this->generateSchema()) {
                return;
@@ -189,12 +179,6 @@ class ClassExtender {
 
         $this->registerExtensionPackage();
 
-
-        if ($this->ce_update_class_key) {
-            $this->addOutput($this->modx->lexicon('ce.updating_class_key'));
-            $this->updateClassKey();
-
-        }
     }
 
     public function displayForm() {
@@ -365,13 +349,6 @@ class ClassExtender {
             $classFile = $this->modelPath . $this->packageLower . '/' . $this->ce_class . '.class.php';
             $inserts = $this->getConstructorText();
 
-            if ($this->objectPrefix === 'Resource') {
-                $inserts .= $this->getResourceOverrides();
-                /*$this->createControllers();*/
-            }
-
-
-
             if (file_exists($classFile)) {
                 $content = file_get_contents($classFile);
                 /* don't add if we've done it already */
@@ -399,34 +376,9 @@ class ClassExtender {
         \$this->set('class_key'," .  $this->ce_class . ");
 
     }\n";
-       /*         \$this->showInContextMenu = true; */
-    }
-
-    public function getResourceOverrides() {
-        $overRides = '';
-
- /*       $overRides = "\n    public static function getControllerPath(xPDO &\$modx) {
-            return \$modx->getOption('ce.core_path', NULL, \$modx->getOption('core_path') .
-             'components/classextender/') . 'controllers/';\n
-    }\n";
-
-    $overRides .= "\n    public function getContextMenuText() {
-        \$this->xpdo->lexicon->load('classextender:default');
-        return array(
-            'text_create' => \$this->xpdo->lexicon('ce.extResource'),
-            'text_create_here' => \$this->xpdo->lexicon('ce.ext_resource_create_here'),
-        );
-    }\n";
-
-    $overRides .= "\n    public function getResourceTypeName() {
-        \$this->xpdo->lexicon->load('classextender:default');
-        return \$this->xpdo->lexicon('ce.extResource');
-    }\n";*/
-
-    return $overRides;
-
 
     }
+
 
     public function createTables() {
         $success = $this->modx->addPackage($this->ce_package_name,
@@ -468,25 +420,6 @@ class ClassExtender {
         $this->addOutput($this->modx->lexicon('ce.extension_package_registered'));
     }
 
-    public function updateClassKey() {
-        switch($this->objectPrefix) {
-            case 'Resource':
-                $this->modx->updateCollection(
-                     'modResource',
-                         array('class_key' => $this->ce_class),
-                         array('class_key' => 'modDocument')
-                );
-            break;
-
-            case 'User':
-                $this->modx->updateCollection(
-                    'modUser',
-                       array('class_key' => $this->ce_class),
-                       array('class_key' => 'modUser')
-                );
-        }
-        $this->addOutput($this->modx->lexicon('ce.class_key_updated'));
-    }
 
     public function rrmdir($dir) {
         if (is_dir($dir)) {
