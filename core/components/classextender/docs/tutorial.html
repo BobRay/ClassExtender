@@ -10,29 +10,20 @@
 
 <p><b>Important!</b> If you uninstall the earlier version, you will lose any custom user or resource data currently stored in the database.</p>
 
-<p>Unfortunately, installing the new version will overwrite your schema files and your chunks. Here is the required upgrade procedure:</p>
+<p>So that the upgrade will not overwrite your schema and extra fields chunks, the upgrade code will copy them to four new files with the prefix 'My':</p>
 
-<h4>Before Upgrading</h4>
-<ol>
-    <li>Duplicate the following four chunks, adding the prefix 'My' to the duplicates:
-        <ul>
-            <li>ExtraUserFields (call the duplicate MyExtraUserFields)</li>
-            <li>ExtUserSchema (call the duplicate MyExtUserSchema)</li>
-            <li>ExtraResourceFields (call the duplicate MyExtraResourceFields)</li>
-            <li>ExtResourceSchema (call the duplicate MyExtResourceSchema)</li>
+<ul>
+    <li>ExtraUserFields will be copied to MyExtraUserFields</li>
+    <li>ExtUserSchema will be copied to MyExtUserSchema</li>
+    <li>ExtraResourceFields will be copied to MyExtraResourceFields</li>
+    <li>ExtResourceSchema will be copied to MyExtResourceSchema</li>
+</ul>
 
-        </ul>
-    </li>
-    <li>Duplicate any ClassExtender Tpl chunks that you have modified</li>
-</ol>
-
-<p>Upgrade the ClassExtender Extra in Package Manager.</p>
+<p>The snippets and plugins in the new versions, will use the 'My' chunks if they exist.</p>
 
 <h4>After Upgrading</h4>
 <ol>
-    <li>Edit the Extend modUser snippet and change the value of the &schemaTpl property to `MyExtUserSchema`</li>
-    <li>Edit the Extend modResource snippet and change the value of the &schemaTpl property to `MyExtResourceSchema`</li>
-    <li>Edit the two MyExtUserSchema and MyExtResourcSchema chunks and replace the aliases for the userData and resourceData object with the ones from the ExtUserSchema and ExtResourceSchema chunks. (This is necessary because the aliases have changed.)</li>
+    <li>Edit the two MyExtUserSchema and MyExtResourceSchema chunks and replace the aliases for the userData and resourceData object with the ones from the ExtUserSchema and ExtResourceSchema chunks. (This is necessary because the aliases have changed.)</li>
     <li>View and Submit the ExtendModUser and/or ExtendModResource Resources.</li>
     <li>If your snippet tags contain a <code>&where</code> property, they will need to be modified (see below).</li>
     <li>Custom snippets you have written may also need to be modified (see below).</li>
@@ -84,24 +75,30 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>This is entirely up to you, but I would recommend performing the entire process using the examples provided with ClassExtender. You'll see how everything works and can verify that ClassExtender operates as it should before trying to create your own extended classes. Once the process is completed, you can drop the existing database table and repeat the steps using your own schema.<p>
 
-<p>The easiest way to start over is to uninstall and re-install ClassExtender. That will remove all traces of ClassExtender in the database. ClassExtender will generate completely new class and map files every time it runs so the example ones will be overwritten with yours.</p>
+<p>The easiest way to start over is to uninstall and re-install ClassExtender. That will remove all traces of ClassExtender in the database. ClassExtender will generate completely new class and map files every time it runs so the example ones will be overwritten with yours.
+
+<div class="box">
+<p>Note that uninstalling will delete the 'My...' chunks created during the install. If you have modified them for your purposes and want to keep them, rename them before uninstalling ClassExtender.</p>
+</div>
 
 <h3>The Examples</h3>
 
 <p>The files and objects included with ClassExtender serve as examples that you can modify to meet your needs.</p>
 
-<p>The User examples are something I did for a client. The client needed extra fields for <code>firstName</code>, <code>lastName</code>, <code>title</code>, <code>registrationDate</code>, and <code>company</code>. The <code>registrationDate</code> field is not shown on the form. It's set to today's date only if the field in the database is empty. The ExtraUserFields chunk contains the HTML to show the fields on the Create/Edit User panel. The ExtraUserFields plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. Don't forget to enable the ExtraUserFields plugin or you won't see the extra fields.</p>
+<p>The User examples are something I did for a client. The client needed extra fields for <code>firstName</code>, <code>lastName</code>, <code>title</code>, <code>registrationDate</code>, and <code>company</code>. The <code>registrationDate</code> field is not shown on the form. It's set to today's date only if the field in the database is empty. The MyExtraUserFields chunk contains the HTML to show the fields on the Create/Edit User panel. It will not be modified during future upgrades of ClassExtender.</p>
+
+<p>The ExtraUserFields plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. Don't forget to enable the ExtraUserFields plugin or you won't see the extra fields.</p>
         
-<p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The ExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. The ExtraResourceFields plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database. Don't forget to enable the ExtraResourceFields plugin or you won't see the extra fields.</p>
+<p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The MyExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. It will not be modified during future upgrades of ClassExtender.</p>
+
+<p>The ExtraResourceFields plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database. Don't forget to enable the ExtraResourceFields plugin or you won't see the extra fields.</p>
 
 <h3>Extending modUser</h3>
 
 <p>Here are the basic steps necessary to extend the <code>modUser</code> object. You shouldn't need to modify any fields in the form:
 
 <ol>
-    <li>Duplicate the ExtUserSchema chunk. Call it MyExtUserSchema.</li>
     <li>Modify the MyExtUserSchema chunk to meet your needs. Usually, all you really need to change are the &quot;fields&quot; of the userData object in the schema.</li>
-    <li>Change the value of the <code>&schemaTpl</code> property in the tag on the Extend modUser Resource to `MyExtUserSchema` and save the Resource.</li>
     <li>View the &quot;Extend modUser&quot; resource.</li>
     <li>Click on Submit.</li>
     <li>Modify the MyExtraUserFields chunk to display your extra fields.</li>
@@ -117,7 +114,6 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 <p>Here are the basic steps necessary to extend the <code>modResource</code> object. You shouldn't need to modify any fields in the form:
 
 <ol>
-    <li>Duplicate the ExtResourceSchema chunk. Call it MyExtUserSchema.</li>
     <li>Modify the MyExtResourceSchema chunk to meet your needs. Usually all you need to modify are the &quot;fields&quot; of the resourceData objext in the schema.</li>
     <li>View the &quot;Extend modResource&quot; resource</li>
     <li>Click on Submit</li>
@@ -239,7 +235,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
         
 <h3>Uninstalling ClassExtender</h3>
         
-<p><b>Important</b>: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any extended classes. The class and map files, the namespace, and any database tables will be removed during the uninstall.</p>
+<p><b>Important</b>: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any extended classes. The class and map files, all chunks (including the 'My..." chunks), the namespace, and any database tables will be removed during the uninstall.</p>
 
 <p>When you uninstall ClassExtender, you may see some error messages. This is normal. There may also be some spurious error messages in the MODX Error Log.</p>
 
