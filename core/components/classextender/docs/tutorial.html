@@ -255,7 +255,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>This makes for faster searching, fewer spurious error messages, and no more interference with other Extras that extend the <code>modUser</code> or <code>modResource</code> objects. One down side is that when you delete a Resource or User, the custom data row for that object is not automatically deleted. The ExtraUserFields and ExtraResourceFields plugins have been modified to do the deletion.</p>
 
-<p>If you need to get a related object, you now have to do it the other way around. This code will no longer work:</p>
+<p>If you need to get a related object, you now have to do it the other way around. This code will no longer work because the <code>modUser</code> object is not aware of the extra fields:</p>
 
 <pre class="brush: php; toolbar: false;"><fixedpre>
 $user = $modx->getObject('extUser', 23);
@@ -298,13 +298,15 @@ $resources = $modx->getCollectionGraph('resourceData', '{"Resource":{}}', $c);
 <p>If you have a User object and would like to get its custom extended fields, do this:</p>
 
 <pre class="brush: php; toolbar: false;"><fixedpre>
-$extraFields = $modx->getObject('userData', array('userdata_id' => $user->get('id'));
+$data = $modx->getObject('userData', array('userdata_id' => $user->get('id'));
+$fields = $data->toArray();
 </fixedpre></pre>
 
 <p>If you have a Resource object and would like to get its custom extended fields, do this:</p>
 
 <pre class="brush: php; toolbar: false;"><fixedpre>
-$extraFields = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id'));
+$data = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id'));
+$fields = $data->toArray();
 </fixedpre></pre>
 
 <div class="box">
@@ -313,7 +315,7 @@ $extraFields = $modx->getObject('resourceData', array('resourcedata_id' => $reso
 
 <h4>Creating Objects</h4>
         
-<p>Although you can't base an xPDO query on <code>extUser</code> or <code>extResource</code>, you can create either object with <code>$modx->newObject()</code> and attach related objects to it.</p>
+<p>Although you can't base an xPDO query on <code>extUser</code> or <code>extResource</code>, you can create either object with <code>$modx->newObject()</code> and attach related objects to it. Be sure to set the <code>class_key</code> field to <code>modUser</code> or <code>modDocument</code> before saving the object.</p>
         
 <p>This works fine:</p>
 
@@ -391,6 +393,11 @@ $user->save();
         <td>empty</td>
     </tr>
     <tr>
+        <td>schemaTpl</td>
+        <td>Name of the Tpl chunk to use for the schema</td>
+        <td>empty</td>
+    </tr>
+    <tr>
         <td>class</td>
         <td>Name of class being created (e.g., extUser, extResource)</td>
         <td>empty</td>
@@ -409,11 +416,6 @@ $user->save();
         <td>tableName</td>
         <td>Name for DB table without the prefix (e.g., user_data, resource_data)</td>
         <td>empty</td>
-    </tr>
-    <tr>
-        <td>method</td>
-        <td>Method to use for creating class and map files; must be use_table or user_schema</td>
-        <td>use_schema</td>
     </tr>
 
 </table>
