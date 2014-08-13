@@ -1,5 +1,16 @@
 Changelog for ClassExtender
 
+ClassExtender 2.0.0-pl
+---------------------------------
+Objects play nice with other extras that extend modResource or modUser
+ClassExtender leaves class_key field as modUser or modDocument
+Reverts class_keys to modUser or modDocument on install
+Option to update class_key removed
+Option to use table removed (never worked very well)
+Snippets and plugins converted to work with standard class_key
+Tutorial has more detail and examples
+
+
 ClassExtender 1.1.1
 ---------------------------------
 Workaround for missing extension_packages System Setting
