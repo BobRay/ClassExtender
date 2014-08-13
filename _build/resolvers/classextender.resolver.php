@@ -28,6 +28,13 @@
 
 if ($object->xpdo) {
     $modx =& $object->xpdo;
+
+    $chunks = array(
+        'ExtraUserFields',
+        'ExtUserSchema',
+        'ExtraResourceFields',
+        'ExtResourceSchema',
+    );
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
@@ -42,6 +49,19 @@ if ($object->xpdo) {
                      array('class_key' => 'modUser'),
                      array('class_key' => 'extUser')
             );
+            foreach ($chunks as $chunk) {
+                $newName = 'My' . $chunk;
+                $obj = $modx->getObject('modChunk', array('name'=> $newName));
+                if (! $obj) {
+                    $oldChunk = $modx->getObject('modChunk', array('name' => $chunk));
+                    if ($oldChunk) {
+                        $newChunk = $modx->newObject('modChunk');
+                        $newChunk->set('name', $newName);
+                        $newChunk->setContent($oldChunk->getContent());
+                        $newChunk->save();
+                    }
+                }
+            }
             break;
 
         case xPDOTransport::ACTION_UNINSTALL:
@@ -99,7 +119,13 @@ if ($object->xpdo) {
                     $rec->remove();
                 }
             }
-
+            foreach($chunks as $chunk) {
+                $newName = 'My' . $chunk;
+                $obj = $modx->getObject('modChunk', array('name' => $newName));
+                if ($obj) {
+                    $obj->remove();
+                }
+            }
             $cm = $modx->getCacheManager();
             $cm->refresh();
 
