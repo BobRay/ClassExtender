@@ -36,13 +36,12 @@ class ClassExtender {
     public $ce_parent_object = '';
     public $ce_table_prefix = '';
     public $ce_table_name = '';
-    public $ce_method = '';
-    public $ce_update_class_key = 'ce_update_class_key_no';
-    public $ce_schema_file;
+    public $ce_schema_tpl_name = '';
     /** @var  $generator xPDOGenerator */
     public $generator;
     public $modelPath;
     public $dirPermission;
+    public $ce_schema_file;
     protected $output = array();
     protected $fields = array();
     protected $packageLower = '';
@@ -98,7 +97,7 @@ class ClassExtender {
         $this->objectPrefix = substr($this->ce_parent_object, 3);
         $this->objectPrefixLower = strtolower($this->objectPrefix);
 
-        $this->schemaChunk = 'Ext' . $this->objectPrefix . 'Schema';
+        $this->schemaChunk = $this->modx->getOption('schemaTpl', $this->props, '');
 
         $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
             ? $_POST['ce_table_prefix']
@@ -115,10 +114,6 @@ class ClassExtender {
         $this->ce_schema_file = $this->modx->getOption('schemaFile',
             $this->props, '' );
 
-        if (($this->ce_method !== 'use_table') && $this->ce_method !== 'use_schema') {
-            $this->addOutput($this->modx->lexicon('ce.bad_method'), true);
-            return;
-        }
         if (empty($this->ce_schema_file)) {
             $path = $this->modelPath . 'schema';
             if (!is_dir($path)) {
@@ -127,46 +122,24 @@ class ClassExtender {
             $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
         }
 
-        if ($this->ce_method == 'use_schema') {
-            if (! file_exists($this->ce_schema_file)) {
-                $this->addOutput($this->modx->lexicon('ce.no_schema'), true);
-                return;
-            }
+        $table = 'ext_' . $this->objectPrefixLower . '_data';
+        $tableExists = gettype($this->modx->exec("SELECT count(*) FROM $table")) == 'integer';
 
-
-        } else {
-            $table = 'ext_' . $this->objectPrefixLower . '_data';
-            $tableExists = gettype($this->modx->exec("SELECT count(*) FROM $table")) == 'integer';
-
-            if (! $tableExists) {
-                $this->addOutput($this->modx->lexicon('ce.no_table') .
-                    $table, true);
-                return;
-            }
+        if (! $tableExists) {
+            $this->addOutput($this->modx->lexicon('ce.no_table') .
+                $table, true);
+            return;
         }
-
     }
 
     public function process() {
 
-        if ($this->ce_method == 'use_table') {
-           if(! $this->generateSchema()) {
-               return;
-           }
-        } else {
-            if (!$this->dumpSchema()) {
-                return;
-            }
-        }
         $this->addOutput($this->modx->lexicon('ce.generating_class_files'));
         if (!$this->generateClassFiles()) {
             return;
         };
-
-        if ($this->ce_method == 'use_schema') {
-            if (!$this->createTables()) {
+        if (!$this->createTables()) {
                 return;
-            }
         }
 
         $this->registerExtensionPackage();
@@ -180,18 +153,9 @@ class ClassExtender {
             'ce_parent_object' => $this->ce_parent_object,
             'ce_table_prefix'  => $this->ce_table_prefix,
             'ce_table_name'    => $this->ce_table_name,
+            'ce_schema_tpl_chunk_name' => $this->schemaChunk,
         );
-        if ($this->ce_method == 'use_table') {
-            $fields['ce_table_checked'] = 'checked="checked"';
-        } else {
-            $fields['ce_schema_checked'] = 'checked="checked"';
-        }
 
-        if ($this->ce_update_class_key) {
-            $fields['ce_update_class_key_yes_checked'] = 'checked="checked"';
-        } else {
-            $fields['ce_update_class_key_no_checked'] = 'checked="checked"';
-        }
         return $this->modx->getChunk('ClassExtenderForm', $fields);
     }
 
@@ -358,9 +322,7 @@ class ClassExtender {
 
     }
 
-    /*public function createControllers() {
 
-    }*/
     public function getConstructorText() {
        return  "\n
     function __construct(xPDO & \$xpdo) {
