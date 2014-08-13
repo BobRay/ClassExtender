@@ -70,7 +70,7 @@ switch ($modx->event->name) {
 
         /* now do the HTML */
 
-        $extraFields = $modx->getChunk('ExtraResourceFields', $fields);
+        $extraFields = $modx->getChunk('MyExtraResourceFields', $fields);
 
         /* Add our custom fields to the Create/Edit Resource form */
         $modx->event->output($extraFields);

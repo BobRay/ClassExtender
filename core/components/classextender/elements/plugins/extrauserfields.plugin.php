@@ -73,7 +73,7 @@ switch ($modx->event->name) {
         }
 
         /* Now do the HTML */
-        $extraFields = $modx->getChunk('ExtraUserFields', $fields);
+        $extraFields = $modx->getChunk('MyExtraUserFields', $fields);
 
         /* Add our custom fields to the Create/Edit User form */
         $modx->event->output($extraFields);
