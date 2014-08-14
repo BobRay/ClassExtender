@@ -2,7 +2,7 @@
 /**
  * snippets transport file for ClassExtender extra
  *
- * Copyright 2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
  * Created on 11-10-2013
  *
  * @package classextender

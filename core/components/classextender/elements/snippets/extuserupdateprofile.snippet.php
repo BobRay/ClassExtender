@@ -2,7 +2,7 @@
 /**
  * ExtUserUpdateProfile snippet for ClassExtender extra
  *
- * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
  * Created on 03-23-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
