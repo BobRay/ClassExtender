@@ -52,7 +52,13 @@ if ($object->xpdo) {
                     if ($oldChunk) {
                         $newChunk = $modx->newObject('modChunk');
                         $newChunk->set('name', $newName);
-                        $newChunk->setContent($oldChunk->getContent());
+                        $content = $oldChunk->getContent();
+                        if ($chunk == 'ExtUserSchema') {
+                            $content = str_replace('<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>', '<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Profile" class="modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>', $content);
+                        }
+
+                        $newChunk->setContent($content);
                         if ($categoryId) {
                             $newChunk->set('category', $categoryId);
                         }
