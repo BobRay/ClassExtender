@@ -94,7 +94,7 @@ $output .= $ce->displayForm();
 
 if ($ce->hasError()) {
     $modx->setPlaceholder('ce_results', $ce->getOutput());
-    return;
+    return '[[+ce_results]]';
 } else {
     $cm = $modx->getCacheManager();
     $cm->refresh();
