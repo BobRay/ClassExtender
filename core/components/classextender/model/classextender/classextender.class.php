@@ -121,20 +121,15 @@ class ClassExtender {
             }
             $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
         }
-
-        $table = 'ext_' . $this->objectPrefixLower . '_data';
-        $tableExists = gettype($this->modx->exec("SELECT count(*) FROM $table")) == 'integer';
-
-        if (! $tableExists) {
-            $this->addOutput($this->modx->lexicon('ce.no_table') .
-                $table, true);
-            return;
-        }
     }
 
     public function process() {
 
         $this->addOutput($this->modx->lexicon('ce.generating_class_files'));
+        if (!$this->dumpSchema()) {
+            return;
+        }
+
         if (!$this->generateClassFiles()) {
             return;
         };
@@ -192,6 +187,10 @@ class ClassExtender {
             mkdir($path, $this->dirPermission, true);
         }
         $content = $this->modx->getChunk($this->schemaChunk);
+        if (! $content) {
+            $this->addOutput($this->modx->lexicon('ce.could_not_find_schema_chunk') .
+                ': ' . $this->schemaChunk , true);
+        }
 
         $fp = fopen($this->ce_schema_file, 'w');
 
