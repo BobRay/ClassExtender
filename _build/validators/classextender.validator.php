@@ -32,6 +32,9 @@ $chunks = array(
     'ExtResourceSchema',
 );
 
+$catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
+$categoryId = $catObj ? $catObj->get('id') : NULL;
+
 if ($object->xpdo) {
     $modx =& $object->xpdo;
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
@@ -48,6 +51,9 @@ if ($object->xpdo) {
                         $newChunk = $modx->newObject('modChunk');
                         $newChunk->set('name', $newName);
                         $newChunk->setContent($oldChunk->getContent());
+                        if ($categoryId) {
+                            $newChunk->set('category', $categoryId);
+                        }
                         $newChunk->save();
                     }
                 }

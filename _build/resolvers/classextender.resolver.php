@@ -35,6 +35,9 @@ if ($object->xpdo) {
         'ExtraResourceFields',
         'ExtResourceSchema',
     );
+    $catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
+    $categoryId = $catObj? $catObj->get('id') : null;
+
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
@@ -58,7 +61,16 @@ if ($object->xpdo) {
                         $newChunk = $modx->newObject('modChunk');
                         $newChunk->set('name', $newName);
                         $newChunk->setContent($oldChunk->getContent());
+                        if ($categoryId) {
+                            $newChunk->set('category', $categoryId);
+                        }
                         $newChunk->save();
+                    }
+                } else {
+                    /* Just set the category */
+                    if ($categoryId && ($obj->get('category') !== $categoryId)) {
+                        $obj->set('category', $categoryId);
+                        $obj->save();
                     }
                 }
             }
