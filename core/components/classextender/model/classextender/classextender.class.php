@@ -97,7 +97,9 @@ class ClassExtender {
         $this->objectPrefix = substr($this->ce_parent_object, 3);
         $this->objectPrefixLower = strtolower($this->objectPrefix);
 
-        $this->schemaChunk = $this->modx->getOption('schemaTpl', $this->props, '');
+        $this->schemaChunk = isset($_POST['ce_schema_tpl_name'])
+            ? $_POST['ce_schema_tpl_name']
+            : $this->modx->getOption('schemaTpl', $this->props, '');
 
         $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
             ? $_POST['ce_table_prefix']
@@ -148,7 +150,7 @@ class ClassExtender {
             'ce_parent_object' => $this->ce_parent_object,
             'ce_table_prefix'  => $this->ce_table_prefix,
             'ce_table_name'    => $this->ce_table_name,
-            'ce_schema_tpl_chunk_name' => $this->schemaChunk,
+            'ce_schema_tpl_name' => $this->schemaChunk,
         );
 
         return $this->modx->getChunk('ClassExtenderForm', $fields);
