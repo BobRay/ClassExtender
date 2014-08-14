@@ -24,6 +24,7 @@
 
 /* $modx->lexicon->load('classextender:default'); */
 class ClassExtender {
+    public $version = '2.0.0';
     /** @var $modx modX */
     public $modx;
     /** @var $props array */
@@ -62,7 +63,7 @@ class ClassExtender {
         $this->output = array();
 
         $cssFile = $this->modx->getOption('ce.assets_url', null,
-                MODX_ASSETS_URL . 'components/classextender/') . 'css/classextender.css';
+                MODX_ASSETS_URL . 'components/classextender/') . 'css/classextender.css?v=' . $this->version;
 
         $this->modx->regClientCSS($cssFile);
 
