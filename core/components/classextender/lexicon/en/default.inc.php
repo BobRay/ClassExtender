@@ -41,19 +41,12 @@ $_lang['ce.no_class_extender'] = 'Could not instantiate ClassExtender';
 
 
 /* Used in classextender.class.php */
-$_lang['ce.no_schema'] = 'Schema file not found';
-$_lang['ce.no_table'] = 'Database table not found: ';
-$_lang['ce.generating_schema'] = 'Generating schema';
+$_lang['ce.could_not_find_schema_chunk'] = 'Could not find schema chunk';
 $_lang['ce.generating_class_files'] = 'Generating class and map files';
-$_lang['ce.deleting_schema'] = 'Deleting old schema file';
-$_lang['ce.no_file_write'] = 'Could not open file for writing: ';
-$_lang['ce.new_schema_written'] = 'New schema file written';
 $_lang['ce.schema_parsed'] = 'Schema parsed';
 $_lang['ce.table_created'] = 'Table created';
 $_lang['ce.extension_package_registered'] = 'Extension package registered';
 $_lang['ce.old_class_files_removed'] = 'Old class and map files removed';
-$_lang['ce.bad_method'] = 'Method must be use_schema or use_table';
-$_lang['ce.error_writing_schema_file'] = 'Error writing schema file';
 $_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
 $_lang['ce.parse_schema_failed'] = 'parse_schema() failed';
 $_lang['ce.addpackage_failed'] = 'addPackage() failed';
