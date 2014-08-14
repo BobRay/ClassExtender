@@ -32,11 +32,13 @@ $chunks = array(
     'ExtResourceSchema',
 );
 
-$catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
-$categoryId = $catObj ? $catObj->get('id') : NULL;
 
 if ($object->xpdo) {
     $modx =& $object->xpdo;
+    $catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
+    $categoryId = $catObj ? $catObj->get('id') : NULL;
+
+
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
             break;
