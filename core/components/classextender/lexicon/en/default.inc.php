@@ -65,3 +65,10 @@ $_lang['ce.user_not_found'] = 'User not found';
 
 /* Used in getextusers.snippet.php */
 $_lang['ce.no_users_found'] = 'No Users Found';
+
+/* Used in extusersearchformtpl.chunk.html */
+$_lang['user_search_first_name_caption'] = 'First Name';
+$_lang['user_search_last_name_caption'] = 'Last Name';
+
+/* Used in usersearchform.snippet.php */
+$_lang['ce_user_search_results_heading'] = 'Results';

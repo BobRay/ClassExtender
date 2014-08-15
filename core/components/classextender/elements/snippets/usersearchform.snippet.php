@@ -24,7 +24,7 @@
 /**
  * Description
  * -----------
- * Show user information by selected category
+ * Show user information based on search
  *
  * Variables
  * ---------
@@ -44,32 +44,30 @@
 
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
 
-$list = $modx->getChunk('ExtUserCategories');
-$categoryList = explode(',', trim($list));
-array_shift($categoryList);
-array_unshift($categoryList, 'Please Select a Category');
 
-$categories = '';
-foreach ($categoryList as $category) {
-    $categories .= "\n  " . '<option value="' . $category . '">' . $category . '</option >';
-}
+$output = $modx->getChunk($formTpl);
 
-$output = $modx->getChunk($formTpl, array('categories' => $categories));
+$pFirstName = $modx->getOption('user_search_first_name', $_POST, '');
+$pLastName = $modx->getOption('user_search_last_name', $_POST, '');
+
+$modx->setPlaceholder('user_search_first_name', $pFirstName);
+$modx->setPlaceholder('user_search_last_name', $pLastName);
+
+
 
 $fields = array();
 
-if (isset($_POST['submit-var']) && isset($_POST['ext-category'])) {
-    if ($_POST['submit-var'] == 'etaoinshrdlu' && !empty($_POST['ext-category'])) {
-        if ($_POST['ext-category'] !== 'Please Select a Category') {
-            $category = $_POST['ext-category'];
-            $fields = array_merge($scriptProperties, array('category' => $category));
-            $fields['where'] = '{"Data.category1:=":"' . $category . '","OR:Data.category2:=":"' . $category . '","OR:Data.category3:=":"' . $category . '"}';
-            $output .= $modx->runSnippet('GetExtUsers', $fields);
-        }
-    }
-} else {
-    $output .= $modx->runSnippet('GetExtUsers');
+if (isset($_POST['submit-var']) && $_POST['submit-var'] == 'etaoinshrdlu') {
+
+    $fields['where'] = '{"firstName:=":"' . $pFirstName . '","OR:lastName:=":"' . $pLastName . '"}';
+
+    $results = $modx->runSnippet('GetExtUsers', $fields);
+
 }
 
-
+if (! empty ($results) ){
+    $modx->SetPlaceholder('user_search.results_heading',
+        $modx->lexicon('ce_user_search_results_heading'));
+    $modx->setPlaceholder('user_search.results', $results);
+}
 return $output;
