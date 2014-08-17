@@ -233,7 +233,16 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>Similarly, the GetExtUsers snippet will not handle the traditional user extended fields, since performance will be much better if you make them custom Data fields using ClassExtender.</p>
 
-<p>There are two other utility snippets: ExtUserUpdateProfile and UserSearchForm. The first shows how to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. In simple cases, you may be able to just add the fields to the Update Profile page and add a tag for the snippet on the page. The second (UserSearchForm) serves as an example of how to search for users. Either snippet may need to be modified to be of any use other than as an example. </p>
+<p>There are two other utility snippets: ExtUserUpdateProfile and UserSearchForm. The first is used to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. In simple cases, you should be able to just 1) add the custom fields to the form on the Update Profile page and 2) add a tag for the snippet on the page (above the form), like this:</p>
+
+<pre class="brush: html; toolbar: false;"><fixedpre>
+[[!ExtUserUpdateProfile]]
+[[!UpdateProfile]]
+</fixedpre></pre>
+
+<p>Be sure the ExtUserUpdateProfile tag is above the UpdateProfile tag and that both snippets are called uncached (with the exclamation point). If any form fields require special handling (e.g., date fields), you'll have to modify the snippet to deal with them. When you are testing the Update Profile form, you may see some odd behavior if either your browser, or a password manager like LastPass, is trying to be helpful by filling in the forms for you. This generally won't affect real users.
+
+<p>The second (UserSearchForm) snippet serves as an example of how to search for users using the custom fields. You will have to modify it to meet your needs.</p>
         
         
 <h3>Uninstalling ClassExtender</h3>
