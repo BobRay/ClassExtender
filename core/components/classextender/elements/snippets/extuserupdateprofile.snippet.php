@@ -34,10 +34,9 @@
  * @package classextender
  **/
 
-$modx->lexicon->load('updateprofile');
+$modx->lexicon->load('login:updateprofile');
 
-$submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn'] == $modx->lexicon('ce.update_profile'));
-
+$submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn'] == $modx->lexicon('login.update_profile'));
 
 $data = null;
 $user = null;
@@ -46,20 +45,23 @@ $fields = array();
 /* @var $data userData */
 
 if (isset($modx->user) && ($modx->user instanceof modUser)) {
+    
     $user =& $modx->user;
     $data = $modx->getObject('userData',
-        array('userdata_id' => $modx->user->get('id')));
+        array('userdata_id' => $user->get('id')), false);
     if ($data) {
         $fields = $data->toArray();
     } else {
         $data = $modx->newObject('userData');
         if ($data) {
+            $data->set('userdata_id', $user->get('id'));
             $fields = $data->toArray();
+            
         }
     }
 }
 
-if (! is_array($data) || empty($data)) {
+if (! is_array($fields) || empty($fields)) {
     return '';
 }
 
@@ -89,7 +91,5 @@ if ($submission) {
         $data->save();
     }
 }
-
-
 
 return '';
