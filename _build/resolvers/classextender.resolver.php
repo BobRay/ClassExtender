@@ -94,18 +94,6 @@ if ($object->xpdo) {
                 $modx->removeExtensionPackage('extendedresource');
             }
 
-            $pages = array(
-                 'ClassExtender',
-                 'Extend modResource',
-                 'Extend modUser',
-            );
-            foreach ($pages as $page) {
-                $resource = $modx->getObject('modResource', array('pagetitle' => $page));
-                if ($resource) {
-                    @$resource->remove();
-                }
-            }
-
             $table = 'ext_resource_data';
             $sql = "DROP TABLE IF EXISTS $table ";
             $results = $modx->query($sql);
