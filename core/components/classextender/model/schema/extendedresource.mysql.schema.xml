@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="extendedresource" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
-    <!-- extend the modUser class -->
+    <!-- extend the modResource class -->
     <object class="extResource" extends="modResource">
         <composite alias="Data" local="id" class="resourceData" foreign="resourcedata_id" cardinality="one" owner="local"/>
     </object>
