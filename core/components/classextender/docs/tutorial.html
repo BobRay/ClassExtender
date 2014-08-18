@@ -145,7 +145,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>SetUserPlaceholders will set placeholders for all fields of the User object (except sensitive fields like password), the User Profile object, and the extended fields from ClassExtender. It will not set placeholders for the traditional user profile extended fields, since you should replace those with fields in your custom table.</p>
 
-<p>SetResourcePlaceholders will set placeholders for all resource fields and all extended fields from ClassExtender. It will not set placeholders for TVs.</p>
+<p>SetResourcePlaceholders will set placeholders for all resource fields and all extended fields from ClassExtender. It will not set placeholders for TVs. <b>Important! If you are using SetResourcePlaceholders to show a user other than the current user, be sure to use a prefix for the placeholders so they won't conflict with the placeholders for the current page.</b></p>
 
 <p>For example, to show the extra field values for the current resource (using the included example fields), you could do this:</p>
 
