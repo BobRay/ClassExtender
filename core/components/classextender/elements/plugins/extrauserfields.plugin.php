@@ -29,12 +29,12 @@
  * Variables
  * ---------
  *
-*@var $modx modX
+ * @var $modx modX
  * @var $scriptProperties array
  *
  * @package classextender
  *
- * Events: OnDocFormRender, OnDocFormPrerender, OnDocFormSave
+ * Events: OnUserFormPrerender, OnUserFormRender, OnUserFormSave
  *
  **/
 
