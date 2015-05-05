@@ -1,5 +1,9 @@
 Changelog for ClassExtender
 
+---------------------------------
+Add Register posthook snippet to save custom fields
+
+
 ClassExtender 2.0.0-pl
 ---------------------------------
 Objects play nice with other extras that extend modResource or modUser
