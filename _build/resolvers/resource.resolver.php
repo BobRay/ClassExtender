@@ -3,7 +3,7 @@
 * Resource resolver  for ClassExtender extra.
 * Sets template, parent, and (optionally) TV values
 *
-* Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+* Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
 * Created on 11-18-2013
 *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -61,7 +61,7 @@ if($object->xpdo) {
                 ),
                 2 =>  array (
                   'pagetitle' => 'ClassExtender',
-                  'parent' => 0,
+                  'parent' => '0',
                   'template' => 'default',
                 ),
             );
@@ -78,6 +78,8 @@ if($object->xpdo) {
                     }
                     if ($fields['template'] == 'default') {
                         $resource->set('template', $modx->getOption('default_template'));
+                    } elseif (empty($fields['template'])) {
+                        $resource->set('template', 0);
                     } else {
                         $templateObj = $modx->getObject('modTemplate', array('templatename' => $fields['template']));
                         if ($templateObj) {

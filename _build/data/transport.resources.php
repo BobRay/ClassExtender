@@ -2,7 +2,7 @@
 /**
  * resources transport file for ClassExtender extra
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
  * Created on 11-18-2013
  *
  * @package classextender
@@ -116,7 +116,7 @@ $resources[3]->fromArray(array (
   'introtext' => NULL,
   'richtext' => false,
   'template' => 'default',
-  'menuindex' => 69,
+  'menuindex' => 67,
   'searchable' => true,
   'cacheable' => true,
   'createdby' => 1,
