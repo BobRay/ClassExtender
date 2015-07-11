@@ -16,14 +16,14 @@ $components = array(
     'packageName' => 'ClassExtender',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'ClassExtender project for MyComponent extra',
-    'version' => '2.0.0',
+    'version' => '2.1.0',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<http://bobsguides.com>',
     'authorUrl' => 'http://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'http://bobsguides.com/classextender-tutorial.html',
-    'copyright' => '2012-2014',
+    'copyright' => '2012-2015',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -193,6 +193,10 @@ $components = array(
             'ExtUserUpdateProfile' => array(
                 'category'    => 'ClassExtender',
                 'description' => 'Set placeholders for and update extended user data',
+            ),
+            'ExtUserRegisterPosthook' => array(
+                'category'    => 'ClassExtender',
+                'description' => 'Update extended user data on registration',
             ),
 
             'UserSearchForm' => array(
