@@ -3,7 +3,7 @@
 /**
  * ClassExtender class file for ClassExtender extra
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
  * Created on 11-10-2013
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -224,37 +224,10 @@ class ClassExtender {
             $this->addOutput($this->modx->lexicon('ce.parse_schema_failed'), true);
         } else {
             $this->addOutput($this->modx->lexicon('ce.schema_parsed'));
-            $classFile = $this->modelPath . $this->packageLower . '/' . $this->ce_class . '.class.php';
-            $inserts = $this->getConstructorText();
-
-            if (file_exists($classFile)) {
-                $content = file_get_contents($classFile);
-                /* don't add if we've done it already */
-                if (strpos($content, 'construct') === false) {
-                    $fp = fopen($classFile, 'w');
-                    if ($fp) {
-                        $content = str_replace('}', $inserts . "\n}", $content);
-                        fwrite($fp, $content);
-                        fclose($fp);
-                    }
-                }
-            }
         }
         return $success;
 
     }
-
-
-    public function getConstructorText() {
-       return  "\n
-    function __construct(xPDO & \$xpdo) {
-        parent::__construct(\$xpdo);
-        \$this->set('class_key'," .  $this->ce_class . ");
-
-    }\n";
-
-    }
-
 
     public function createTables() {
         $success = $this->modx->addPackage($this->ce_package_name,
