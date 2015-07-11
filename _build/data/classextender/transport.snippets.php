@@ -2,7 +2,7 @@
 /**
  * snippets transport file for ClassExtender extra
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
  * Created on 11-10-2013
  *
  * @package classextender
@@ -118,5 +118,15 @@ $snippets[7]->setContent(file_get_contents($sources['source_core'] . '/elements/
 $properties = include $sources['data'].'properties/properties.classextender.snippet.php';
 $snippets[7]->setProperties($properties);
 unset($properties);
+
+$snippets[8] = $modx->newObject('modSnippet');
+$snippets[8]->fromArray(array (
+  'id' => 8,
+  'property_preprocess' => false,
+  'name' => 'ExtUserRegisterPosthook',
+  'description' => 'Update extended user data on registration',
+  'properties' => NULL,
+), '', true, true);
+$snippets[8]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/extuserregisterposthook.snippet.php'));
 
 return $snippets;
