@@ -121,8 +121,3 @@ if ($submission) {
 }
 
 return true;
-
-
-
-
-
