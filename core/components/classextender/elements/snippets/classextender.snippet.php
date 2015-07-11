@@ -95,14 +95,12 @@ $output .= $ce->displayForm();
 if ($ce->hasError()) {
     $modx->setPlaceholder('ce_results', $ce->getOutput());
     return '[[+ce_results]]';
-} else {
-    $cm = $modx->getCacheManager();
-    $cm->refresh();
-
 }
 
 if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
     $ce->process();
+    $cm = $modx->getCacheManager();
+    $cm->refresh();
 }
 
 $modx->setPlaceholder('ce_results', $ce->getOutput());

@@ -53,6 +53,8 @@ $_lang['ce.addpackage_failed'] = 'addPackage() failed';
 $_lang['ce.getmanager_failed'] = 'getManager() failed';
 $_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
 $_lang['ce.saving_schema'] = 'Saving schema';
+$_lang['ce.plugin_enabled'] = 'plugin enabled';
+
 
 /* Used in getextresources.snippet.php */
 $_lang['ce.no_resources_found'] = 'No Resources Found';

@@ -140,6 +140,8 @@ class ClassExtender {
                 return;
         }
 
+        $this->activatePlugin();
+
         $this->registerExtensionPackage();
 
     }
@@ -267,6 +269,22 @@ class ClassExtender {
         $this->modx->addExtensionPackage($this->packageLower, $path,
             array('tablePrefix' => $this->ce_table_prefix));
         $this->addOutput($this->modx->lexicon('ce.extension_package_registered'));
+    }
+
+    public function activatePlugin() {
+        $package = $this->ce_package_name;
+        $plugin = '';
+        if ($package === 'extendeduser') {
+            $plugin = 'ExtraUserFields';
+        } elseif ($package === 'extendedresource') {
+            $plugin = 'ExtraResourceFields';
+        }
+        $pluginObj = $this->modx->getObject('modPlugin', array('name' => $plugin));
+        if ($pluginObj) {
+            $pluginObj->set('disabled', false);
+            $pluginObj->save();
+            $this->addOutput($plugin . ' ' . $this->modx->lexicon('ce.plugin_enabled'));
+        }
     }
 
 
