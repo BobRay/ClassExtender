@@ -1,7 +1,10 @@
 Changelog for ClassExtender
 
 ---------------------------------
+Fix critical bug with updating extended objects
 Add Register posthook snippet to save custom fields
+Automatically enable plugin when class is extended
+Prevent having to clear cache when extending objects
 
 
 ClassExtender 2.0.0-pl

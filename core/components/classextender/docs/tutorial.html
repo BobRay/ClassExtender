@@ -58,7 +58,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <h3>Overview</h3>
 
-<p>We'll cover this in more detail below, but the basic process for extending either object is to modify the appropriate schema chunk to meet your needs, then view either the &quot;Extend modUser&quot; resource or the &quot;Extend modResource&quot; resource. That will present you with a form that, when submitted, will do all the work for you. It will create the class and map files, and register the extension package. Once that's done, all that's left is to modify the chunk used to display the extra fields in the Create/Edit Resource or User panel in the Manager, and enable the plugin that displays them. If any of your fields require special handling (e.g., a date field that should be set to today's date), you'll also have to modify the plugin to handle that.</p>
+<p>We'll cover this in more detail below, but the basic process for extending either object is to modify the appropriate schema chunk to meet your needs, then view either the &quot;Extend modUser&quot; resource or the &quot;Extend modResource&quot; resource. That will present you with a form that, when submitted, will do all the work for you. It will create the class and map files, and register the extension package. Once that's done, all that's left is to modify the chunk used to display the extra fields in the Create/Edit Resource or User panel in the Manager. The appropriate plugin will be enabled automatically. If any of your fields require special handling (e.g., a date field that should be set to today's date), you'll also have to modify the plugin to handle that.</p>
 
 <h3>Object Schema</h3>
 
@@ -88,11 +88,12 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <p>The User examples are something I did for a client. The client needed extra fields for <code>firstName</code>, <code>lastName</code>, <code>title</code>, <code>registrationDate</code>, and <code>company</code>. The <code>registrationDate</code> field is not shown on the form. It's set to today's date only if the field in the database is empty. The MyExtraUserFields chunk contains the HTML to show the fields on the Create/Edit User panel. It will not be modified during future upgrades of ClassExtender.</p>
 
-<p>The ExtraUserFields plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. Don't forget to enable the ExtraUserFields plugin or you won't see the extra fields.</p>
+<p>The ExtraUserFields plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. The plugin will be enabled automatically when you extend the <code>modUser</code> object.</p>
         
 <p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The MyExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. It will not be modified during future upgrades of ClassExtender.</p>
 
-<p>The ExtraResourceFields plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database. Don't forget to enable the ExtraResourceFields plugin or you won't see the extra fields.</p>
+<p>The ExtraResourceFields plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database.
+The plugin will be enabled automatically when you extend the <code>modResource</code> object.</p>
 
 <h3>Extending modUser</h3>
 
@@ -103,7 +104,6 @@ Go to System | Package Management on the main menu in the MODX Manager and click
     <li>View the &quot;Extend modUser&quot; resource.</li>
     <li>Click on Submit.</li>
     <li>Modify the MyExtraUserFields chunk to display your extra fields. Be sure to use the names specified for the fields in your schema.</li>
-    <li>Enable the ExtraUserFields plugin, which will display and save the fields.</li>
     <li>If necessary, modify the ExtraUserFields plugin to deal with fields that require special handling.</li>
 </ol>
 
@@ -119,7 +119,6 @@ Go to System | Package Management on the main menu in the MODX Manager and click
     <li>View the &quot;Extend modResource&quot; resource.</li>
     <li>Click on Submit.</li>
     <li>Modify the MyExtraResourceFields chunk to display your extra fields. Be sure to use the names specified for the fields in your schema.</li>
-    <li>Enable the ExtraResourceFields plugin, which will display and save the fields.</li>
     <li>If necessary, modify the ExtraResourceFields plugin to deal with fields that require special handling.</li>
 </ol>
 
@@ -133,7 +132,7 @@ Go to System | Package Management on the main menu in the MODX Manager and click
 
 <h3>Troubleshooting</h3>
 
-<p>If your extra fields fail to show up in the Create/Edit User or Resource forms in the Manager, make sure you've enabled the appropriate plugin in the ClassExtender category.</p>
+<p>If your extra fields fail to show up in the Create/Edit User or Resource forms in the Manager, make sure the appropriate plugin in the ClassExtender category is enabled.</p>
 
 <p>If the fields are not saved to the database, make sure the field names specified in your MyExtraUserFields or MyExtraResourceFields match those specified in your schema chunk.</p>
 
