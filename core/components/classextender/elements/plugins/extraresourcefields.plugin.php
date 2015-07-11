@@ -90,6 +90,9 @@ switch ($modx->event->name) {
         $postKeys = array_keys($_POST);
         $dirty = false;
         foreach($fields as $field) {
+            if ($field === 'id') {
+                continue;
+            }
             if (in_array($field, $postKeys)) {
                 if ($_POST[$field] != $data->get($field)) {
                     if (empty($_POST[$field])) {

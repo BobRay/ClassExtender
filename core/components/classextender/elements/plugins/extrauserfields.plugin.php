@@ -97,6 +97,9 @@ switch ($modx->event->name) {
         $dirty = false;
 
         foreach($fields as $field) {
+            if ($field === 'id') {
+                continue;
+            }
             if (in_array($field, $postKeys)) {
                 /* Convert NULL to '', but preserve '0' */
                 if (empty($_POST[$field]) && ($_POST[$field] !== '0')) {
