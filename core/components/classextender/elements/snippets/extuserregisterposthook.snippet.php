@@ -59,8 +59,9 @@ $fields = array();
 /* @var $data userData */
 
 if (isset($modx->user) && ($modx->user instanceof modUser)) {
+    $userNameField = $modx->getOption('userNameField', $scriptProperties, 'username', true);
 
-    $userName = $hook->getValue('username');
+    $userName = $hook->getValue($userNameField);
 
    /* Get new user ID via username */
     $newUser = $modx->getObject("modUser", array('username' => $userName));
