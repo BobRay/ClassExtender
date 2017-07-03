@@ -1,21 +1,17 @@
-ClassExtender Extra for MODx Revolution
+ClassExtender Extra for MODX Revolution
 =======================================
 
 
-**Author:** Bob Ray <http://bobsguides.com> [Bob's Guides](http://bobsguides.com)
+**Author:** Bob Ray [Bob's Guides](https://bobsguides.com)
 
-Documentation is available at [Bob's Guides](http://bobsguides.com/classextender-class.html)
+**Documentation:** [ClassExtender Docs](https://bobsguides.com/classextender-class.html)
 
-ClassExtender Extra
+**Bugs and requests:** [ClassExtender Issues](https://github.com/BobRay/ClassExtender/issues)
 
-A utility to create extended MODX objects. By default
-creates an extended modUser object called extUser and and extended modResource object called extResource.
+**Questions about using ClassExtender** [MODX Forums](https://forums.modx.com)
 
-Edit the schema file to match the extra user or resource fields you want to store in your custom extended user table, then view either the Extend modUser or Extend modResource resources.
 
-The extra user and/or resource fields are in an object called Data (in their own custom table):
+ClassExtender is a utility to create extended MODX objects. By default, ClassExtender
+creates an extended modUser object called extUser and an extended modResource object called extResource.
 
-$user->getOne('Data');
-
-$resource->getOne('Data'); 
 

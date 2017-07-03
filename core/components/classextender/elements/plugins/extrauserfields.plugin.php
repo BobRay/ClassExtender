@@ -2,7 +2,7 @@
 /**
  * ExtraUserFields plugin for ClassExtender extra
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
  * Created on 12-10-2013
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the

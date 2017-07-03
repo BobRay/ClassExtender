@@ -19,11 +19,11 @@ $components = array(
     'version' => '2.1.0',
     'release' => 'pl',
     'author' => 'Bob Ray',
-    'email' => '<http://bobsguides.com>',
-    'authorUrl' => 'http://bobsguides.com',
+    'email' => '<https://bobsguides.com>',
+    'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
-    'packageDocumentationUrl' => 'http://bobsguides.com/classextender-tutorial.html',
-    'copyright' => '2012-2015',
+    'packageDocumentationUrl' => 'https://bobsguides.com/classextender-tutorial.html',
+    'copyright' => '2012-2017',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),

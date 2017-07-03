@@ -3,7 +3,7 @@
 * Resource resolver  for ClassExtender extra.
 * Sets template, parent, and (optionally) TV values
 *
-* Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
+* Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
 * Created on 11-18-2013
 *
  * ClassExtender is free software; you can redistribute it and/or modify it under the

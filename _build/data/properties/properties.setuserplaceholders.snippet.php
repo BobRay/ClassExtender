@@ -2,7 +2,7 @@
 /**
  * Properties file for SetUserPlaceholders snippet
  *
- * Copyright 2012-2015 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
  * Created on 04-16-2014
  *
  * @package classextender

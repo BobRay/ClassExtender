@@ -37,7 +37,7 @@
 <h3>Why Extend modUser and modResource?</h3>
 <p>As you probably know, most of the information on a user is contained in the User Profile. Often, however, you need to store information about a user that won't fit there. Using the Profile's extended fields is an option, but it's very slow and inefficient to search for or sort users based on what is in their extended fields. Extending the <code>modUser</code> object essentially gives you an extra user profile with as many fields as you need to store your information. Having the information there will allow you to do extremely fast searches on the extended data and sort the results.</p>
 
-<p>The traditional method of extending <code>modUser</code> is documented <a href="http://rtfm.modx.com/revolution/2.x/developing-in-modx/advanced-development/extending-moduser" target="_blank">here</a>. Extending <code>modResource</code> is documented <a href="http://rtfm.modx.com/revolution/2.x/developing-in-modx/advanced-development/custom-resource-classes/creating-a-resource-class" target="_blank"> here</a>. You don't need to consult those pages to use ClassExtender, but doing so may help you understand what it's doing, though ClassExtender takes a slightly different approach. It will also give you an appreciation of how much time and trouble ClassExtender is saving you.</p>
+<p>The traditional method of extending <code>modUser</code> is documented <a href="https://rtfm.modx.com/revolution/2.x/developing-in-modx/advanced-development/extending-moduser" target="_blank">here</a>. Extending <code>modResource</code> is documented <a href="https://rtfm.modx.com/revolution/2.x/developing-in-modx/advanced-development/custom-resource-classes/creating-a-resource-class" target="_blank"> here</a>. You don't need to consult those pages to use ClassExtender, but doing so may help you understand what it's doing, though ClassExtender takes a slightly different approach. It will also give you an appreciation of how much time and trouble ClassExtender is saving you.</p>
 <br />
 
 <div class="box">
@@ -180,11 +180,11 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 
 <p>In the <code>&where</code> property for Users, the custom fields should not have a prefix (e.g., firstName), the user fields should be prefixed with <code>User</code> (e.g. User.username), and the profile fields should be prefixed with <code>Profile</code> (e.g., Profile.email).</p>
 
-<p>See <a href="http://bobsguides.com/modx-object-quick-reference.html#top"> this page</a> to determine which fields are in the <code>modUser</code> object, and which fields are in the <code>modUserProfile</code> object.</p>
+<p>See <a href="https://bobsguides.com/modx-object-quick-reference.html#top"> this page</a> to determine which fields are in the <code>modUser</code> object, and which fields are in the <code>modUserProfile</code> object.</p>
 
 <p>For Resources, the custom fields should have no prefix and the resource fields should be prefixed with <code>Resource.</code>.</p>
 
-<p>See <a href="http://bobsguides.com/modx-object-quick-reference.html#top"> this page</a> for a list of the <code>modResource</code> object fields.</p>
+<p>See <a href="https://bobsguides.com/modx-object-quick-reference.html#top"> this page</a> for a list of the <code>modResource</code> object fields.</p>
 
 <p>Also, see the examples below.</p>
 </div>
@@ -222,7 +222,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 ]]
 </fixedpre></pre>
 
-<p>The content of the <code>&where</code> property is just as it is for other xPDO-based snippets like getResources. There are some examples <a href="http://rtfm.modx.com/extras/revo/getresources#getResources-Examples" target="_blank"> here</a>.</p>
+<p>The content of the <code>&where</code> property is just as it is for other xPDO-based snippets like getResources. There are some examples <a href="https://rtfm.modx.com/extras/revo/getresources#getResources-Examples" target="_blank"> here</a>.</p>
 
 <p>With the GetExtUsers snippet, you can use the username, active, and all fields in the Profile and Data tables as placeholders in the Tpl chunks.</p>
 

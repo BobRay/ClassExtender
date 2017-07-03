@@ -2,7 +2,7 @@
 /**
  * ExtraResourceFields plugin for ClassExtender extra
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
  * Created on 12-10-2013
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -38,7 +38,7 @@ $fields = array();
 $data = null;
 
 /** @var $data xPDOObject */
-
+/** @var $resource modResource */
 if ($resource && $resource instanceof modResource) {
     $data = $modx->getObject('resourceData',
         array('resourcedata_id' => $resource->get('id')));
@@ -111,6 +111,7 @@ switch ($modx->event->name) {
         break;
 
     case 'OnEmptyTrash':
+        /** @var $resources array() */
         foreach($resources as $resource) {
             $data = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id')));
             if ($data) {
