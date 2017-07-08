@@ -2,7 +2,7 @@
 /**
  * plugins transport file for ClassExtender extra
  *
- * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2017 Bob Ray <https://bobsguides.com>
  * Created on 12-10-2013
  *
  * @package classextender
