@@ -2,7 +2,7 @@
 /**
  * Properties file for ClassExtender snippet
  *
- * Copyright 2012-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
  * Created on 04-15-2014
  *
  * @package classextender

@@ -2,7 +2,7 @@
 /**
  * Properties file for GetExtUsers snippet
  *
- * Copyright 2012-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
  * Created on 01-07-2014
  *
  * @package classextender
