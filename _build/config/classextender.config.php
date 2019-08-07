@@ -16,14 +16,14 @@ $components = array(
     'packageName' => 'ClassExtender',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'ClassExtender project for MyComponent extra',
-    'version' => '2.1.0',
+    'version' => '2.2.0',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<https://bobsguides.com>',
     'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'https://bobsguides.com/classextender-tutorial.html',
-    'copyright' => '2012-2017',
+    'copyright' => '2012-2019',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
