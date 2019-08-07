@@ -254,6 +254,8 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 ]]
 </fixedpre></pre>
 
+<p>There is also an optional <code>&userNameField</code> property in case you use a custom field for the username</p>
+
 <p>The third snippet (UserSearchForm) serves as an example of how to search for users using the custom fields. You will have to modify it to meet your needs.</p>
         
         
@@ -494,7 +496,21 @@ $user->save();
         <td>Direction to sort in (ASC, DESC)</td>
         <td>ASC</td>
     </tr>
+    <tr>
+        <td>limit</td>
+        <td>number of users to retrieve</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>offset</td>
+        <td>offset of first user to retrieve</td>
+        <td>null</td>
+    </tr>
+
 </table>
+
+<p>The optional <code>offset</code> and <code>limit</code> properties are for when you have a very large number of users and want to retrieve them in batches with <code>$modx->runSnippet('getExtUsers', $properties)</code>. The <code>$properties</code> variable will hold an array of property keys and values. By default (without these two properties), all users that match your criteria will be retrieved.</p>
+
 
 <h3>GetExtResources Snippet Properties</h3>
 
