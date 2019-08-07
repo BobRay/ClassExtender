@@ -60,11 +60,17 @@ $innerTpl = $modx->getOption('extUserInnerTpl', $sp, 'extUserInnerTpl');
 $rowTpl = $modx->getOption('extUserRowTpl', $sp, 'extUserRowTpl');
 $sortBy = $modx->getOption('sortby', $sp, 'username');
 $sortDir = $modx->getOption('sortdir', $sp, 'ASC');
+$limit = $modx->getOption('limit', $sp, 'null', true);
+$offset = $modx->getOption('offset', $sp, 'null', true);
 
+$offset = ($offset === null) ? 0 : (int) $offset;
 
 $c = $modx->newQuery($userClass);
 $c->sortby($sortBy, $sortDir);
 $c->where($where);
+if ($limit !== null) {
+    $c->limit($limit, $offset);
+}
 
 $users = $modx->getCollectionGraph($userClass, '{"Profile":{},"User":{}}', $c);
 
