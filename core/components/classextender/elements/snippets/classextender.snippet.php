@@ -67,7 +67,7 @@ if (!defined('MODX_CORE_PATH')) {
         $homeId = $modx->getOption('site_start');
         $homeResource = $modx->getObject('modResource', $homeId);
 
-        if ($homeResource instanceof modResource) {
+        if ($homeResource) {
             $modx->resource = $homeResource;
         } else {
             echo "\nNo Resource\n";
@@ -85,10 +85,10 @@ require_once $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path'
 $modx->lexicon->load('classextender:default');
 $props =& $scriptProperties;
 $ce = new ClassExtender($modx, $props);
-if (! $ce instanceof ClassExtender) {
+if (! $ce) {
     die ($this->modx->lexicon('ce.no_class_extender'));
-
 }
+$output = '';
 $ce->init();
 $output .= $ce->displayForm();
 

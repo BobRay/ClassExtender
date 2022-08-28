@@ -58,7 +58,7 @@ $fields = array();
 
 /* @var $data userData */
 
-if (isset($modx->user) && ($modx->user instanceof modUser)) {
+if (isset($modx->user)) {
     $usernameField = $modx->getOption('usernameField', $scriptProperties, 'username', true);
 
     $userName = $hook->getValue($usernameField);

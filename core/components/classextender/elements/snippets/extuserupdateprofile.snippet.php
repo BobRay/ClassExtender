@@ -44,7 +44,7 @@ $fields = array();
 
 /* @var $data userData */
 
-if (isset($modx->user) && ($modx->user instanceof modUser)) {
+if (isset($modx->user)) {
     
     $user =& $modx->user;
     $data = $modx->getObject('userData',

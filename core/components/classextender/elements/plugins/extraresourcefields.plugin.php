@@ -39,7 +39,7 @@ $data = null;
 
 /** @var $data xPDOObject */
 /** @var $resource modResource */
-if ($resource && $resource instanceof modResource) {
+if ($resource) {
     $data = $modx->getObject('resourceData',
         array('resourcedata_id' => $resource->get('id')));
 }

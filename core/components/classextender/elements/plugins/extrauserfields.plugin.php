@@ -42,7 +42,7 @@
 $fields = array();
 
 /* Make sure we have an extUser object to work with */
-if (isset($user) && ($user instanceof  modUser)) {
+if (isset($user)) {
     $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
 }
 /* @var $data userData */
