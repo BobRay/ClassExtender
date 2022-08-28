@@ -54,8 +54,11 @@ if ($object->xpdo) {
                         $newChunk->set('name', $newName);
                         $content = $oldChunk->getContent();
                         if ($chunk == 'ExtUserSchema') {
-                            $content = str_replace('<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>', '<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
+                            /* Don't replace if already done */
+                            if (strpos($content, 'Profile') === false) {
+                                $content = str_replace('<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>', '<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
         <aggregate alias="Profile" class="modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>', $content);
+                            }
                         }
 
                         $newChunk->setContent($content);
