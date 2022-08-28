@@ -29,9 +29,8 @@ class ClassExtender {
     public $modx;
     /** @var $props array */
     public $props;
-    /* this is not the extended user class.
-       it is the class of the object that holds
-       the extended data */
+    /* Note: MODX 3 will use the package name as
+       a namespace in the classes */
     public $ce_package_name = '';
     public $ce_class = '';
     public $ce_parent_object = '';
@@ -50,6 +49,8 @@ class ClassExtender {
     protected $objectPrefixLower = '';
     protected $hasError = false;
     protected $schemaChunk = '';
+    protected $isMODX3;
+    protected $classPrefix;
 
 
     function __construct(&$modx, &$config = array()) {
@@ -61,6 +62,10 @@ class ClassExtender {
     public function init() {
         $this->hasError = false;
         $this->output = array();
+        $this->isMODX3 = $this->modx->getVersionData()['version'] >= 3;
+        $this->classPrefix = $this->isMODX3
+            ? 'MODX\Revolution\\'
+            : '';
 
         $cssFile = $this->modx->getOption('ce.assets_url', null,
                 MODX_ASSETS_URL . 'components/classextender/') . 'css/classextender.css?v=' . $this->version;
@@ -72,6 +77,9 @@ class ClassExtender {
 
         $manager = $this->modx->getManager();
         $this->generator = $manager->getGenerator();
+        if (! $this->generator) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR, "Could not get generator");
+        }
 
         $basePath = $this->modx->getOption('ce.core_path', NULL,
             $this->modx->getOption('core_path') .
@@ -86,21 +94,20 @@ class ClassExtender {
 
         $this->ce_parent_object = isset($_POST['ce_parent_object'])
             ? $_POST['ce_parent_object']
-            : $this->modx->getOption('parentObject', $this->props, 'modUser');
+            : $this->modx->getOption('parentObject', $this->props, $this->classPrefix . 'modUser');
 
         $this->ce_class = isset($_POST['ce_class'])
             ? $_POST['ce_class']
             :$this->modx->getOption('class',
-                $this->props, $this->ce_parent_object);
+                $this->props, 'userData');
 
         /* Strip off 'mod' to produce 'User' or 'Resource' */
-
-        $this->objectPrefix = substr($this->ce_parent_object, 3);
-        $this->objectPrefixLower = strtolower($this->objectPrefix);
+     $this->objectPrefix = substr(basename($this->ce_parent_object), 3);
+     $this->objectPrefixLower = strtolower($this->objectPrefix);
 
         $this->schemaChunk = isset($_POST['ce_schema_tpl_name'])
             ? $_POST['ce_schema_tpl_name']
-            : $this->modx->getOption('schemaTpl', $this->props, '');
+            : $this->modx->getOption('schemaTpl', $this->props, 'MyExtUserSchema');
 
         $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
             ? $_POST['ce_table_prefix']
@@ -136,12 +143,14 @@ class ClassExtender {
         if (!$this->generateClassFiles()) {
             return;
         };
+
         if (!$this->createTables()) {
                 return;
         }
 
         $this->activatePlugin();
 
+        /* Deprecated */
         $this->registerExtensionPackage();
 
     }
@@ -166,11 +175,7 @@ class ClassExtender {
         } else {
             $this->output[] = '<p class="ce_success">' . $msg . '</p>';
         }
-
-
     }
-
-
 
     public function hasError() {
         return $this->hasError;
@@ -180,7 +185,7 @@ class ClassExtender {
         return implode("\n", $this->output);
     }
 
-
+    /* Create schema file from schema chunk */
     public function dumpSchema() {
 
         $success = true;
@@ -195,21 +200,41 @@ class ClassExtender {
         if (! $content) {
             $this->addOutput($this->modx->lexicon('ce.could_not_find_schema_chunk') .
                 ': ' . $this->schemaChunk , true);
-        }
-
-        $fp = fopen($this->ce_schema_file, 'w');
-
-        if (!$fp) {
-            $success = false;
-            $this->addOutput($this->modx->lexicon('ce.could_not_open_schema_file'), true);
         } else {
-            fwrite($fp, $content);
-            fclose($fp);
-        }
 
+            /* Convert schema to MODX 3 format -- should not alter
+               schemas that are already correct */
+            if ($this->isMODX3) {
+                $replacements = array(
+                    'extends="modUser"' => 'extends="MODX\Revolution\modUser"',
+                    'extends="xPDOObject"' => 'extends="xPDO\Om\xPDOObject"',
+                    'extends="xPDOSimpleObject"' =>
+                        'extends="xPDO\Om\xPDOSimpleObject"',
+                    'extends="modResource"' =>
+                        'extends="MODX\Revolution\modResource"',
+                );
+                foreach ($replacements as $key => $value) {
+                    if (strpos($content, $key) !== false) {
+                        $content = str_replace($key, $value, $content);
+                    }
+                }
+            }
+
+            $fp = fopen($this->ce_schema_file, 'w');
+
+            if (!$fp) {
+                $success = false;
+                $this->addOutput($this->modx->lexicon('ce.could_not_open_schema_file'), true);
+            } else {
+                fwrite($fp, $content);
+                fclose($fp);
+            }
+        }
         return $success;
     }
 
+    /* Use xPDO generator to parse schema and write
+       class files to disk */
     public function generateClassFiles() {
 
         $dir = $this->modelPath . $this->packageLower;
@@ -224,16 +249,23 @@ class ClassExtender {
 
         if (!$success) {
             $this->addOutput($this->modx->lexicon('ce.parse_schema_failed'), true);
+
         } else {
+
             $this->addOutput($this->modx->lexicon('ce.schema_parsed'));
         }
         return $success;
-
     }
 
     public function createTables() {
+        $pkg = $this->packageLower;
+        $dir = $this->modelPath;
+        require $this->modelPath . 'ce_autoload.php';
+
+        /* Required!!! */
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
+
         if (!$success) {
             $this->addOutput($this->modx->lexicon("ce.addpackage_failed"), true);
         } else {
@@ -242,11 +274,17 @@ class ClassExtender {
                 $this->addOutput($this->modx->lexicon("ce.getmanager_failed"), true);
                 $success = false;
             } else {
-                $object = $this->objectPrefixLower . 'Data';
-                $success = $manager->createObjectContainer($object);
+                $class = $this->objectPrefixLower . 'Data';
+                if ($this->isMODX3) {
+                    /* MODX 3 will use package name as namespace
+                       for all classes */
+                    $finalClass = $pkg . '\\' . $class;
+                } else {
+                    $finalClass = $class;
+                }
+                $success = $manager->createObjectContainer($finalClass);
             }
         }
-
 
         if (! $success) {
             $this->addOutput(
@@ -257,18 +295,25 @@ class ClassExtender {
         return $success;
     }
 
+
     public function registerExtensionPackage() {
 
-        $path = '[[++core_path]]' . 'components/classextender/model/';
-        /* Clear existing registration so it can be updated */
+       /* Clear existing registration */
         $setting = $this->modx->getObject('modSystemSetting',
             array('key' => 'extension_packages'));
         if (! empty($setting)) {
             $this->modx->removeExtensionPackage($this->packageLower);
         }
-        $this->modx->addExtensionPackage($this->packageLower, $path,
-            array('tablePrefix' => $this->ce_table_prefix));
-        $this->addOutput($this->modx->lexicon('ce.extension_package_registered'));
+        /* If extension_packages is now empty, remove the setting
+           (it's deprecated) */
+        $setting = $this->modx->getObject('modSystemSetting',
+            array('key' => 'extension_packages'));
+        if ($setting) {
+            $val = $setting->get('value');
+            if (empty($val) || strlen($val) < 5) {
+                $setting->remove();
+            }
+        }
     }
 
     public function activatePlugin() {
@@ -287,7 +332,8 @@ class ClassExtender {
         }
     }
 
-
+    /* Called to remove package directory (e.g., extendeduser)
+       before parsing and writing class files */
     public function rrmdir($dir) {
         if (is_dir($dir)) {
             $objects = scandir($dir);
