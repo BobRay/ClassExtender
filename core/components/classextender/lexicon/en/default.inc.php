@@ -74,3 +74,8 @@ $_lang['user_search_last_name_caption'] = 'Last Name';
 
 /* Used in usersearchform.snippet.php */
 $_lang['ce_user_search_results_heading'] = 'Results';
+
+/* System Settings */
+$_lang['setting_ce_autoload_directories'] = 'Autoload directories';
+
+$_lang['setting_ce_autoload_directories_desc'] = 'Comma-separated list of directories holding class files; default: extendeduser,extendedresource';
