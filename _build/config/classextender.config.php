@@ -55,12 +55,22 @@ $components = array(
      * and export them with exportObjects. If you do that, be sure to set
      * their namespace to the lowercase package name of your extra */
 
-    'newSystemSettings' => array(),
+    'newSystemSettings' => array(
+        'ce_autoload_directories' => array(
+            'key' => 'ce_autoload_directories',
+            'name' => 'Autoload directories',
+            'description' => 'comma-separated list of directories containing class files; default: extendeduser,extendedresource',
+            'namespace' => 'classextender',
+            'xtype' => 'textfield',
+            'value' => 'extendeduser,extendedresource',
+            'area' => 'classextender'
+        ),
+    ),
 
     /* ************************ NEW SYSTEM EVENTS ************************* */
 
     /* Array of your new System Events (not default
-     * MODX System Events). Listed here so they can be created during
+     * MODX System Events). Listed here, so they can be created during
      * install and removed during uninstall.
      *
      * Warning: Do *not* list regular MODX System Events here !!! */
@@ -103,7 +113,7 @@ $components = array(
 
     /* ************************* CATEGORIES *************************** */
     /* (optional) List of categories. This is only necessary if you
-     * need to categories other than the one named for packageName
+     * need to add categories other than the one named for packageName
      * or want to nest categories.
     */
 
@@ -553,7 +563,7 @@ $components = array(
         'chunks',
         'resources',
         'plugins',
-//        'menus'
+        'systemSettings',
     ),
     /*  Array  of resources to process. You can specify specific resources
         or parent (container) resources, or both.
@@ -578,7 +588,7 @@ $components = array(
     /* ******************** LEXICON HELPER SETTINGS ***************** */
     /* These settings are used by LexiconHelper */
     'rewriteCodeFiles' => true,  /* remove ~~descriptions */
-    'rewriteLexiconFiles' => true, /* automatically add missing strings to lexicon files */
+    'rewriteLexiconFiles' => false, /* automatically add missing strings to lexicon files */
     /* ******************************************* */
 
     /* Array of aliases used in code for the properties array.
