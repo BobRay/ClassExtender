@@ -2,7 +2,7 @@
 /**
  * Properties file for UserSearchForm snippet
  *
- * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2022 Bob Ray <https://bobsguides.com>
  * Created on 04-16-2014
  *
  * @package classextender

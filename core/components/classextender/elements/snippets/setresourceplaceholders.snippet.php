@@ -2,7 +2,7 @@
 /**
  * SetResourcePlaceholders snippet for ClassExtender extra
  *
- * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2022 Bob Ray <https://bobsguides.com>
  * Created on 04-13-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the

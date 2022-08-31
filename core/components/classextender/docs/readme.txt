@@ -3,7 +3,7 @@ ClassExtender
 
 
 Author: Bob Ray <https://bobsguides.com>
-Copyright 2012-2019 Bob Ray
+Copyright 2012-2022 Bob Ray
 
 Official Documentation: https://bobsguides.com/classextender-tutorial.html
 

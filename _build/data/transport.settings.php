@@ -2,7 +2,7 @@
 /**
  * systemSettings transport file for ClassExtender extra
  *
- * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2022 Bob Ray <https://bobsguides.com>
  * Created on 08-27-2022
  *
  * @package classextender
