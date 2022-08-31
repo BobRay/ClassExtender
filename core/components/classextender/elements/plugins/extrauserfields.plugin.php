@@ -1,4 +1,3 @@
-<?php
 /**
  * ExtraUserFields plugin for ClassExtender extra
  *
@@ -31,25 +30,47 @@
  *
  * @var $modx modX
  * @var $scriptProperties array
- *
+ * @var $user modUser
  * @package classextender
  *
  * Events: OnUserFormPrerender, OnUserFormRender, OnUserFormSave
  *
  **/
 
+require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
+
+
+$packageName = 'extendeduser';
+$modelPath = MODX_CORE_PATH . 'components/classextender/model/';
+$tablePrefix = 'ext_';
+
+ $success = $modx->addPackage($packageName,
+            $modelPath, $tablePrefix);
+
+        if (!$success) {
+            $modx->log(modX::LOG_LEVEL_ERROR, $this->modx->lexicon("ce.addpackage_failed"));
+        }
+
+
 /* Define extra fields */
 $fields = array();
 
+$prefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
+// $table = $modx->getTableName($prefix . 'userData');
+// $modx->log(modX::LOG_LEVEL_ERROR, 'Table: ' . $table);
+
 /* Make sure we have an extUser object to work with */
-if (isset($user)) {
-    $data = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
+if (isset($user) ) {
+    $data = $modx->getObject($prefix . 'userData', array('userdata_id' => $user->get('id')));
 }
 /* @var $data userData */
 
 /* Create related object if it doesn't exist */
 if (!$data) {
-    $data = $modx->newObject('userData');
+    $data = $modx->newObject($prefix . 'userData');
 }
 
 if ($data) {
@@ -58,7 +79,7 @@ if ($data) {
 
 switch ($modx->event->name) {
     case 'OnUserFormPrerender':
-        /* if you want to add custom scripts, css, etc, register them here */
+        /* if you want to add custom scripts, css, etc., register them here */
         break;
     case 'OnUserFormRender':
 
@@ -114,7 +135,7 @@ switch ($modx->event->name) {
             }
         }
 
-        /* Set registration date to today - delete if not needed */
+        /* Set registration date to today -- delete if not needed */
         $rDate = $data->get('registrationDate');
         if (empty($rDate)) {
             $dirty = true;
@@ -124,12 +145,15 @@ switch ($modx->event->name) {
 
         /* Save the data, if necessary */
         if ($dirty) {
-            $data->save();
+
+            if (!$data->save()) {
+                $modx->log(modX::LOG_LEVEL_ERROR, 'Could not save user');
+            }
         }
 
         break;
     case 'OnUserRemove':
-        $extData = $modx->getObject('userData', array('userdata_id' => $user->get('id')));
+        $extData = $modx->getObject($prefix . 'userData', array('userdata_id' => $user->get('id')));
         if ($extData) {
             $extData->remove();
         }
