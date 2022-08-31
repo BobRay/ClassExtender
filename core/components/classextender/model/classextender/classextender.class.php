@@ -263,6 +263,7 @@ class ClassExtender {
         require $this->modelPath . 'ce_autoload.php';
 
         /* Required!!! */
+       //  $this->modx->log(modX::LOG_LEVEL_ERROR, 'Package: ' . $this->ce_package_name);
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
 
@@ -289,8 +290,27 @@ class ClassExtender {
         if (! $success) {
             $this->addOutput(
                  $this->modx->lexicon('ce.create_object_container_failed'), true);
+
         } else {
             $this->addOutput($this->modx->lexicon('ce.table_created'));
+            /* Add modExtensionPackage object to DB */
+            $extensionPackage = $this->modx->getObject($this->classPrefix . 'modExtensionPackage', array('namespace' => $pkg));
+
+            if (!$extensionPackage) {
+                $fields = array(
+                    'namespace' => $pkg,
+                    'name' => $pkg,
+                    'path' => '[[++core_path]]' . 'components/classextender/model/',
+                    'table_prefix' => $this->ce_table_prefix,
+                );
+                $extensionPackage = $this->modx->newObject($this->classPrefix . 'modExtensionPackage');
+                $extensionPackage->fromArray($fields);
+                if (!$extensionPackage->save()) {
+                    $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not save extension package object');
+                } else {
+                    $this->addOutput('Created extension package object');
+                }
+            }
         }
         return $success;
     }
