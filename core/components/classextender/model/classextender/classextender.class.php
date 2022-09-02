@@ -260,7 +260,7 @@ class ClassExtender {
     public function createTables() {
         $pkg = $this->packageLower;
         $dir = $this->modelPath;
-        require $this->modelPath . 'ce_autoload.php';
+        require_once $this->modelPath . 'ce_autoload.php';
 
         /* Required!!! */
        //  $this->modx->log(modX::LOG_LEVEL_ERROR, 'Package: ' . $this->ce_package_name);
@@ -295,12 +295,23 @@ class ClassExtender {
             $this->addOutput($this->modx->lexicon('ce.table_created'));
             /* Add modExtensionPackage object to DB */
             $extensionPackage = $this->modx->getObject($this->classPrefix . 'modExtensionPackage', array('namespace' => $pkg));
+            $namespace = $this->modx->getObject($this->classPrefix . 'modNamespace', array('name' => $pkg));
+
+            if (! $namespace) {
+                $namespace = $this->modx->newObject($this->classPrefix . 'modNamespace');
+                $namespace->set('name', $pkg);
+                $namespace->set('path', '{core_path}' . 'components/classextender/');
+                $namespace->set('assets_path' . '{assets_path}' . 'components/classextender/');
+                if (! $namespace->save()) {
+                    $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not save namespace');
+                }
+            }
 
             if (!$extensionPackage) {
                 $fields = array(
                     'namespace' => $pkg,
                     'name' => $pkg,
-                    'path' => '[[++core_path]]' . 'components/classextender/model/',
+                    'path' => '[[++core_path]]' . 'components/classextender/',
                     'table_prefix' => $this->ce_table_prefix,
                 );
                 $extensionPackage = $this->modx->newObject($this->classPrefix . 'modExtensionPackage');
