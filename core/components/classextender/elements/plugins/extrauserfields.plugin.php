@@ -41,16 +41,16 @@
 require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
 
 
-$packageName = 'extendeduser';
+/*$packageName = 'extendeduser';
 $modelPath = MODX_CORE_PATH . 'components/classextender/model/';
 $tablePrefix = 'ext_';
 
- $success = $modx->addPackage($packageName,
+$success = $modx->addPackage($packageName,
             $modelPath, $tablePrefix);
 
-        if (!$success) {
+if (!$success) {
             $modx->log(modX::LOG_LEVEL_ERROR, $this->modx->lexicon("ce.addpackage_failed"));
-        }
+}*/
 
 
 /* Define extra fields */
@@ -60,11 +60,8 @@ $prefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'
     : '';
 
-// $table = $modx->getTableName($prefix . 'userData');
-// $modx->log(modX::LOG_LEVEL_ERROR, 'Table: ' . $table);
-
 /* Make sure we have an extUser object to work with */
-if (isset($user) ) {
+if (isset($user)) {
     $data = $modx->getObject($prefix . 'userData', array('userdata_id' => $user->get('id')));
 }
 /* @var $data userData */
@@ -89,7 +86,7 @@ switch ($modx->event->name) {
             foreach ($fields as $key => $value) {
                 $dbValue = $data->get($key);
                 /* Make sure there are no null values */
-                $dbValue = $dbValue === null? '' : $dbValue;
+                $dbValue = $dbValue === null ? '' : $dbValue;
                 $fields[$key] = $dbValue;
             }
         }
@@ -118,7 +115,7 @@ switch ($modx->event->name) {
         $postKeys = array_keys($_POST);
         $dirty = false;
 
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             if ($field === 'id') {
                 continue;
             }
