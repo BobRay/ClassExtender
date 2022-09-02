@@ -41,6 +41,9 @@
 
 $modx->lexicon->load('classextender:default');
 
+require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
+
+//  $modx->addPackage('extendeduser', MODX_CORE_PATH . 'components/classextender/model/', 'ext_');
 
 /* @var $scriptProperties array */
 $scriptProperties = isset($scriptProperties)
@@ -67,9 +70,9 @@ $sortDir = $modx->getOption('sortdir', $sp, 'ASC');
 $limit = $modx->getOption('limit', $sp, 'null', true);
 $offset = $modx->getOption('offset', $sp, 'null', true);
 
-$offset = ($offset === null) ? 0 : (int) $offset;
+$offset = ($offset === null) ? 0 : (int)$offset;
 
-$c = $modx->newQuery($cePrefix .  $userClass);
+$c = $modx->newQuery($cePrefix . $userClass);
 $c->sortby($sortBy, $sortDir);
 $c->where($where);
 if ($limit !== null) {
