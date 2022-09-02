@@ -48,6 +48,10 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
 $userClass = $modx->getOption('userDataClass', $sp, 'userData');
 
 $where = $modx->getOption('where', $sp, array());
@@ -65,14 +69,14 @@ $offset = $modx->getOption('offset', $sp, 'null', true);
 
 $offset = ($offset === null) ? 0 : (int) $offset;
 
-$c = $modx->newQuery($userClass);
+$c = $modx->newQuery($cePrefix .  $userClass);
 $c->sortby($sortBy, $sortDir);
 $c->where($where);
 if ($limit !== null) {
     $c->limit($limit, $offset);
 }
 
-$users = $modx->getCollectionGraph($userClass, '{"Profile":{},"User":{}}', $c);
+$users = $modx->getCollectionGraph($cePrefix . $userClass, '{"Profile":{},"User":{}}', $c);
 
 $count = count($users);
 
