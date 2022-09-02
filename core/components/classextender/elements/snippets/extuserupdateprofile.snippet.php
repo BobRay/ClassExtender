@@ -36,6 +36,12 @@
 
 $modx->lexicon->load('login:updateprofile');
 
+require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
+
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
 $submission = isset($_POST['login-updprof-btn']) && ($_POST['login-updprof-btn'] == $modx->lexicon('login.update_profile'));
 
 $data = null;
@@ -47,12 +53,12 @@ $fields = array();
 if (isset($modx->user)) {
     
     $user =& $modx->user;
-    $data = $modx->getObject('userData',
+    $data = $modx->getObject($cePrefix . 'userData',
         array('userdata_id' => $user->get('id')), false);
     if ($data) {
         $fields = $data->toArray();
     } else {
-        $data = $modx->newObject('userData');
+        $data = $modx->newObject($cePrefix . 'userData');
         if ($data) {
             $data->set('userdata_id', $user->get('id'));
             $fields = $data->toArray();
@@ -88,7 +94,9 @@ if ($submission) {
     }
 
     if ($dirty) {
-        $data->save();
+        if (! $data->save()) {
+            $modx->log(modX::LOG_LEVEL_ERROR, 'could not save userData object');
+        }
     }
 }
 
