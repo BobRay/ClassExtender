@@ -150,9 +150,8 @@ class ClassExtender {
 
         $this->activatePlugin();
 
-        /* Deprecated */
-        $this->registerExtensionPackage();
-
+        /* Move extension package to modExtensionPackage object */
+        $this->createExtensionPackageObject();
     }
 
     public function displayForm() {
@@ -327,7 +326,7 @@ class ClassExtender {
     }
 
 
-    public function registerExtensionPackage() {
+    public function CreateExtensionPackageObject() {
 
        /* Clear existing registration */
         $setting = $this->modx->getObject('modSystemSetting',
