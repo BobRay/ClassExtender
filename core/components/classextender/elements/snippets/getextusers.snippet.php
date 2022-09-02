@@ -35,7 +35,7 @@
  * @package classextender
  **/
 
-/* The extendeduser package should be pre-loaded
+/* The extendeduser package should be preloaded
    due to being registered in the extension_packages
    System Setting */
 
