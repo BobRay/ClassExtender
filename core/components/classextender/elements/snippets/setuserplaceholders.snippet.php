@@ -37,12 +37,18 @@
 
 $modx->lexicon->load('classextender:default');
 
+require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
+
 $sp = $scriptProperties;
 $userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
 $dataClass = $modx->getOption('userDataClass', $sp, 'userData');
 
-$c = $modx->newQuery($dataClass);
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
+$c = $modx->newQuery($cePrefix . $dataClass);
 
 
 if (!empty($userId)) {
@@ -51,7 +57,7 @@ if (!empty($userId)) {
     $c->where(array('userdata_id' => $modx->user->get('id')));
 }
 
-$data = $modx->getObjectGraph($dataClass, '{"Profile":{},"User":{}}', $c);
+$data = $modx->getObjectGraph($cePrefix .  $dataClass, '{"Profile":{},"User":{}}', $c);
 
 if (!$data) {
     return $modx->lexicon('ce.user_not_found');
