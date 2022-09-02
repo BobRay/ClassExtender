@@ -39,14 +39,16 @@ $modx->lexicon->load('classextender:default');
 
 require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
 
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
 $sp = $scriptProperties;
 $userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
 $dataClass = $modx->getOption('userDataClass', $sp, 'userData');
 
-$cePrefix = $modx->getVersionData()['version'] >= 3
-    ? 'extendeduser\\'
-    : '';
+
 
 $c = $modx->newQuery($cePrefix . $dataClass);
 
