@@ -1,0 +1,20 @@
+<!-- Uses ClassExtender snippet and class.
+     Parses Schema and Creates table
+-->
+
+
+<!--
+* Gets MyExtResourceSchema from chunk,
+* writes it to extendedresource.mysql.schema.xml,
+* and uses that for parseSchema()
+-->
+
+[[!ClassExtender?
+    &package=`extendedResource`
+    &schemaTpl=`MyExtResourceSchema`
+    &class=`resourceData`
+    &parentObject=`modUser`
+    &tablePrefix=`ext_`
+    &tableName=`user_data`
+    &dirPermission=`0755`
+]]
