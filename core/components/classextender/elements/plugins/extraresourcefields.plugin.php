@@ -34,18 +34,24 @@
  * @package classextender
  **/
 
+require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
+
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
+
 $fields = array();
 $data = null;
 
 /** @var $data xPDOObject */
 /** @var $resource modResource */
 if ($resource) {
-    $data = $modx->getObject('resourceData',
+    $data = $modx->getObject($cePrefix .'resourceData',
         array('resourcedata_id' => $resource->get('id')));
 }
 
 if (! $data) {
-    $data = $modx->newObject('resourceData');
+    $data = $modx->newObject($cePrefix . 'resourceData');
 }
 if ($data) {
     $fields = $data->toArray();
@@ -105,7 +111,9 @@ switch ($modx->event->name) {
         }
 
         if ($dirty) {
-            $data->save();
+            if (!$data->save()) {
+                $modx->log(modX::LOG_LEVEL_ERROR, 'Could not save resourceData object');
+            }
         }
 
         break;

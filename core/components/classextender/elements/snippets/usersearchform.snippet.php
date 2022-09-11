@@ -41,6 +41,11 @@
  * search form; Default: ExtUserSearchFormTpl.
  */
 
+require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
+
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendeduser\\'
+    : '';
 
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
 
