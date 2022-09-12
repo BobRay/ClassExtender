@@ -85,7 +85,7 @@ require_once $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path'
 $modx->lexicon->load('classextender:default');
 $props =& $scriptProperties;
 $ce = new ClassExtender($modx, $props);
-if (! $ce) {
+if (!$ce) {
     die ($this->modx->lexicon('ce.no_class_extender'));
 }
 $output = '';

@@ -41,11 +41,6 @@
  * search form; Default: ExtUserSearchFormTpl.
  */
 
-require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
-
-$cePrefix = $modx->getVersionData()['version'] >= 3
-    ? 'extendeduser\\'
-    : '';
 
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
 
@@ -59,7 +54,6 @@ $modx->setPlaceholder('user_search_first_name', $pFirstName);
 $modx->setPlaceholder('user_search_last_name', $pLastName);
 
 
-
 $fields = array();
 
 if (isset($_POST['submit-var']) && $_POST['submit-var'] == 'etaoinshrdlu') {
@@ -70,7 +64,7 @@ if (isset($_POST['submit-var']) && $_POST['submit-var'] == 'etaoinshrdlu') {
 
 }
 
-if (! empty ($results) ){
+if (!empty ($results)) {
     $modx->SetPlaceholder('user_search.results_heading',
         $modx->lexicon('ce_user_search_results_heading'));
     $modx->setPlaceholder('user_search.results', $results);

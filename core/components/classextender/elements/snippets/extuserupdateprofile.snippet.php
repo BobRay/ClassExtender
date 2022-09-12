@@ -51,7 +51,7 @@ $fields = array();
 /* @var $data userData */
 
 if (isset($modx->user)) {
-    
+
     $user =& $modx->user;
     $data = $modx->getObject($cePrefix . 'userData',
         array('userdata_id' => $user->get('id')), false);
@@ -62,18 +62,18 @@ if (isset($modx->user)) {
         if ($data) {
             $data->set('userdata_id', $user->get('id'));
             $fields = $data->toArray();
-            
+
         }
     }
 }
 
-if (! is_array($fields) || empty($fields)) {
+if (!is_array($fields) || empty($fields)) {
     return '';
 }
 
 /* Convert any nulls to '' */
 if (!empty($fields)) {
-    foreach($fields as $key => $value) {
+    foreach ($fields as $key => $value) {
         if (empty($value) && ($value !== '0')) {
             $fields[$key] = '';
         }
@@ -94,7 +94,7 @@ if ($submission) {
     }
 
     if ($dirty) {
-        if (! $data->save()) {
+        if (!$data->save()) {
             $modx->log(modX::LOG_LEVEL_ERROR, 'could not save userData object');
         }
     }

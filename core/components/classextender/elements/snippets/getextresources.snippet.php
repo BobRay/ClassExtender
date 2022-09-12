@@ -34,9 +34,16 @@
  * @package classextender
  **/
 
-/* The extendedresource package should be pre-loaded
+/* The extendedresource package should be preloaded
    due to being registered in the extension_packages
    System Setting */
+
+require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
+
+
+$cePrefix = $modx->getVersionData()['version'] >= 3
+    ? 'extendedresource\\'
+    : '';
 
 
 $modx->lexicon->load('classextender:default');
@@ -48,6 +55,11 @@ $scriptProperties = isset($scriptProperties)
 $sp = $scriptProperties;
 
 $resourceClass = $modx->getOption('resourceDataClass', $sp, 'resourceData');
+
+if (strpos($resourceClass, '\\') === false) {
+    $resourceClass = $cePrefix . $resourceClass;
+}
+
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)
@@ -65,7 +77,7 @@ $rowTpl = $modx->getOption('extResourceRowTpl', $sp, 'extResourceRowTpl');
 $c = $modx->newQuery($resourceClass);
 $c->sortby($sortBy, $sortDir);
 
-if (! empty($where)) {
+if (!empty($where)) {
     $c->where($where);
 }
 

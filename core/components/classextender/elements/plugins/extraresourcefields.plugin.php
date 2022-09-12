@@ -36,8 +36,9 @@
 
 require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
 
+
 $cePrefix = $modx->getVersionData()['version'] >= 3
-    ? 'extendeduser\\'
+    ? 'extendedresource\\'
     : '';
 
 $fields = array();
@@ -46,11 +47,11 @@ $data = null;
 /** @var $data xPDOObject */
 /** @var $resource modResource */
 if ($resource) {
-    $data = $modx->getObject($cePrefix .'resourceData',
+    $data = $modx->getObject($cePrefix . 'resourceData',
         array('resourcedata_id' => $resource->get('id')));
 }
 
-if (! $data) {
+if (!$data) {
     $data = $modx->newObject($cePrefix . 'resourceData');
 }
 if ($data) {
@@ -59,16 +60,19 @@ if ($data) {
     return '';
 }
 
+// $modx->log(modX::LOG_LEVEL_ERROR, 'Event: ' . $modx->event->name);
+
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
         /* if you want to add custom scripts, css, etc, register them here */
         break;
     case 'OnDocFormRender':
+        // $modx->log(modX::LOG_LEVEL_ERROR, 'In OnDocFormRender');
         if ($data) {
             /* Set fields with values from DB (if any) */
             foreach ($fields as $key => $value) {
                 /* Make sure there are no null values */
-                if ($value === null ) {
+                if ($value === null) {
                     $fields[$key] = '';
                 }
             }
@@ -79,6 +83,7 @@ switch ($modx->event->name) {
         $extraFields = $modx->getChunk('MyExtraResourceFields', $fields);
 
         /* Add our custom fields to the Create/Edit Resource form */
+        // $modx->log(modX::LOG_LEVEL_ERROR, print_r($extraFields, true));
         $modx->event->output($extraFields);
         break;
     case 'OnDocFormSave':
@@ -95,7 +100,7 @@ switch ($modx->event->name) {
         $fields = array_keys($fields);
         $postKeys = array_keys($_POST);
         $dirty = false;
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             if ($field === 'id') {
                 continue;
             }
@@ -120,7 +125,7 @@ switch ($modx->event->name) {
 
     case 'OnEmptyTrash':
         /** @var $resources array() */
-        foreach($resources as $resource) {
+        foreach ($resources as $resource) {
             $data = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id')));
             if ($data) {
                 $data->remove();

@@ -205,12 +205,22 @@ class ClassExtender {
                schemas that are already correct */
             if ($this->isMODX3) {
                 $replacements = array(
-                    'extends="modUser"' => 'extends="MODX\Revolution\modUser"',
+                    'class="modUser"' =>
+                        'class="MODX\Revolution\modUser"',
+                    'class="modResource"' => 'class="MODX\Revolution\modResource"',
+                    'extends="modUser"' =>
+                        'extends="MODX\Revolution\modUser"',
                     'extends="xPDOObject"' => 'extends="xPDO\Om\xPDOObject"',
                     'extends="xPDOSimpleObject"' =>
                         'extends="xPDO\Om\xPDOSimpleObject"',
                     'extends="modResource"' =>
                         'extends="MODX\Revolution\modResource"',
+                    'class="resourceData" foreign' =>
+                        'class="extendedresource\resourceData" foreign',
+                    'class="userData" foreign' =>
+                        'class="extendeduser\userData" foreign',
+                    'class="modUserProfile"' =>
+                        'class="MODX\Revolution\modUserProfile"',
                 );
                 foreach ($replacements as $key => $value) {
                     if (strpos($content, $key) !== false) {
@@ -334,6 +344,18 @@ class ClassExtender {
         if (! empty($setting)) {
             $this->modx->removeExtensionPackage($this->packageLower);
         }
+
+        $path = '[[++core_path]]' . 'components/classextender/model/';
+        /* Clear existing registration so it can be updated */
+        $setting = $this->modx->getObject('modSystemSetting',
+            array('key' => 'extension_packages'));
+        if (!empty($setting)) {
+            $this->modx->removeExtensionPackage($this->packageLower);
+        }
+        $this->modx->addExtensionPackage($this->packageLower, $path,
+            array('tablePrefix' => $this->ce_table_prefix));
+
+
         /* If extension_packages is now empty, remove the setting
            (it's deprecated) */
         $setting = $this->modx->getObject('modSystemSetting',

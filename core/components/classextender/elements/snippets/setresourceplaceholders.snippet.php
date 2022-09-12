@@ -37,12 +37,24 @@
 
 $modx->lexicon->load('classextender:default');
 
+$cePrefix = '';
+$modxPrefix = '';
+
+require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
+
+$isModx3 = $modx->getVersionData()['version'] >= 3;
+
+if ($isModx3) {
+    $cePrefix = 'extendedresource\\';
+    $modxPrefix = 'MODX\Revolution\\';
+}
+
 $sp = $scriptProperties;
-$resourceId = $modx->getOption('resourceId', $sp, NULL);
-$prefix = $modx->getOption('prefix', $sp, '');
+$resourceId = $modx->getOption('resourceId', $sp, NULL, true);
+$placeholderPrefix = $modx->getOption('prefix', $sp, '', true);
 
 if ($resourceId != NULL) {
-    $resource = $modx->getObject('modResource', $resourceId);
+    $resource = $modx->getObject($modxPrefix . 'modResource', $resourceId);
     if (!$resource) {
         return $modx->lexicon('ce.resource_not_found');
     }
@@ -50,13 +62,16 @@ if ($resourceId != NULL) {
     $resource = $modx->resource;
 }
 
-$data = $modx->getObject('resourceData',
+$data = $modx->getObject($cePrefix . 'resourceData',
     array('resourcedata_id' => $resource->get('id')));
 
 if ($data) {
-    $modx->toPlaceholders($data, $prefix);
+    $modx->toPlaceholders($data, $placeholderPrefix);
+} else {
+    $modx->log(modX::LOG_LEVEL_ERROR, 'Could not get resourceData object');
+
 }
 
-$modx->toPlaceholders($resource->toArray(), $prefix);
+$modx->toPlaceholders($resource->toArray(), $placeholderPrefix);
 
 return '';

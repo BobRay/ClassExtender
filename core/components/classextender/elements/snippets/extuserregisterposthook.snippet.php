@@ -38,17 +38,34 @@
 
 /** Usage:
  * Add the custom user fields to the register form and modify the Register tag:
+ * */
 
+/*
 
 [[!Register?
-    &submitVar=`loginRegisterBtn`
+    &submitVar=`login-register-btn`
     ...
     &useExtended=`0`
     &postHooks=`ExtUserRegister`
-]] */
+]]
 
+*/
 
-$submission = isset($_POST['loginRegisterBtn']) && ($_POST['loginRegisterBtn'] == 'Register');
+require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
+
+$isModx3 = $modx->getVersionData()['version'] >= 3
+    ? true
+    : false;
+
+$cePrefix = '';
+$modxPrefix = '';
+
+if ($isModx3) {
+    $cePrefix = 'extendeduser\\';
+    $modxPrefix = 'MODX\Revolution\\';
+}
+
+$submission = isset($_POST['login-register-btn']) && ($_POST['login-register-btn'] == 'Register');
 
 $data = NULL;
 $newUser = NULL;
@@ -63,17 +80,17 @@ if (isset($modx->user)) {
 
     $userName = $hook->getValue($usernameField);
 
-   /* Get new user ID via username */
-    $newUser = $modx->getObject("modUser", array('username' => $userName));
+    /* Get new user ID via username */
+    $newUser = $modx->getObject($modxPrefix . "modUser", array('username' => $userName));
     $userId = $newUser->get('id');
 
 
-    $data = $modx->getObject('userData',
+    $data = $modx->getObject($cePrefix . 'userData',
         array('userdata_id' => $userId), false);
     if ($data) {
         $fields = $data->toArray();
     } else {
-        $data = $modx->newObject('userData');
+        $data = $modx->newObject($cePrefix . 'userData');
         if ($data) {
             $data->set('userdata_id', $userId);
             $fields = $data->toArray();
@@ -97,6 +114,7 @@ if (!empty($fields)) {
 }
 
 if ($submission) {
+    $modx->log(modX::LOG_LEVEL_ERROR, '[ClassExtender] ' . 'Form Submitted');
     $modx->request->sanitizeRequest();
     $dirty = false;
 

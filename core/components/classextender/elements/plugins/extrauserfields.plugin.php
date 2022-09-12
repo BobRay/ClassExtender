@@ -41,17 +41,17 @@
 require_once MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php';
 
 
-/*$packageName = 'extendeduser';
-$modelPath = MODX_CORE_PATH . 'components/classextender/model/';
-$tablePrefix = 'ext_';
+// $packageName = 'extendeduser';
+// $modelPath = MODX_CORE_PATH . 'components/classextender/model/';
+// $tablePrefix = 'ext_';
 
-$success = $modx->addPackage($packageName,
+/* $success = $modx->addPackage($packageName,
             $modelPath, $tablePrefix);
 
-if (!$success) {
+        if (!$success) {
             $modx->log(modX::LOG_LEVEL_ERROR, $this->modx->lexicon("ce.addpackage_failed"));
-}*/
-
+        }
+*/
 
 /* Define extra fields */
 $fields = array();
@@ -59,6 +59,9 @@ $fields = array();
 $prefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'
     : '';
+
+// $table = $modx->getTableName($prefix . 'userData');
+// $modx->log(modX::LOG_LEVEL_ERROR, 'Table: ' . $table);
 
 /* Make sure we have an extUser object to work with */
 if (isset($user)) {
