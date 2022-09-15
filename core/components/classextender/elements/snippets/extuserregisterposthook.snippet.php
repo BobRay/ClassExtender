@@ -80,7 +80,7 @@ if (isset($modx->user)) {
 
     $userName = $hook->getValue($usernameField);
 
-    /* Get new user ID via username */
+    /* Get new user ID via username (created by Register snippet) */
     $newUser = $modx->getObject($modxPrefix . "modUser", array('username' => $userName));
     $userId = $newUser->get('id');
 
@@ -126,6 +126,15 @@ if ($submission) {
             }
         }
     }
+    /* Set registration date to today -- delete if not needed */
+    if (isset($fields['registrationDate'])) {
+        $rDate = $data->get('registrationDate');
+        if (empty($rDate)) {
+            $dirty = true;
+            $data->set('registrationDate', strtotime(date('Y-m-d')));
+        }
+    }
+    /* End of registration date section */
 
     if ($dirty) {
         if ($data->save()) {
@@ -138,5 +147,4 @@ if ($submission) {
         }
     }
 }
-
 return true;

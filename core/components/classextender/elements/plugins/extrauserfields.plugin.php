@@ -137,10 +137,12 @@ switch ($modx->event->name) {
         }
 
         /* Set registration date to today -- delete if not needed */
-        $rDate = $data->get('registrationDate');
-        if (empty($rDate)) {
-            $dirty = true;
-            $data->set('registrationDate', strtotime(date('Y-m-d')));
+        if (isset($fields['registrationDate'])) {
+            $rDate = $data->get('registrationDate');
+            if (empty($rDate)) {
+                $dirty = true;
+                $data->set('registrationDate', strtotime(date('Y-m-d')));
+            }
         }
         /* End of registration date section */
 
