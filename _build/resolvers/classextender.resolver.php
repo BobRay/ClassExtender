@@ -29,13 +29,17 @@
 if ($object->xpdo) {
     $modx =& $object->xpdo;
 
+    $prefix = $modx->getVersionData()['version'] >= 3
+        ?'MODX\Revolution\\'
+        : '';
+
     $chunks = array(
         'ExtraUserFields',
         'ExtUserSchema',
         'ExtraResourceFields',
         'ExtResourceSchema',
     );
-    $catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
+    $catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
     $categoryId = $catObj? $catObj->get('id') : null;
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
@@ -54,11 +58,11 @@ if ($object->xpdo) {
             );
             foreach ($chunks as $chunk) {
                 $newName = 'My' . $chunk;
-                $obj = $modx->getObject('modChunk', array('name'=> $newName));
+                $obj = $modx->getObject($prefix . 'modChunk', array('name'=> $newName));
                 if (! $obj) {
-                    $oldChunk = $modx->getObject('modChunk', array('name' => $chunk));
+                    $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
                     if ($oldChunk) {
-                        $newChunk = $modx->newObject('modChunk');
+                        $newChunk = $modx->newObject($prefix . 'modChunk');
                         $newChunk->set('name', $newName);
                         $newChunk->setContent($oldChunk->getContent());
                         if ($categoryId) {
@@ -78,16 +82,16 @@ if ($object->xpdo) {
 
         case xPDOTransport::ACTION_UNINSTALL:
             $modx->updateCollection(
-                       'modResource',
-                           array('class_key' => 'modDocument'),
-                           array('class_key' => 'extResource')
+                $prefix . 'modResource',
+                           array('class_key' => $prefix . 'modDocument'),
+                           array('class_key' => $prefix . 'extResource')
             );
             $modx->updateCollection(
-                       'modUser',
-                           array('class_key' => 'modUser'),
-                           array('class_key' => 'extUser')
+                $prefix . 'modUser',
+                           array('class_key' => $prefix . 'modUser'),
+                           array('class_key' => $prefix . 'extUser')
             );
-            $setting = $modx->getObject('modSystemSetting',
+            $setting = $modx->getObject($prefix . 'modSystemSetting',
                 array('key' => 'extension_packages'));
             if (! empty($setting)) {
                 $modx->removeExtensionPackage('extendeduser');
@@ -106,14 +110,14 @@ if ($object->xpdo) {
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
             };
             /* Remove modExtensionPackage objects in 2.3 */
-            if (class_exists('modExtensionPackage')) {
+            if (class_exists($prefix . 'modExtensionPackage')) {
                 /** @var $rec xPDOObject */
-                $recs = $modx->getCollection('modExtensionPackage',
+                $recs = $modx->getCollection($prefix . 'modExtensionPackage',
                     array('namespace' => 'extendeduser'));
                 foreach ($recs as $rec) {
                     $rec->remove();
                 }
-                $recs = $modx->getCollection('modExtensionPackage',
+                $recs = $modx->getCollection($prefix . 'modExtensionPackage',
                     array('namespace' => 'extendedresource'));
                 foreach ($recs as $rec) {
                     $rec->remove();
@@ -121,11 +125,29 @@ if ($object->xpdo) {
             }
             foreach($chunks as $chunk) {
                 $newName = 'My' . $chunk;
-                $obj = $modx->getObject('modChunk', array('name' => $newName));
+                $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
                 if ($obj) {
                     $obj->remove();
                 }
             }
+
+            /* Remove extensionPackage objects and namespaces */
+            $packages = array(
+                'extendeduser',
+                'extendedresource',
+            );
+
+            foreach ($packages as $name) {
+                $extPackage = $modx->getObject($prefix . 'modExtensionPackage', array('name' => $name));
+                if ($extPackage) {
+                    $extPackage->remove();
+                }
+                $nameSpace = $modx->getObject($prefix . 'modNamespace', array('name' => $name));
+                if ($nameSpace) {
+                    $nameSpace->remove();
+                }
+            }
+
             $cm = $modx->getCacheManager();
             $cm->refresh();
 
