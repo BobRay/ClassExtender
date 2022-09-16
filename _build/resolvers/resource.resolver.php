@@ -73,6 +73,46 @@ if($object->xpdo) {
                   'parent' => '0',
                   'template' => 'default',
                 ),
+                3 =>  array (
+                  'pagetitle' => 'Examples',
+                  'parent' => 'ClassExtender',
+                  'template' => 'default',
+                ),
+                4 =>  array (
+                  'pagetitle' => 'ClassExtender Register PostHook',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                5 =>  array (
+                  'pagetitle' => 'ClassExtender Update Profile',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                6 =>  array (
+                  'pagetitle' => 'ClassExtender GetExtUsers',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                7 =>  array (
+                  'pagetitle' => 'ClassExtender GetExtResources',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                8 =>  array (
+                  'pagetitle' => 'ClassExtender Set Resource Placeholders',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                9 =>  array (
+                  'pagetitle' => 'ClassExtender Set User Placeholders',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
+                10 =>  array (
+                  'pagetitle' => 'ClassExtender User Search Form',
+                  'parent' => 'Examples',
+                  'template' => 'default',
+                ),
             );
 
             if (is_array($intersects)) {
