@@ -75,6 +75,9 @@ $_lang['user_search_last_name_caption'] = 'Last Name';
 /* Used in usersearchform.snippet.php */
 $_lang['ce_user_search_results_heading'] = 'Results';
 
+/* Used in upDateProfile.snippet.php */
+$_lang['ce_login_required'];
+
 /* System Settings */
 $_lang['setting_ce_autoload_directories'] = 'Autoload directories';
 
