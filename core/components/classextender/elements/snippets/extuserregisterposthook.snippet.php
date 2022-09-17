@@ -147,4 +147,5 @@ if ($submission) {
         }
     }
 }
+$_POST = array();
 return true;
