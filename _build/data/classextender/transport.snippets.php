@@ -129,4 +129,14 @@ $snippets[8]->fromArray(array (
 ), '', true, true);
 $snippets[8]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/extuserregisterposthook.snippet.php'));
 
+$snippets[9] = $modx->newObject('modSnippet');
+$snippets[9]->fromArray(array (
+  'id' => 9,
+  'property_preprocess' => false,
+  'name' => 'RequireLogin',
+  'description' => 'Show Login form to not-logged-in users',
+  'properties' => NULL,
+), '', true, true);
+$snippets[9]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/requirelogin.snippet.php'));
+
 return $snippets;
