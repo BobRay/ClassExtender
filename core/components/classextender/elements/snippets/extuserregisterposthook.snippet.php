@@ -114,7 +114,7 @@ if (!empty($fields)) {
 }
 
 if ($submission) {
-    $modx->log(modX::LOG_LEVEL_ERROR, '[ClassExtender] ' . 'Form Submitted');
+    // $modx->log(modX::LOG_LEVEL_ERROR, '[ClassExtender] ' . 'Form Submitted');
     $modx->request->sanitizeRequest();
     $dirty = false;
 
