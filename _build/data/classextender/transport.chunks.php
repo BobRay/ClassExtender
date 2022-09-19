@@ -155,4 +155,24 @@ $chunks[13]->fromArray(array (
 ), '', true, true);
 $chunks[13]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extusersearchformtpl.chunk.html'));
 
+$chunks[14] = $modx->newObject('modChunk');
+$chunks[14]->fromArray(array (
+  'id' => 14,
+  'property_preprocess' => false,
+  'name' => 'ExtUpdateProfileLoggedIn',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[14]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/ExtUpdateProfileLoggedIn.chunk.html'));
+
+$chunks[15] = $modx->newObject('modChunk');
+$chunks[15]->fromArray(array (
+  'id' => 15,
+  'property_preprocess' => false,
+  'name' => 'ExtUpdateProfileNotLoggedIn',
+  'description' => 'Chunk',
+  'properties' => NULL,
+), '', true, true);
+$chunks[15]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/ExtUpdateProfileNotLoggedIn.chunk.html'));
+
 return $chunks;
