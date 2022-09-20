@@ -39,7 +39,6 @@
 /* Used in classextenderform.chunk.html */
 $_lang['ce_schema_tpl_name_caption'] = 'Schema Tpl chunk';
 $_lang['ce_package_name_caption'] = 'Package Name';
-$_lang['ce_class_caption'] = 'Class';
-$_lang['ce_parent_object_caption'] = 'Parent Object';
+$_lang['ce_parent_object_caption'] = 'Base Object';
 $_lang['ce_table_prefix_caption'] = 'Table Prefix';
-$_lang['ce_table_name_caption'] = 'Table Name';
+

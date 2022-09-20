@@ -32,10 +32,10 @@ class ClassExtender {
     /* Note: MODX 3 will use the package name as
        a namespace in the classes */
     public $ce_package_name = '';
-    public $ce_class = '';
+   // public $ce_class = '';
     public $ce_parent_object = '';
     public $ce_table_prefix = '';
-    public $ce_table_name = '';
+   // public $ce_table_name = '';
     public $ce_schema_tpl_name = '';
     /** @var  $generator xPDOGenerator */
     public $generator;
@@ -45,7 +45,7 @@ class ClassExtender {
     protected $output = array();
     protected $fields = array();
     protected $packageLower = '';
-    protected $objectPrefix = '';
+    // protected $objectPrefix = '';
     protected $objectPrefixLower = '';
     protected $hasError = false;
     protected $schemaChunk = '';
@@ -88,49 +88,48 @@ class ClassExtender {
 
         $this->ce_package_name = isset($_POST['ce_package'])
             ? $_POST['ce_package']
-            : $this->modx->getOption('package', $this->props, 'extendeduser');
+            : $this->modx->getOption('package', $this->props, '');
+
+        if (empty($this->ce_package_name)) {
+            $this->addOutput('Packagename is empty', true);
+        }
 
         $this->packageLower = strtolower($this->ce_package_name);
 
         $this->ce_parent_object = isset($_POST['ce_parent_object'])
             ? $_POST['ce_parent_object']
-            : $this->modx->getOption('parentObject', $this->props, $this->classPrefix . 'modUser');
+            : $this->modx->getOption('parentObject', $this->props, '');
+        if (empty($this->ce_parent_object)) {
+            $this->addOutput('Base object is empty', true);
+        }
 
-        $this->ce_class = isset($_POST['ce_class'])
+       /* $this->ce_class = isset($_POST['ce_class'])
             ? $_POST['ce_class']
             :$this->modx->getOption('class',
-                $this->props, 'userData');
+                $this->props, 'userData');*/
 
         /* Strip off 'mod' to produce 'User' or 'Resource' */
-     $this->objectPrefix = substr(basename($this->ce_parent_object), 3);
-     $this->objectPrefixLower = strtolower($this->objectPrefix);
+        $this->objectPrefix = basename($this->ce_parent_object);
+
+        $this->objectPrefixLower = strtolower($this->objectPrefix);
+        /* Remove 'mod' if it's there */
+        $this->objectPrefixLower = str_replace('mod', '', $this->objectPrefixLower);
 
         $this->schemaChunk = isset($_POST['ce_schema_tpl_name'])
             ? $_POST['ce_schema_tpl_name']
-            : $this->modx->getOption('schemaTpl', $this->props, 'MyExtUserSchema');
+            : $this->modx->getOption('schemaTpl', $this->props, '');
 
         $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
             ? $_POST['ce_table_prefix']
             : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
 
-        $this->ce_table_name = isset($_POST['ce_table_name'])
-            ? $_POST['ce_table_name']
-            : $this->modx->getOption('tableName', $this->props, 'user_data');
-
-        $this->ce_method = isset($_POST['ce_method'])
-            ? $_POST['ce_method']
-            : $this->modx->getOption('method', $this->props, 'use_schema');
-
-        $this->ce_schema_file = $this->modx->getOption('schemaFile',
-            $this->props, '' );
-
-        if (empty($this->ce_schema_file)) {
-            $path = $this->modelPath . 'schema';
-            if (!is_dir($path)) {
-                mkdir($path, $this->dirPermission, true);
-            }
-            $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
+        /* File to be written containing schema */
+        $path = $this->modelPath . 'schema';
+        if (!is_dir($path)) {
+            mkdir($path, $this->dirPermission, true);
         }
+
+        $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
     }
 
     public function process() {
@@ -157,10 +156,8 @@ class ClassExtender {
     public function displayForm() {
         $fields = array(
             'ce_package_name'  => $this->ce_package_name,
-            'ce_class'         => $this->ce_class,
             'ce_parent_object' => $this->ce_parent_object,
             'ce_table_prefix'  => $this->ce_table_prefix,
-            'ce_table_name'    => $this->ce_table_name,
             'ce_schema_tpl_name' => $this->schemaChunk,
         );
 
@@ -196,11 +193,11 @@ class ClassExtender {
             mkdir($path, $this->dirPermission, true);
         }
         $content = $this->modx->getChunk($this->schemaChunk);
-        if (! $content) {
+        if (empty($content)) {
             $this->addOutput($this->modx->lexicon('ce.could_not_find_schema_chunk') .
                 ': ' . $this->schemaChunk , true);
+            return false;
         } else {
-
             /* Convert schema to MODX 3 format -- should not alter
                schemas that are already correct */
             if ($this->isMODX3) {
@@ -258,9 +255,7 @@ class ClassExtender {
 
         if (!$success) {
             $this->addOutput($this->modx->lexicon('ce.parse_schema_failed'), true);
-
         } else {
-
             $this->addOutput($this->modx->lexicon('ce.schema_parsed'));
         }
         return $success;
@@ -272,7 +267,6 @@ class ClassExtender {
         require_once $this->modelPath . 'ce_autoload.php';
 
         /* Required!!! */
-       //  $this->modx->log(modX::LOG_LEVEL_ERROR, 'Package: ' . $this->ce_package_name);
         $success = $this->modx->addPackage($this->ce_package_name,
             $this->modelPath, $this->ce_table_prefix);
 
@@ -336,7 +330,7 @@ class ClassExtender {
     }
 
 
-    public function CreateExtensionPackageObject() {
+    public function createExtensionPackageObject() {
 
        /* Clear existing registration */
         $setting = $this->modx->getObject('modSystemSetting',
