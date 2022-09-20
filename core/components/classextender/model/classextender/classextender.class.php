@@ -103,15 +103,10 @@ class ClassExtender {
             $this->addOutput('Base object is empty', true);
         }
 
-       /* $this->ce_class = isset($_POST['ce_class'])
-            ? $_POST['ce_class']
-            :$this->modx->getOption('class',
-                $this->props, 'userData');*/
-
-        /* Strip off 'mod' to produce 'User' or 'Resource' */
+        /* Strip off 'mod' to produce 'user' or 'resource' */
         $this->objectPrefix = basename($this->ce_parent_object);
-
         $this->objectPrefixLower = strtolower($this->objectPrefix);
+
         /* Remove 'mod' if it's there */
         $this->objectPrefixLower = str_replace('mod', '', $this->objectPrefixLower);
 
