@@ -89,7 +89,7 @@ $resources = $modx->getCollectionGraph($resourceClass, '{"Resource":{}}', $c);
 $count = count($resources);
 
 if (!$count) {
-    return $modx->lexicon('ce.no_resources_found');
+    return '<p class="ce_error">' . $modx->lexicon('ce.no_resources_found') . '</p>';
 
 }
 

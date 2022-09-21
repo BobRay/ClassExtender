@@ -86,7 +86,7 @@ $users = $modx->getCollectionGraph($cePrefix . $userClass, '{"Profile":{},"User"
 $count = count($users);
 
 if (!$count) {
-    return $modx->lexicon('ce.no_users_found');
+    return '<p class="ce_error">' . $modx->lexicon('ce.no_users_found') . '</p>';
 
 }
 
