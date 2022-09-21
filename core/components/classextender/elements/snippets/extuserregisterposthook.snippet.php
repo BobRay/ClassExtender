@@ -37,7 +37,7 @@
  **/
 
 /** Usage:
- * Add the custom user fields to the register form and modify the Register tag:
+ * See the example resource under the ClassExtender folder
  * */
 
 /*

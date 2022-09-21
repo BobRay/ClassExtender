@@ -26,6 +26,8 @@
  * -----------
  * Set placeholders for extra resource fields
  *
+ * See the example resource under the ClassExtender folder
+ *
  * Variables
  * ---------
  *

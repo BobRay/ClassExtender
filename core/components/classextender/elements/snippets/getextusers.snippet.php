@@ -32,6 +32,8 @@
  * @var $modx modX
  * @var $scriptProperties array
  *
+ * See the example resource under the ClassExtender folder
+ *
  * @package classextender
  **/
 

@@ -26,6 +26,8 @@
  * -----------
  * Set placeholders for and update extended user data
  *
+ * See the example resource under the ClassExtender folder
+ *
  * Variables
  * ---------
  * @var $modx modX

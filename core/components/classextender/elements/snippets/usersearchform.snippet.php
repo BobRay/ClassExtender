@@ -26,6 +26,8 @@
  * -----------
  * Show user information based on search
  *
+ * See the example resource under the ClassExtender folder
+ *
  * Variables
  * ---------
  *
