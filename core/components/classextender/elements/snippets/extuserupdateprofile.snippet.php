@@ -42,7 +42,12 @@ $modx->lexicon->load('classextender:default');
 if (! $modx->user->hasSessionContext($modx->context->get('key'))) {
     return "<h3>" . $modx->lexicon('ce_login_required') . "</h3>";
 }
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
 
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
 
 require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
 

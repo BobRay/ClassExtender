@@ -46,6 +46,12 @@
 
 $formTpl = $modx->getOption('extFormTpl', $scriptProperties, 'ExtUserSearchFormTpl');
 
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
 
 $output = $modx->getChunk($formTpl);
 

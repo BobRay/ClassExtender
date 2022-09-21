@@ -52,6 +52,14 @@ if ($isModx3) {
 }
 
 $sp = $scriptProperties;
+
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 $resourceId = $modx->getOption('resourceId', $sp, NULL, true);
 $placeholderPrefix = $modx->getOption('prefix', $sp, '', true);
 

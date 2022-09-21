@@ -67,10 +67,12 @@ class ClassExtender {
             ? 'MODX\Revolution\\'
             : '';
 
-        $cssFile = $this->modx->getOption('ce.assets_url', null,
-                MODX_ASSETS_URL . 'components/classextender/') . 'css/classextender.css?v=' . $this->version;
+        $cssFile = $this->modx->getOption('cssFile', $this->props,
+                '', true);
 
-        $this->modx->regClientCSS($cssFile);
+        if (!empty($cssFile)) {
+            $this->modx->regClientCSS($cssFile);
+        }
 
         $this->dirPermission = (int) $this->modx->getOption('dirPermission',
             $this->props, 0755);

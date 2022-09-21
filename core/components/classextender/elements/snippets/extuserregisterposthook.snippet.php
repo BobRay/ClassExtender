@@ -57,6 +57,13 @@ $isModx3 = $modx->getVersionData()['version'] >= 3
     ? true
     : false;
 
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 $cePrefix = '';
 $modxPrefix = '';
 

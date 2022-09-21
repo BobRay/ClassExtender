@@ -42,6 +42,14 @@ $modx->lexicon->load('classextender:default');
 require_once(MODX_CORE_PATH . 'components/classextender/model/ce_autoload.php');
 
 $sp = $scriptProperties;
+
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 $userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
 $dataClass = $modx->getOption('userDataClass', $sp, 'userData');

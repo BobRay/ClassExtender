@@ -56,6 +56,13 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 $resourceClass = $modx->getOption('resourceDataClass', $sp, 'resourceData');
 
 if (strpos($resourceClass, '\\') === false) {

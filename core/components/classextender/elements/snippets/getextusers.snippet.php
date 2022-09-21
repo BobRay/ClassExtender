@@ -53,6 +53,13 @@ $scriptProperties = isset($scriptProperties)
     : array();
 $sp = $scriptProperties;
 
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 $cePrefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'
     : '';
