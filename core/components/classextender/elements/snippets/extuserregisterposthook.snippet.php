@@ -57,12 +57,6 @@ $isModx3 = $modx->getVersionData()['version'] >= 3
     ? true
     : false;
 
-$cssFile = $modx->getOption('cssFile', $scriptProperties,
-    '', true);
-
-if (!empty($cssFile)) {
-    $modx->regClientCSS($cssFile);
-}
 
 $cePrefix = '';
 $modxPrefix = '';
@@ -85,10 +79,17 @@ $fields = array();
 if (isset($modx->user)) {
     $usernameField = $modx->getOption('usernameField', $scriptProperties, 'username', true);
 
+    /** @var $hook LoginHooks */
     $userName = $hook->getValue($usernameField);
 
     /* Get new user ID via username (created by Register snippet) */
     $newUser = $modx->getObject($modxPrefix . "modUser", array('username' => $userName));
+
+    if (!$newUser) {
+        $modx->log(modX::LOG_LEVEL_ERROR, "Could not get user object, username: {$userName}");
+        return false;
+    }
+
     $userId = $newUser->get('id');
 
 
