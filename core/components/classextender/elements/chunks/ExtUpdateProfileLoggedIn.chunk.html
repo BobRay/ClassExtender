@@ -1,10 +1,15 @@
+<!-- You  may want to redirect to another page -->
+
 [[!ExtUserUpdateProfile]]
 [[!UpdateProfile?
     &useExtended=`0`
     &redirectTo=`[[*id]]`
 ]]
 
-<div class="update-profile">
+<div class="ce_update-profile">
+
+    <fieldset class="ce_fieldset">
+    <legend class="ce_legend"> Update Profile </legend>
     <div class="updprof-error">[[+error.message]]</div>
     [[+login.update_success:is=`1`:then=`[[%login.profile_updated? &namespace=`login` &topic=`updateprofile`]]`]]
 
@@ -13,7 +18,6 @@
 <br>
         <label for="fullname">[[!%login.fullname? &namespace=`login` &topic=`updateprofile`]]
             <span class="error">[[+error.fullname]]</span>
-<br>
         </label>
         <input type="text" name="fullname" id="fullname" value="[[+fullname]]" />
 <br>
@@ -67,26 +71,27 @@
         </label>
         <input type="text" name="website" id="website" value="[[+website]]" />
 <br>
-        <label for="firstName">First Name:
+        <label for="firstName">First Name
         </label>
         <input type="text" name="firstName" id="firstName" value="[[+firstName]]" />
 <br>
-        <label for="lastName">Last Name:
+        <label for="lastName">Last Name
         </label>
         <input type="text" name="lastName" id="lastName" value="[[+lastName]]" />
 <br>
-        <label for="title">Title:
+        <label for="title">Title
         </label>
         <input type="text" name="title" id="title" value="[[+title]]" />
 <br>
-        <label for="company">Company:
+        <label for="company">Company
         </label>
         <input type="text" name="company" id="company" value="[[+company]]" />
+<br>
+<br>
 
-        <br class="clear" />
+        <input id="ce_form_button" type="submit" name="login-updprof-btn" value="[[!%login.update_profile]]" />
 
-        <div class="form-buttons">
-            <input type="submit" name="login-updprof-btn" value="[[!%login.update_profile]]" />
-        </div>
     </form>
+
+</fieldset>
 </div>
