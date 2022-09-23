@@ -36,6 +36,13 @@
 
 $msg='';
 
+$cssFile = $modx->getOption('cssFile', $scriptProperties,
+    '', true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
+}
+
 if ($modx->user->hasSessionContext($modx->context->get('key'))) {
     $chunk = $modx->getOption('loggedInChunk', $scriptProperties, '');
 } else {
