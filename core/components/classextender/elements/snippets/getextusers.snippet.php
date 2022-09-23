@@ -88,6 +88,7 @@ if ($limit !== null) {
     $c->limit($limit, $offset);
 }
 
+
 $users = $modx->getCollectionGraph($cePrefix . $userClass, '{"Profile":{},"User":{}}', $c);
 
 $count = count($users);
@@ -105,15 +106,20 @@ $output = '';
 $innerOutput = '';
 foreach ($users as $user) {
     $fields = $user->toArray();
-    unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class']);
+
     if ($user->Profile) {
         $fields = array_merge($user->Profile->toArray(), $fields);
     }
     if ($user->User) {
         $fields = array_merge($user->User->toArray(), $fields);
     }
+
+    unset($fields['password'], $fields['cachepwd'], $fields['salt'], $fields['hash_class']);
+
     $inner = $modx->getChunk($innerTpl, $fields);
     $row = $modx->getChunk($rowTpl, $fields);
+
+
     $innerOutput .= str_replace('[[+extUserRow]]', $row, $inner);
     $i++;
 }
