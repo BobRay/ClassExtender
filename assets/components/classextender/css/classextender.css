@@ -9,30 +9,30 @@
 
 div#class_extender {
     font-family: arial, Helvetica, sans-serif;
-    font-size: 12pt;
+    font-size:12pt;
     width: 40%;
-    padding: 30px;
-    margin-top: 60px;
+    padding:30px;
+    margin-top:60px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid black;
-    border-radius: 10px;
+    border:1px solid black;
+    border-radius:10px;
     background-color: #d3d3d3;
 }
 
 form#class_extender_form fieldset {
     padding-top: 0;
-    margin-top: 0;
+    margin-top:0;
     margin-bottom: 30px;
     border-radius: 10px;
-    background-color: #efefef;
+    background-color:#efefef;
 }
 
 form#class_extender_form input {
-    width: 14em;
-    padding-left: 10px;
-    margin-bottom: 15px;
-    border-radius: 10px;
+    width:14em;
+    padding-left:10px;
+    margin-bottom:15px;
+    border-radius:10px;
 }
 
 form#class_extender_form legend {
@@ -47,31 +47,35 @@ p.ce_error, .error, span.error {
 }
 
 p.ce_success {
-    color: green;
+    color:green;
 }
 
-.get_ext_resources, .get_ext_users {
-    background-color: lightgray;
-    padding: 1em;
-    padding-top: .5em;
+.get_ext_resources, .get_ext_users, .set_resource_placeholders, .set_user_placeholders, .user_search_results   {
+	background-color:lightgray;
+	padding:1em;
+	padding-top:.5em;
 }
-
 .loginUsernameLabel, .LoginPasswordLabel, .loginLoginButton {
-    display: block;
-    margin: 20px 0;
+	display: block;
+	margin: 20px 0;
 }
 
 fieldset.ce_fieldset {
-    background-color: lightgray;
-    border-radius: 10px;
+	background-color:lightgray;
+	border-radius: 10px;
 
 }
 
 fieldset.ce_fieldset legend {
-    border-radius: 10px;
-    padding: 10px 20px;
-    background-color: white;
-    border: 1px solid
+	border-radius: 10px;
+	padding: 10px 20px;
+	background-color:white;
+	border:1px solid
+}
+
+.user_search_results {
+	border-radius: 10px;
+	border:1px solid;
 }
 
 .ce_fieldset label {
