@@ -16,14 +16,14 @@ $components = array(
     'packageName' => 'ClassExtender',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'ClassExtender project for MyComponent extra',
-    'version' => '2.2.0',
+    'version' => '2.3.0',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<https://bobsguides.com>',
     'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'https://bobsguides.com/classextender-tutorial.html',
-    'copyright' => '2012-2019',
+    'copyright' => '2012-2022',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -213,6 +213,10 @@ $components = array(
                 'category'    => 'ClassExtender',
                 'description' => 'Show users selected by category',
             ),
+            'RequireLogin' => array(
+                'category' => 'ClassExtender',
+                'description' => 'Show Login form to not-logged-in users',
+            ),
 
         ),
         'plugins' => array(
@@ -317,6 +321,21 @@ $components = array(
                 'name' => 'ExtUserSearchFormTpl',
             ),
 
+            'ExtUserRegisterFormTpl' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtUserRegisterFormTpl',
+            ),
+            'ExtUpdateProfileLoggedIn' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtUpdateProfileLoggedIn',
+                'filename' => 'ExtUpdateProfileLoggedIn.chunk.html'
+            ),
+            'ExtUpdateProfileNotLoggedIn' => array(
+                'category' => 'ClassExtender',
+                'name' => 'ExtUpdateProfileNotLoggedIn',
+                'filename' => 'ExtUpdateProfileNotLoggedIn.chunk.html'
+            ),
+
 
         ),
         'templates' => array(
@@ -341,6 +360,78 @@ $components = array(
             'richtext'  => false,
             'published' => false,
         ),
+        'Examples' => array(
+            'pagetitle' => 'Examples',
+            'alias' => 'examples',
+            'template' => 'default',
+            'parent' => 'ClassExtender',
+            'richtext' => false,
+            'published' => false,
+        ),
+        'ClassExtender Register PostHook' => array(
+            'pagetitle' => 'ClassExtender Register PostHook',
+            'alias' => 'classextender-register-posthook',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+        'ClassExtender Update Profile' => array(
+            'pagetitle' => 'ClassExtender Update Profile',
+            'alias' => 'class-extender-update-profile',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+        'ClassExtender GetExtUsers' => array(
+            'pagetitle' => 'ClassExtender GetExtUsers',
+            'alias' => 'class-extender-getextusers',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+        'ClassExtender GetExtResources' => array(
+            'pagetitle' => 'ClassExtender GetExtResources',
+            'alias' => 'class-extender-getextresources',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+
+        'ClassExtender Set Resource Placeholders' => array(
+            'pagetitle' => 'ClassExtender Set Resource Placeholders',
+            'alias' => 'class-extender-set-resource-placeholders',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+        'ClassExtender Set User Placeholders' => array(
+            'pagetitle' => 'ClassExtender Set User Placeholders',
+            'alias' => 'class-extender-set-user-placeholders',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+        'ClassExtender User Search Form' => array(
+            'pagetitle' => 'ClassExtender User Search Form',
+            'alias' => 'class-extender-user-search-form',
+            'template' => 'default',
+            'parent' => 'Examples',
+            'richtext' => false,
+            'published' => false,
+        ),
+
+
         'Extend modUser' => array(
             'pagetitle'   => 'Extend modUser',
             'alias'       => 'extend-moduser',
@@ -576,7 +667,15 @@ $components = array(
     'exportResources' => array(
         'Extend modUser',
         'Extend modResource',
-        'ClassExtender'
+        'ClassExtender',
+        'Examples',
+        'ClassExtender Register PostHook',
+        'ClassExtender Update Profile',
+        'ClassExtender GetExtUsers',
+        'ClassExtender GetExtResources',
+        'ClassExtender Set Resource Placeholders',
+        'ClassExtender Set User Placeholders',
+        'ClassExtender User Search Form',
     ),
     /* Array of resource parent IDs to get children of. */
     'parents' => array(),
