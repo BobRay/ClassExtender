@@ -1,6 +1,29 @@
 <div class="register">
 
+<style>
+input {
+    width:14em;
+    padding-left:10px;
+    margin-bottom:15px;
+}
 
+fieldset {
+    padding-top: 0;
+    margin-top:0;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    background-color:#efefef;
+}
+legend {
+    padding: 3px 10px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+</style>
+
+<fieldset>
+  <legend> Register </legend>
   <form class="form" action="[[~[[*id]]]]" method="post">
     <input type="hidden" name="nospam:blank" value=""/>
     <br>
@@ -40,4 +63,5 @@
       <input type="submit" name="login-register-btn" id="login-register-btn" value="Register"/>
     </div>
   </form>
+</fieldset>
 </div>
