@@ -1,38 +1,7 @@
-<h3>User Search</h3>
+<!-- Requires ExtUserSearchFormTpl
+Calls GetExtUsers snippetTo be found, users must have values for the custom fields,and records in the userData table -->
 
-
-
-<fieldset class="ce_fieldset">
-<legend>User Search</legend>
-
-<form id="class_extender_form" class="ext-user-search-form" id="ext-user-search-form" method="post">
-    <p>Enter a user first and/or last name to search for, then click on Submit</p>
-
-    <input type="hidden" name="submit-var" value="etaoinshrdlu"/>
-
-    <label for="user_search_first_name">[[%user_search_first_name_caption? &namespace=`classextender` &topic=`default`]]
-    <input type="text" size="50" id="user_search_first_name"
-                name="user_search_first_name" value="[[+user_search_first_name]]"/>
-    </label>
-
-    <br>
-    <label for="user_search_last_name">[[%user_search_last_name_caption? &namespace=`classextender` &topic=`default`]]
-        <input type="text" size="50" id="user_search_last_name"
-                name="user_search_last_name" value="[[+user_search_last_name]]"/><br/>
-    </label>
-    <br/>
-    <input type="submit" value="Submit">
-
-</form>
-</fieldset>
-<br><br>
-
-
-<div class="user_search_results">
-
-<h3>[[+user_search.results_heading]]</h3>
-
-    [[+user_search.results]]
-
-</div>
-
+[[!UserSearchForm?
+    &formTpl=`ExtUserSearchFormTpl`
+    &cssFile =`[[++assets_url]]components/classextender/css/classextender.css`
+]]
