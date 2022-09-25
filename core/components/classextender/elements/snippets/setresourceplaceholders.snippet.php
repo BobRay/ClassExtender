@@ -78,8 +78,7 @@ $data = $modx->getObject($cePrefix . 'resourceData',
 if ($data) {
     $modx->toPlaceholders($data, $placeholderPrefix);
 } else {
-    $modx->log(modX::LOG_LEVEL_ERROR, 'Could not get resourceData object');
-
+    $modx->log(modX::LOG_LEVEL_ERROR, 'No extra fields set for resource ' . $resource->get('id'));
 }
 
 $modx->toPlaceholders($resource->toArray(), $placeholderPrefix);
