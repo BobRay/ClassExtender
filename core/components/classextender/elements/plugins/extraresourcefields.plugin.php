@@ -126,7 +126,7 @@ switch ($modx->event->name) {
     case 'OnEmptyTrash':
         /** @var $resources array() */
         foreach ($resources as $resource) {
-            $data = $modx->getObject('resourceData', array('resourcedata_id' => $resource->get('id')));
+            $data = $modx->getObject($cePrefix . 'resourceData', array('resourcedata_id' => $resource->get('id')));
             if ($data) {
                 $data->remove();
             }
