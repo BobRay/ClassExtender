@@ -24,7 +24,7 @@
 
 /* $modx->lexicon->load('classextender:default'); */
 class ClassExtender {
-    public $version = '2.0.0';
+    public $version = '2.3.1';
     /** @var $modx modX */
     public $modx;
     /** @var $props array */
