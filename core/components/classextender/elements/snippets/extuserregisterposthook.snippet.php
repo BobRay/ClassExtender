@@ -107,6 +107,7 @@ if (isset($modx->user)) {
 }
 
 if (!is_array($fields) || empty($fields)) {
+    /** @var $hook LoginHooks */
     $hook->addError('username', '[ExtUserRegisterPosthook] Error getting user data');
     return false;
 }
