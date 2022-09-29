@@ -223,15 +223,30 @@ class ClassExtender {
        and classArray from schema file. */
     public function getSchemaInfo() {
         $schema = new SimpleXMLElement($this->ce_schema_file, 0, true);
+        if (empty($schema)) {
+            $this->addOutput($this->modx->lexicon('ce.parse_schema_failed'), true);
+            return false;
+        }
+
         $atts = $schema->attributes();
 
         $tablePrefix = (string)$schema['tablePrefix'];
+
+        if (empty($tablePrefix)) {
+            $this->addOutput($this->modx->lexicon('ce.no_table_prefix_in schema'), true);
+            return false;
+        }
 
         if ($this->ce_table_prefix !== $tablePrefix) {
             $this->addOutput($this->modx->lexicon('ce.table_prefixes_do_not_match'), true);
             return false;
         }
         $objects = $schema->object;
+
+        if (empty($objects)) {
+            $this->addOutput ($this->modx->lexicon('ce.no_classes_in_schema'), true);
+            return false;
+        }
 
         foreach ($objects as $object) {
             $class = (string)$object['class'];
@@ -242,6 +257,7 @@ class ClassExtender {
                 'table' => $table,
             );
         }
+        return true;
     }
 
     /* Use xPDO generator to parse schema and write
