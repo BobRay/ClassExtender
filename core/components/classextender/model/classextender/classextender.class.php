@@ -30,7 +30,6 @@ class ClassExtender {
     /* Note: MODX 3 will use the package name as
        a namespace in the classes */
     public string $ce_package_name = '';
-    // public $ce_parent_object = '';
     public string $ce_table_prefix = '';
     public string $ce_schema_tpl_name = '';
     public $generator; /* Do not set type declaration */
@@ -96,27 +95,9 @@ class ClassExtender {
 
         $this->packageLower = strtolower($this->ce_package_name);
 
-        $this->ce_parent_object = isset($_POST['ce_parent_object'])
-            ? $_POST['ce_parent_object']
-            : $this->modx->getOption('parentObject', $this->props, '');
-        if (empty($this->ce_parent_object)) {
-            $this->addOutput('Base object is empty', true);
-        }
+        $this->schemaChunk = $_POST['ce_schema_tpl_name'] ?: $this->modx->getOption('schemaTpl', $this->props, '');
 
-        /* Strip off 'mod' to produce 'user' or 'resource' */
-        $this->objectPrefix = basename($this->ce_parent_object);
-        $this->objectPrefixLower = strtolower($this->objectPrefix);
-
-        /* Remove 'mod' if it's there */
-        $this->objectPrefixLower = str_replace('mod', '', $this->objectPrefixLower);
-
-        $this->schemaChunk = isset($_POST['ce_schema_tpl_name'])
-            ? $_POST['ce_schema_tpl_name']
-            : $this->modx->getOption('schemaTpl', $this->props, '');
-
-        $this->ce_table_prefix = isset($_POST['ce_table_prefix'])
-            ? $_POST['ce_table_prefix']
-            : $this->modx->getOption('tablePrefix', $this->props, 'ext_');
+        $this->ce_table_prefix = $_POST['ce_table_prefix'] ?: $this->modx->getOption('tablePrefix', $this->props, 'ext_');
 
         /* File to be written containing schema */
         $path = $this->modelPath . 'schema';
@@ -134,7 +115,9 @@ class ClassExtender {
             return;
         }
 
-        if (! $this->getSchemaInfo())
+        if (! $this->getSchemaInfo()) {
+            return;
+        }
 
         if (!$this->generateClassFiles()) {
             return;
@@ -154,7 +137,6 @@ class ClassExtender {
     public function displayForm() {
         $fields = array(
             'ce_package_name'  => $this->ce_package_name,
-            'ce_parent_object' => $this->ce_parent_object,
             'ce_table_prefix'  => $this->ce_table_prefix,
             'ce_schema_tpl_name' => $this->schemaChunk,
         );
