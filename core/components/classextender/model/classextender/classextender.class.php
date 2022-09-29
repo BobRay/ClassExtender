@@ -24,34 +24,31 @@
 
 /* $modx->lexicon->load('classextender:default'); */
 class ClassExtender {
-    public $version = '2.3.1';
-    /** @var $modx modX */
-    public $modx;
-    /** @var $props array */
-    public $props;
+    public string $version = '2.3.1';
+    public modX $modx;
+    public array $props;
     /* Note: MODX 3 will use the package name as
        a namespace in the classes */
-    public $ce_package_name = '';
-   // public $ce_class = '';
-    public $ce_parent_object = '';
-    public $ce_table_prefix = '';
-   // public $ce_table_name = '';
-    public $ce_schema_tpl_name = '';
-    /** @var  $generator xPDOGenerator */
-    public $generator;
-    public $modelPath;
-    public $dirPermission;
-    public $ce_schema_file;
-    protected $output = array();
-    protected $fields = array();
-    protected $packageLower = '';
+    public string $ce_package_name = '';
+    // public $ce_parent_object = '';
+    public string $ce_table_prefix = '';
+    public string $ce_schema_tpl_name = '';
+    public $generator; /* Do not set type declaration */
+    public string $modelPath;
+    public int $dirPermission;
+    public string $ce_schema_file;
+    protected array $output = array();
+    protected array $fields = array();
+    protected string $packageLower = '';
     // protected $objectPrefix = '';
-    protected $objectPrefixLower = '';
-    protected $hasError = false;
-    protected $schemaChunk = '';
-    protected $isMODX3;
-    protected $classPrefix;
-
+    protected string $objectPrefixLower = '';
+    protected bool $hasError = false;
+    protected string $schemaChunk = '';
+    protected bool $isMODX3 = false;
+    protected string $classPrefix = '';
+    /* Array of classes in schema each
+    holding class and table name */
+    protected array $classArray = array();
 
     function __construct(&$modx, &$config = array()) {
         $this->modx =& $modx;
@@ -79,7 +76,8 @@ class ClassExtender {
 
         $manager = $this->modx->getManager();
         $this->generator = $manager->getGenerator();
-        if (! $this->generator) {
+
+        if (empty($this->generator)) {
             $this->modx->log(modX::LOG_LEVEL_ERROR, "Could not get generator");
         }
 
@@ -136,6 +134,8 @@ class ClassExtender {
             return;
         }
 
+        if (! $this->getSchemaInfo())
+
         if (!$this->generateClassFiles()) {
             return;
         };
@@ -146,8 +146,9 @@ class ClassExtender {
 
         $this->activatePlugin();
 
-        /* Move extension package to modExtensionPackage object */
-        $this->createExtensionPackageObject();
+        /* Move extension package to modExtensionPackage object
+           (new object is created when creating tables) */
+        $this->removeExtensionPackageSystemSetting();
     }
 
     public function displayForm() {
@@ -236,6 +237,31 @@ class ClassExtender {
         return $success;
     }
 
+    /* Pull package name, tablePrefix,
+       and classArray from schema file. */
+    public function getSchemaInfo() {
+        $schema = new SimpleXMLElement($this->ce_schema_file, 0, true);
+        $atts = $schema->attributes();
+
+        $tablePrefix = (string)$schema['tablePrefix'];
+
+        if ($this->ce_table_prefix !== $tablePrefix) {
+            $this->addOutput($this->modx->lexicon('ce.table_prefixes_do_not_match'), true);
+            return false;
+        }
+        $objects = $schema->object;
+
+        foreach ($objects as $object) {
+            $class = (string)$object['class'];
+            $table = (string)$object['table'];
+
+            $this->classArray[] = array(
+                'class' => $class,
+                'table' => $table,
+            );
+        }
+    }
+
     /* Use xPDO generator to parse schema and write
        class files to disk */
     public function generateClassFiles() {
@@ -275,15 +301,18 @@ class ClassExtender {
                 $this->addOutput($this->modx->lexicon("ce.getmanager_failed"), true);
                 $success = false;
             } else {
-                $class = $this->objectPrefixLower . 'Data';
-                if ($this->isMODX3) {
-                    /* MODX 3 will use package name as namespace
-                       for all classes */
-                    $finalClass = $pkg . '\\' . $class;
-                } else {
-                    $finalClass = $class;
+                foreach ($this->classArray as $classInfo) {
+
+                    $class = $classInfo['class'];
+                    if ($this->isMODX3) {
+                        /* MODX 3 will use package name as namespace
+                           for all classes */
+                        $finalClass = $pkg . '\\' . $class;
+                    } else {
+                        $finalClass = $class;
+                    }
+                    $success = $manager->createObjectContainer($finalClass);
                 }
-                $success = $manager->createObjectContainer($finalClass);
             }
         }
 
@@ -327,7 +356,7 @@ class ClassExtender {
     }
 
 
-    public function createExtensionPackageObject() {
+    public function removeExtensionPackageSystemSetting() {
 
        /* Clear existing registration */
         $setting = $this->modx->getObject('modSystemSetting',
@@ -336,16 +365,12 @@ class ClassExtender {
             $this->modx->removeExtensionPackage($this->packageLower);
         }
 
-        $path = '[[++core_path]]' . 'components/classextender/model/';
-        /* Clear existing registration so it can be updated */
+        /* Clear existing registration */
         $setting = $this->modx->getObject('modSystemSetting',
             array('key' => 'extension_packages'));
-        if (!empty($setting)) {
+        if (!empty($setting) || $setting == '[]') {
             $this->modx->removeExtensionPackage($this->packageLower);
         }
-        $this->modx->addExtensionPackage($this->packageLower, $path,
-            array('tablePrefix' => $this->ce_table_prefix));
-
 
         /* If extension_packages is now empty, remove the setting
            (it's deprecated) */
@@ -354,6 +379,7 @@ class ClassExtender {
         if ($setting) {
             $val = $setting->get('value');
             if (empty($val) || strlen($val) < 5) {
+                $setting->set('value', null);
                 $setting->remove();
             }
         }

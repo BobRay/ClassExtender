@@ -54,6 +54,7 @@ $_lang['ce.getmanager_failed'] = 'getManager() failed';
 $_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
 $_lang['ce.saving_schema'] = 'Saving schema';
 $_lang['ce.plugin_enabled'] = 'plugin enabled';
+$_lang['ce.table_prefixes_do_not_match'] = 'Table prefix in snippet property does not match prefix in schema';
 
 
 /* Used in getextresources.snippet.php */
