@@ -137,7 +137,7 @@ switch ($modx->event->name) {
         }
 
         /* Set registration date to today -- delete if not needed */
-        if (isset($fields['registrationDate'])) {
+        if (in_array('registrationDate', $fields)) {
             $rDate = $data->get('registrationDate');
             if (empty($rDate)) {
                 $dirty = true;
