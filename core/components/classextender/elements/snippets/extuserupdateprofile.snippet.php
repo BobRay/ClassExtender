@@ -106,6 +106,16 @@ if ($submission) {
         }
     }
 
+    /* Set registration date to today -- delete if not needed */
+    if (isset($fields['registrationDate'])) {
+        $rDate = $data->get('registrationDate');
+        if (empty($rDate)) {
+            $dirty = true;
+            $data->set('registrationDate', strtotime(date('Y-m-d')));
+        }
+    }
+    /* End of registration date section */
+
     if ($dirty) {
         if (!$data->save()) {
             $modx->log(modX::LOG_LEVEL_ERROR, 'could not save userData object');
