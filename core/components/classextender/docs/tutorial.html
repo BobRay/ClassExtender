@@ -198,7 +198,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 
 <p>SetResourcePlaceholders will set placeholders for all resource fields and all extended fields from ClassExtender. It will not set placeholders for TVs.</p>
 
-<b>Important! If you are using SetResourcePlaceholders to show a user other than the current user, be sure to use a prefix for the placeholders, so they won't conflict with the placeholders for the current page set by MODX.</b></p>
+<p><b>Important! If you are using SetResourcePlaceholders to show a user other than the current user, be sure to use a prefix for the placeholders, so they won't conflict with the placeholders for the current page set by MODX.</b></p>
 
 <p>The package also includes two snippets: GetExtUsers and GetExtResources. These operate a little like getResources, only without some of the bells and whistles. They use Tpl chunks to display sorted, aggregated Users or Resources based on some search criteria. You can specify the Tpl chunks, sorting, and selection criteria in the properties of the snippet tag.<p>
 
@@ -278,7 +278,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 
 <h3>A Word of Warning</h3>
 
-<p>In order to get the most out of the extended objects created by ClassExtender, you may need some knowledge of PHP in order to modify the code to do what you want. You'll also need to either modify the XML schema or create your own PHP table to hold the data, though neither of these is particularly difficult. Standard MODX extras like getResources won't know about your extra fields, so they'll need to be modified to include them, though they'll still work fine in cases where you don't need to display the extra fields.</p>
+<p>In order to get the most out of the extended objects created by ClassExtender, you may need some knowledge of PHP, so you can modify the code to do what you want. You'll also need to either modify the XML schema or create your own PHP table to hold the data, though neither of these is particularly difficult. Standard MODX extras like getResources won't know about your extra fields, so they'll need to be modified to include them, though they'll still work fine in cases where you don't need to display the extra fields.</p>
 
 <h3>ClassExtender System Settings</h3>
 
