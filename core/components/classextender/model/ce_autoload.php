@@ -25,15 +25,17 @@ function ce_autoload($class) {
     foreach ($directories as $dir) {
         $dir .= '/';
         $paths = array(
-            $modelPath . $dir . $file . '.php',
-            $modelPath . $dir . 'mysql/' . $file . '.php',
-            $modelPath . $dir . $file . '.class.php',
             $modelPath . $dir . 'mysql/' . $file . '.class.php',
+            $modelPath . $dir . 'mysql/' . $file . '.php',
+            $modelPath . $dir . $file . '.php',
+            $modelPath . $dir . $file . '.class.php',
         );
 
         foreach ($paths as $path) {
             if (is_readable($path)) {
                 require_once $path;
+                /* Stop looking */
+                break 2;
             }
         }
     }
