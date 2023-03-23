@@ -32,7 +32,7 @@ function ce_autoload($class) {
         );
 
         foreach ($paths as $path) {
-            if (is_readable($path)) {
+            if (@is_readable($path)) {
                 require_once $path;
                 /* Stop looking */
                 break 2;
