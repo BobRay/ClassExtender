@@ -61,7 +61,9 @@ $chunks[4]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ClassExtenderForm',
   'description' => 'Chunk',
-  'properties' => NULL,
+  'properties' => 
+  array (
+  ),
 ), '', true, true);
 $chunks[4]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/classextenderform.chunk.html'));
 
