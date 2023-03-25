@@ -31,9 +31,7 @@
 /* @var $newEvents array */
 
 if (!function_exists('checkFields')) {
-    function checkFields($required, $objectFields) {
-
-        global $modx;
+    function checkFields($modx, $required, $objectFields) {
         $fields = explode(',', $required);
         foreach ($fields as $field) {
             if (!isset($objectFields[$field])) {
@@ -49,9 +47,9 @@ if (!function_exists('checkFields')) {
 $newEvents = array (
             );
 
-
-if ($object->xpdo) {
-    $modx =& $object->xpdo;
+/** @var modTransportPackage $transport */
+if ($transport->xpdo) {
+    $modx =& $transport->xpdo;
 
     $classPrefix = $modx->getVersionData()['version'] >= 3
             ? 'MODX\Revolution\\'
@@ -127,7 +125,7 @@ if ($object->xpdo) {
             if (is_array($intersects)) {
                 foreach ($intersects as $k => $fields) {
                     /* make sure we have all fields */
-                    if (!checkFields('pluginid,event,priority,propertyset', $fields)) {
+                    if (!checkFields($modx, 'pluginid,event,priority,propertyset', $fields)) {
                         continue;
                     }
                     $event = $modx->getObject($classPrefix . 'modEvent', array('name' => $fields['event']));
