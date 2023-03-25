@@ -44,7 +44,9 @@ $plugins[2]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ExtraUserFields',
   'description' => 'Add and process extra fields in Create/Edit User form',
-  'properties' => NULL,
+  'properties' => 
+  array (
+  ),
   'disabled' => true,
 ), '', true, true);
 $plugins[2]->setContent(file_get_contents($sources['source_core'] . '/elements/plugins/extrauserfields.plugin.php'));
