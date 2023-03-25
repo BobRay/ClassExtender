@@ -139,4 +139,16 @@ $snippets[9]->fromArray(array (
 ), '', true, true);
 $snippets[9]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/requirelogin.snippet.php'));
 
+$snippets[10] = $modx->newObject('modSnippet');
+$snippets[10]->fromArray(array (
+  'id' => 10,
+  'property_preprocess' => false,
+  'name' => 'CreateSchema',
+  'description' => 'Creates a schema file from one or more database tables. Writes schema to file and specified chunk',
+  'properties' => 
+  array (
+  ),
+), '', true, true);
+$snippets[10]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/createschema.snippet.php'));
+
 return $snippets;
