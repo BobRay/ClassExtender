@@ -23,6 +23,7 @@
  */
 
 /* $modx->lexicon->load('classextender:default'); */
+
 class ClassExtender {
     public modX $modx;
     public array $props;
@@ -222,7 +223,9 @@ class ClassExtender {
                         $content = str_replace($key, $value, $content);
                     }
                 }
-            }
+
+
+            } /* End MODX 3 Section */
 
             $fp = fopen($this->ce_schema_file, 'w');
 
@@ -371,7 +374,7 @@ class ClassExtender {
         if ($setting) {
             $val = $setting->get('value');
             if (empty($val) || strlen($val) < 5) {
-                $setting->set('value', '');
+                $setting->set('value', "");
             }
         }
         $extensionPackage = $this->modx->getObject($this->classPrefix . 'modExtensionPackage', array('namespace' => $this->packageLower));
