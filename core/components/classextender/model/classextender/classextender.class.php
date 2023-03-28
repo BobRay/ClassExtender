@@ -101,6 +101,24 @@ class ClassExtender {
         $this->ce_schema_file = $path . '/' . $this->packageLower . '.mysql.schema.xml';
     }
 
+    public function updateSystemSetting($packageLower) {
+        $ss = $this->modx->getObject(
+            $this->classPrefix . 'modSystemSetting',
+            array('key' => 'ce_autoload_directories')
+        );
+        $val = $ss->get('value');
+        $finalVal = null;
+        if (empty($val)) {
+            $finalVal = $packageLower;
+        } elseif (strpos($val, $packageLower) === false) {
+            $finalVal = $packageLower . ',' . $val;
+        }
+        if ($finalVal !== null) {
+            $ss->set('value', $finalVal);
+            $ss->save();
+        }
+    }
+
     public function process() {
 
         $this->addOutput($this->modx->lexicon('ce.generating_class_files'));
@@ -131,6 +149,9 @@ class ClassExtender {
 
         /* Move extension package to modExtensionPackage object */
         if (!$this->createExtensionPackageObject()) {
+            return;
+        }
+        if (!$this->updateSystemSetting($this->packageLower)) {
             return;
         }
     }
