@@ -144,7 +144,7 @@ $snippets[10]->fromArray(array (
   'id' => 10,
   'property_preprocess' => false,
   'name' => 'CreateSchema',
-  'description' => 'Creates a schema file from one or more database tables. Writes schema to file and specified chunk',
+  'description' => 'Creates a schema based on an existing DB table. Writes the schema to a file and to a chunk specified in the snippet properties. See the CreateSchema Resource.',
   'properties' => 
   array (
   ),
