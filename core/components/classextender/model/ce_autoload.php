@@ -1,11 +1,17 @@
 <?php
 
 function ce_autoload($class) {
-    global $modx;
-    $debug = true;
-    $corePath = $modx->getOption('core_path');
-    $modx->log(modX::LOG_LEVEL_ERROR, 'Class: ' . $class);
 
+    /* Bail out if 'data' isn't in class name */
+    if (strpos(strtolower($class), 'data') === false) {
+        return;
+    }
+    global $modx;
+    $debug = false;
+    $corePath = $modx->getOption('core_path');
+    if ($debug) {
+        $modx->log(modX::LOG_LEVEL_ERROR, 'Class: ' . $class);
+    }
 
     $modelPath = $corePath .
         'components/classextender/model/';
@@ -17,7 +23,9 @@ function ce_autoload($class) {
 
 
         $path = $modelPath . $filePath . '.php';
-        $modx->log(modX::LOG_LEVEL_ERROR, 'Path: ' . $path);
+        if ($debug) {
+            $modx->log(modX::LOG_LEVEL_ERROR, 'Path: ' . $path);
+        }
         if (@is_readable($path)) {
             require $path;
             if ($debug) {
@@ -39,8 +47,10 @@ function ce_autoload($class) {
         /* Get directories from System Setting
        and convert to array */
         $dirString = $modx->getOption('ce_autoload_directories', null,
-            'extendeduser,extendedresource', true);
-
+            '', true);
+        if (empty($dirString)) {
+            return;
+        }
         $directories = explode(',', $dirString);
 
         $file = $class;
@@ -61,7 +71,7 @@ function ce_autoload($class) {
                 $modx->log(modX::LOG_LEVEL_ERROR, 'Path: ' . $path);
                 if (@is_readable($path)) {
                     $modx->log(modX::LOG_LEVEL_ERROR, 'Found');
-                    require_once $path;
+                    require $path;
                     /* Stop looking */
                     return;
                 }
