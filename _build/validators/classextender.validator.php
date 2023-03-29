@@ -35,9 +35,13 @@ $chunks = array(
 
 if ($object->xpdo) {
     $modx =& $object->xpdo;
-    $catObj = $modx->getObject('modCategory', array('category' => 'ClassExtender'));
-    $categoryId = $catObj ? $catObj->get('id') : NULL;
 
+    $prefix = $modx->getVersionData()['version'] >= 3
+        ? 'MODX\Revolution\\'
+        : '';
+
+    $catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
+    $categoryId = $catObj ? $catObj->get('id') : 0;
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
@@ -46,11 +50,11 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_UPGRADE:
             foreach ($chunks as $chunk) {
                 $newName = 'My' . $chunk;
-                $obj = $modx->getObject('modChunk', array('name' => $newName));
+                $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
                 if (!$obj) {
-                    $oldChunk = $modx->getObject('modChunk', array('name' => $chunk));
+                    $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
                     if ($oldChunk) {
-                        $newChunk = $modx->newObject('modChunk');
+                        $newChunk = $modx->newObject($prefix . 'modChunk');
                         $newChunk->set('name', $newName);
                         $content = $oldChunk->getContent();
                         if ($chunk == 'ExtUserSchema') {
