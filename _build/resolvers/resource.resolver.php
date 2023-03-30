@@ -162,6 +162,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 }
 
                 if (isset($fields['tvValues'])) {
+                    /* @var array $fields['tvValues'] */
                     foreach($fields['tvValues'] as $tvName => $value) {
                         $resource->setTVValue($tvName, $value);
                     }
