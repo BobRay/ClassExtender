@@ -2,7 +2,7 @@
 /**
  * resources transport file for ClassExtender extra
  *
- * Copyright 2012-2022 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
  * Created on 11-18-2013
  *
  * @package classextender
