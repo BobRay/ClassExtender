@@ -3,7 +3,7 @@
 * Resource resolver  for ClassExtender extra.
 * Sets template, parent, and (optionally) TV values
 *
-* Copyright 2012-2022 Bob Ray <https://bobsguides.com>
+* Copyright 2012-2023 Bob Ray <https://bobsguides.com>
 * Created on 11-18-2013
 *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -162,7 +162,6 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 }
 
                 if (isset($fields['tvValues'])) {
-                    /* @var array $fields['tvValues'] */
                     foreach($fields['tvValues'] as $tvName => $value) {
                         $resource->setTVValue($tvName, $value);
                     }
