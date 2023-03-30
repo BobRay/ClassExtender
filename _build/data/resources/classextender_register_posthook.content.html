@@ -3,6 +3,14 @@
 <!-- Set the &redirectTo property to the ID of
      your "Thanks for Registering" page -->
 
+<!-- Note: The <code>activation</code> property works the opposite of the
+way you might expect it to. If it's <code>1</code> (<code>true</code>),
+the created user's `modUser` record will be saved as inactive, and the
+user will have to respond to an email to become an active user, or the
+active field will have to be set manually.
+
+If it's <code>0</code> (<code>false</code>, the user will be saved as an active user. -->
+
 <h3>[[+error.message]]</h3>
 
 [[!Register?
