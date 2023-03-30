@@ -59,37 +59,41 @@ $fileName = $dir . '/' . $fileName;
 
 $manager = $modx->getManager();
 if (!$manager) {
-    $output .= '<p>Could not get Manager</p>';
+    $output .= '<h3 style="color:red">Could not get Manager</h3>';
 }
 $generator = $manager->getGenerator();
 if (!$generator) {
-    $output .= '<p>Could not get Generator</p>';
+    $output .= '<h3 style="color:red">Could not get Generator</h3>';
+    return $output;
 }
 
 if ($generator->writeSchema($fileName,
     $package, $baseClass, $tablePrefix, true)) {
-    $output .= '<p>Schema written to ' . $fileName . '</p>';
+    $output .= '<h3 style="color:green">Schema written to ' . $fileName . '</h3>';
 } else {
-    $output .= '<p>Error writing schema file - writeSchema() failed</p>';
+    $output .= '<h3 style="color:red">Error writing schema file - writeSchema() failed</h3>';
+    return $output;
 }
 $chunk = $modx->getObject($classPrefix . 'modChunk',
     array('name' => $chunkName));
 
 if (!$chunk) {
-    $output .= '<p>Creating Chunk' . $chunkName . '</p>';
+    $output .= '<h3 style="color:green">Creating Chunk' . $chunkName . '</h3>';
     $chunk = $modx->newObject($classPrefix . 'modChunk');
     $chunk->set('name', $chunkName);
 }
 $content = file_get_contents($fileName);
 if (empty($content)) {
-    $output .= '<p>file_get_contents() failed' . '</p>';
+    $output .= '<h3 style="color:red">file_get_contents() failed' . '</h3>';
+    return $output;    
 }
 $chunk->set('snippet', $content);
 
 if (!$chunk->save()) {
-    $output .= '<p>Could not save chunk' . '</p>';
+    $output .= '<h3 style="color:red">Could not save chunk' . '</h3>';
+    return $output;
 } else {
-    $output .= '<p>Saved schema in ' . $chunkName . ' chunk' . '</p>';
+    $output .= '<h3 style="color:green">Saved schema in ' . $chunkName . ' chunk' . '<h3>';
 }
 
 return $output;
