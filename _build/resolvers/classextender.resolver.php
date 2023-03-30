@@ -26,36 +26,56 @@
 
 /* @var array $options */
 
-if ($object->xpdo) {
+$chunks = array(
+    'ExtraUserFields',
+    'ExtUserSchema',
+    'ExtraResourceFields',
+    'ExtResourceSchema',
+);
+/** @var modTransportPackage $transport */
+if ($transport) {
+    $modx =& $transport->xpdo;
+} else {
     $modx =& $object->xpdo;
+}
+
+    unset($_SESSION['validator_run']);
 
     $prefix = $modx->getVersionData()['version'] >= 3
         ?'MODX\Revolution\\'
         : '';
 
-    $chunks = array(
-        'ExtraUserFields',
-        'ExtUserSchema',
-        'ExtraResourceFields',
-        'ExtResourceSchema',
-    );
+
     $catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
-    $categoryId = $catObj? $catObj->get('id') : null;
+    $categoryId = $catObj? $catObj->get('id') : 0;
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
+            if (isset($_SESSION['enable_plugins'])) {
+                $pArray = $_SESSION['enable_plugins'];
+                foreach ($pArray as $pluginId => $pluginDisabled) {
+                    $plugin = $modx->getObject($prefix . 'modPlugin', $pluginId);
+                    if ($plugin->get('disabled') != $pluginDisabled) {
+                        $plugin->set('disabled', $pluginDisabled);
+                        $plugin->save();
+                    }
+                }
+            }
             /* Set class keys back to original values */
             $modx->updateCollection(
-                 'modResource',
-                     array('class_key' => 'modDocument'),
-                     array('class_key' => 'extResource')
+                'modResource',
+                array('class_key' => 'modDocument'),
+                array('class_key' => 'extResource')
             );
             $modx->updateCollection(
-                 'modUser',
-                     array('class_key' => 'modUser'),
-                     array('class_key' => 'extUser')
+                'modUser',
+                array('class_key' => 'modUser'),
+                array('class_key' => 'extUser')
             );
+        /* Intentional fallthrough */
+        case xPDOTransport::ACTION_INSTALL:
+
+
             foreach ($chunks as $chunk) {
                 $newName = 'My' . $chunk;
                 $obj = $modx->getObject($prefix . 'modChunk', array('name'=> $newName));
@@ -109,7 +129,7 @@ if ($object->xpdo) {
             $results = $modx->query($sql);
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
             };
-            /* Remove modExtensionPackage objects in 2.3 */
+            /* Remove modExtensionPackage objects in > 2.3 */
             if (class_exists($prefix . 'modExtensionPackage')) {
                 /** @var $rec xPDOObject */
                 $recs = $modx->getCollection($prefix . 'modExtensionPackage',
@@ -153,6 +173,6 @@ if ($object->xpdo) {
 
             break;
     }
-}
+
 
 return true;

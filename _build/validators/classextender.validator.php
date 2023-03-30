@@ -32,53 +32,73 @@ $chunks = array(
     'ExtResourceSchema',
 );
 
-
-if ($object->xpdo) {
+/* @var modTransportPackage $transport */
+if ($transport) {
+    $modx =& $transport->xpdo;
+} else {
     $modx =& $object->xpdo;
+}
 
-    $prefix = $modx->getVersionData()['version'] >= 3
-        ? 'MODX\Revolution\\'
-        : '';
+$prefix = $modx->getVersionData()['version'] >= 3
+    ? 'MODX\Revolution\\'
+    : '';
+if (isset($_SESSION['validator_run'])) {
+    return true;
+}
+$catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
+$categoryId = $catObj ? $catObj->get('id') : 0;
 
-    $catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
-    $categoryId = $catObj ? $catObj->get('id') : 0;
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_INSTALL:
+        break;
 
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
-            break;
+    case xPDOTransport::ACTION_UPGRADE:
+        unset($_SESSION['']);
+        /* Attempt to preserve plugin enabled status */
+        if (!empty($categoryId)) {
+            $plugins = $modx->getCollection($prefix .
+                'modPlugin',array('category' => $categoryId));
+            if (!empty($plugins)) {
+                $enablePlugins = array();
+                foreach($plugins as $plugin) {
+                    $enablePlugins[$plugin->get('id')] = $plugin->get('disabled');
+                }
+                $_SESSION['enable_plugins'] = $enablePlugins;
+                $_SESSION['validator_run'] = 1;
+            }
+        }
 
-        case xPDOTransport::ACTION_UPGRADE:
-            foreach ($chunks as $chunk) {
-                $newName = 'My' . $chunk;
-                $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
-                if (!$obj) {
-                    $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
-                    if ($oldChunk) {
-                        $newChunk = $modx->newObject($prefix . 'modChunk');
-                        $newChunk->set('name', $newName);
-                        $content = $oldChunk->getContent();
-                        if ($chunk == 'ExtUserSchema') {
-                            /* Don't replace if already done */
-                            if (strpos($content, 'Profile') === false) {
-                                $content = str_replace('<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>', '<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
-        <aggregate alias="Profile" class="modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>', $content);
-                            }
+        foreach ($chunks as $chunk) {
+            $newName = 'My' . $chunk;
+            $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
+            if (!$obj) {
+                $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
+                if ($oldChunk) {
+                    $newChunk = $modx->newObject($prefix . 'modChunk');
+                    $newChunk->set('name', $newName);
+                    $content = $oldChunk->getContent();
+                    if ($chunk == 'ExtUserSchema') {
+                        /* Don't replace if already done */
+                        if (strpos($content, 'Profile') === false) {
+                            $content = str_replace('<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>', '<aggregate alias="User" class= "modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
+    <aggregate alias="Profile" class="modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>', $content);
                         }
-
-                        $newChunk->setContent($content);
-                        if ($categoryId) {
-                            $newChunk->set('category', $categoryId);
-                        }
-                        $newChunk->save();
                     }
+
+                    $newChunk->setContent($content);
+                    if ($categoryId) {
+                        $newChunk->set('category', $categoryId);
+                    }
+                    $newChunk->save();
                 }
             }
+        }
 
-            break;
+        break;
 
-        case xPDOTransport::ACTION_UNINSTALL:
-            break;
-    }
+    case xPDOTransport::ACTION_UNINSTALL:
+        break;
 }
+
 
 return true;
