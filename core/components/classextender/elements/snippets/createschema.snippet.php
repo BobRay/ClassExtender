@@ -42,11 +42,20 @@ $baseClass = $modx->getOption('baseClass', $sp,
     'xPDOSimpleObject', true);
 $fileName = $modx->getOption('fileName', $sp, $packageLower .
     '.mysql.schema.xml', true);
-$chunkName = $modx->getOption('chunkName', $sp, '', true);
+
+$defaultChunk = $packageLower . 'SchemaTpl';
+$chunkName = $modx->getOption('chunkName', $sp, $defaultChunk, true);
 $dirPermission = $modx->getOption('dirPermission',
     $sp, 0755, true);
-$dir = MODX_CORE_PATH . 'components/' .
-    $packageLower . '/temp';
+
+$corePath = $this->modx->getOption('ce.core_path', NULL,
+    $this->modx->getOption('core_path'));
+
+$modelPath = $corePath . 'components/classextender/';
+
+$schemaPath = $modelPath . $packageLower . '/' . 'schema';
+
+$dir = $schemaPath;
 
 /* Create directory if it doesn't exist */
 if (!is_dir($dir)) {
