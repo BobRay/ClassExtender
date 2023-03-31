@@ -73,10 +73,10 @@ class ClassExtender {
             $this->modx->log(modX::LOG_LEVEL_ERROR, "Could not get generator");
         }
 
-        $basePath = $this->modx->getOption('ce.core_path', NULL,
+        $modelPath = $this->modx->getOption('ce.core_path', NULL,
             $this->modx->getOption('core_path') .
-            'components/classextender/');
-        $this->modelPath = $basePath . 'model/';
+            'components/classextender/model/');
+        $this->modelPath = $modelPath;
 
         $this->ce_package_name = isset($_POST['ce_package'])
             ? $_POST['ce_package']
