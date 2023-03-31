@@ -118,7 +118,7 @@ if ($transport) {
                 $modx->removeExtensionPackage('extendedresource');
             }
 
-            $table = 'ext_resource_data';
+           /* $table = 'ext_resource_data';
             $sql = "DROP TABLE IF EXISTS $table ";
             $results = $modx->query($sql);
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
@@ -128,7 +128,10 @@ if ($transport) {
             $sql = "DROP TABLE IF EXISTS $table";
             $results = $modx->query($sql);
             while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
-            };
+            };*/
+
+            $modx->log(modX::LOG_LEVEL_INFO, "To prevent the possible loss of important data, the database tables have not been removed. Remove them manually if you don't need them");
+
             /* Remove modExtensionPackage objects in > 2.3 */
             if (class_exists($prefix . 'modExtensionPackage')) {
                 /** @var $rec xPDOObject */
