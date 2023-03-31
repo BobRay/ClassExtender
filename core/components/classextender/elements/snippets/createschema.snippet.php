@@ -42,18 +42,21 @@ $baseClass = $modx->getOption('baseClass', $sp,
     'xPDOSimpleObject', true);
 $fileName = $modx->getOption('fileName', $sp, $packageLower .
     '.mysql.schema.xml', true);
+    
+   
 
 $defaultChunk = $packageLower . 'SchemaTpl';
 $chunkName = $modx->getOption('chunkName', $sp, $defaultChunk, true);
+
 $dirPermission = $modx->getOption('dirPermission',
     $sp, 0755, true);
 
-$corePath = $this->modx->getOption('ce.core_path', NULL,
-    $this->modx->getOption('core_path'));
+$corePath = $modx->getOption('ce.core_path', NULL,
+    $modx->getOption('core_path'));
 
-$modelPath = $corePath . 'components/classextender/';
+$modelPath = $corePath . 'model/';
 
-$schemaPath = $modelPath . $packageLower . '/' . 'schema';
+$schemaPath = $modelPath . 'schema';
 
 $dir = $schemaPath;
 
@@ -64,17 +67,21 @@ if (!is_dir($dir)) {
     umask($oldMask);
     clearstatcache();
 }
+ 
 $fileName = $dir . '/' . $fileName;
 
 $manager = $modx->getManager();
 if (!$manager) {
     $output .= '<h3 style="color:red">Could not get Manager</h3>';
 }
+
 $generator = $manager->getGenerator();
+
 if (!$generator) {
     $output .= '<h3 style="color:red">Could not get Generator</h3>';
     return $output;
 }
+
 
 if ($generator->writeSchema($fileName,
     $package, $baseClass, $tablePrefix, true)) {
@@ -86,11 +93,16 @@ if ($generator->writeSchema($fileName,
 $chunk = $modx->getObject($classPrefix . 'modChunk',
     array('name' => $chunkName));
 
+$catObj = $modx->getObject($classPrefix . 'modCategory', array('category' => 'ClassExtender'));
+$categoryId = $catObj ? $catObj->get('id') : 0;
+
 if (!$chunk) {
     $output .= '<h3 style="color:green">Creating Chunk' . $chunkName . '</h3>';
     $chunk = $modx->newObject($classPrefix . 'modChunk');
     $chunk->set('name', $chunkName);
 }
+$chunk->set('category', $categoryId);
+
 $content = file_get_contents($fileName);
 if (empty($content)) {
     $output .= '<h3 style="color:red">file_get_contents() failed' . '</h3>';
