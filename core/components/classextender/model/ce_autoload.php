@@ -8,18 +8,20 @@ function ce_autoload($class) {
     }
     global $modx;
     $debug = false;
+    $ds = DIRECTORY_SEPARATOR;
+
     $corePath = $modx->getOption('core_path');
     if ($debug) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Class: ' . $class);
     }
 
     $modelPath = $corePath .
-        'components/classextender/model/';
+        'components' . $ds . 'classextender' . $ds . 'model' . $ds;
 
     if (strpos($class, '\\') !== false) {
         /* Namespaced */
         /* $filePath includes class name */
-        $filePath = str_replace('\\', '/', $class);
+        $filePath = str_replace('\\', DIRECTORY_SEPARATOR, $class);
 
 
         $path = $modelPath . $filePath . '.php';
@@ -54,16 +56,17 @@ function ce_autoload($class) {
         $directories = explode(',', $dirString);
 
         $file = $class;
+
         $paths = array(
-            '/mysql/' . $file . '.class.php',
-            '/mysql/' . $file . '.php',
+           $ds . 'mysql' . $ds . $file . '.class.php',
+           $ds . 'mysql' . $file . '.php',
         );
 
         foreach ($directories as $dir) {
 
             $paths = array(
-                $modelPath . $dir . '/mysql/' . $file . '.class.php',
-                $modelPath . $dir . '/mysql/' . $file . '.php',
+                $modelPath . $dir . $ds . 'mysql' .$ds . $file . '.class.php',
+                $modelPath . $dir . $ds . 'mysql' . $ds . $file . '.php',
             );
 
             foreach ($paths as $path) {
