@@ -177,4 +177,16 @@ $chunks[15]->fromArray(array (
 ), '', true, true);
 $chunks[15]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/ExtUpdateProfileNotLoggedIn.chunk.html'));
 
+$chunks[16] = $modx->newObject('modChunk');
+$chunks[16]->fromArray(array (
+  'id' => 16,
+  'property_preprocess' => false,
+  'name' => 'CreateSchemaForm',
+  'description' => 'Form for Create Schema to use in creating a schema from an existing DB table',
+  'properties' => 
+  array (
+  ),
+), '', true, true);
+$chunks[16]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/createschemaform.chunk.html'));
+
 return $chunks;

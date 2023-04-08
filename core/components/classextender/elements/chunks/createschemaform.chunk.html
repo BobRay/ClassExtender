@@ -1,0 +1,45 @@
+<!-- lexicon->load('classextender:form'); -->
+
+<div id="class_extender">
+<form id="class_extender_form" action="[[~[[*id]]]]" method="post">
+
+<h3>[[*pagetitle]]</h3>
+
+   <div id="ce_results">
+       [[+ce_results]]
+   </div>
+
+    <input type="hidden" name="submitVar" id="submitVar" value="submitVar"/>
+
+    <label for="ce_package_name">[[%ce_package_name_caption? &namespace=`classextender` &topic=`form`]]<br/>
+        <input type="text" size="50" id="ce_package_name"
+                name="ce_package_name" value="[[+package]]" readonly/>
+    </label>
+
+    
+    
+    <br/><label for="ce_base_class">[[%ce_base_class_caption? &namespace=`classextender` &topic=`form`]]
+    <br/> <input type="text" size="50" id="ce_base_class" name="ce_base_class" value="[[+baseClass]]" readonly/> </label>
+    
+    
+
+    <br/><label for="ce_table_prefix">[[%ce_table_prefix_caption? &namespace=`classextender` &topic=`form`]]
+    <br/> <input type="text" size="50" id="ce_table_prefix" name="ce_table_prefix" value="[[+tablePrefix]]" readonly/> </label>
+    
+    
+    <br/><label for="ce_chunk_name">[[%ce_chunk_name_caption? &namespace=`classextender` &topic=`form`]]<br/>
+    <input type="text" size="50" id="ce_chunk_name" name="ce_schunk_name" value="[[+chunkName]]" readonly/>
+    
+    <br/><label for="ce_file_name">[[%ce_file_name_caption? &namespace=`classextender` &topic=`form`]]<br/>
+    <input type="text" size="50" id="ce_file_name" name="ce_file_name" value="[[+fileName]]" readonly/>
+
+    </label>
+
+    <br>
+    <br>
+    <br>
+
+    <input id="ce_button" name="ce_submit" type="submit" value="Submit"/>
+
+</form>
+</div>

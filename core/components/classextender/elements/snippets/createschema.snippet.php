@@ -4,6 +4,19 @@
  * Copyright 2023 Bob Ray
  * Created on 03/01/2023
  *
+ * ClassExtender is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * ClassExtender is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * ClassExtender; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  * @package classextender
  */
 
@@ -60,61 +73,79 @@ $schemaPath = $modelPath . 'schema';
 
 $dir = $schemaPath;
 
-/* Create directory if it doesn't exist */
-if (!is_dir($dir)) {
-    $oldMask = umask(0);
-    mkdir($dir, 0755, true);
-    umask($oldMask);
-    clearstatcache();
-}
- 
-$fileName = $dir . '/' . $fileName;
+$displayPath = 'core/components/classextender/<br>' . '&nbsp;&nbsp;&nbsp;&nbsp;' . 'model/schema/' . $fileName;
 
-$manager = $modx->getManager();
-if (!$manager) {
-    $output .= '<h3 style="color:red">Could not get Manager</h3>';
+$cssFile = $modx->getOption('cssFile', $sp,
+    '[[++assets_url]]components/classextender/css/classextender.css',
+     true);
+
+if (!empty($cssFile)) {
+    $modx->regClientCSS($cssFile);
 }
 
-$generator = $manager->getGenerator();
+if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
+    /* Create directory if it doesn't exist */
+    if (!is_dir($dir)) {
+        $oldMask = umask(0);
+        mkdir($dir, 0755, true);
+        umask($oldMask);
+        clearstatcache();
+    }
 
-if (!$generator) {
-    $output .= '<h3 style="color:red">Could not get Generator</h3>';
+    $fileName = $dir . '/' . $fileName;
+
+    $manager = $modx->getManager();
+    if (!$manager) {
+        $output .= '<h3 style="color:red">Could not get Manager</h3>';
+        return $output;
+    }
+
+    $generator = $manager->getGenerator();
+
+    if (!$generator) {
+        $output .= '<h3 style="color:red">Could not get Generator</h3>';
+        return $output;
+    }
+
+
+    if ($generator->writeSchema($fileName,
+        $package, $baseClass, $tablePrefix, true)) {
+        $output .= '<h3 style="color:green">Schema written to file:<br>' . $displayPath . '</h3>';
+    } else {
+        $output .= '<h3 style="color:red">Error writing schema file - writeSchema() failed</h3>';
+        return $output;
+    }
+    $chunk = $modx->getObject($classPrefix . 'modChunk',
+        array('name' => $chunkName));
+
+    $catObj = $modx->getObject($classPrefix . 'modCategory', array('category' => 'ClassExtender'));
+    $categoryId = $catObj ? $catObj->get('id') : 0;
+
+    if (!$chunk) {
+        $output .= '<h3 style="color:green">Creating Chunk: ' . $chunkName . '</h3>';
+        $chunk = $modx->newObject($classPrefix . 'modChunk');
+        $chunk->set('name', $chunkName);
+    }
+    $chunk->set('category', $categoryId);
+
+    $content = file_get_contents($fileName);
+    if (empty($content)) {
+        $output .= '<h3 style="color:red">file_get_contents() failed' . '</h3>';
+        return $output;
+    }
+    $chunk->set('snippet', $content);
+
+    if (!$chunk->save()) {
+        $output .= '<h3 style="color:red">Could not save chunk' . '</h3>';
+        return $output;
+    } else {
+        $output .= '<h3 style="color:green">Saved schema in chunk: ' . $chunkName . '</h3>';
+    }
+
     return $output;
-}
-
-
-if ($generator->writeSchema($fileName,
-    $package, $baseClass, $tablePrefix, true)) {
-    $output .= '<h3 style="color:green">Schema written to ' . $fileName . '</h3>';
 } else {
-    $output .= '<h3 style="color:red">Error writing schema file - writeSchema() failed</h3>';
-    return $output;
+    /* Not a submission; Display Form */
+    return $modx->getChunk('CreateSchemaForm', $sp);
+
+
 }
-$chunk = $modx->getObject($classPrefix . 'modChunk',
-    array('name' => $chunkName));
-
-$catObj = $modx->getObject($classPrefix . 'modCategory', array('category' => 'ClassExtender'));
-$categoryId = $catObj ? $catObj->get('id') : 0;
-
-if (!$chunk) {
-    $output .= '<h3 style="color:green">Creating Chunk' . $chunkName . '</h3>';
-    $chunk = $modx->newObject($classPrefix . 'modChunk');
-    $chunk->set('name', $chunkName);
-}
-$chunk->set('category', $categoryId);
-
-$content = file_get_contents($fileName);
-if (empty($content)) {
-    $output .= '<h3 style="color:red">file_get_contents() failed' . '</h3>';
-    return $output;    
-}
-$chunk->set('snippet', $content);
-
-if (!$chunk->save()) {
-    $output .= '<h3 style="color:red">Could not save chunk' . '</h3>';
-    return $output;
-} else {
-    $output .= '<h3 style="color:green">Saved schema in ' . $chunkName . ' chunk' . '<h3>';
-}
-
-return $output;
