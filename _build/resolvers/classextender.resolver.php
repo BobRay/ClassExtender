@@ -111,41 +111,38 @@ if ($transport) {
                            array('class_key' => $prefix . 'modUser'),
                            array('class_key' => $prefix . 'extUser')
             );
-            $setting = $modx->getObject($prefix . 'modSystemSetting',
-                array('key' => 'extension_packages'));
-            if (! empty($setting)) {
-                $modx->removeExtensionPackage('extendeduser');
-                $modx->removeExtensionPackage('extendedresource');
-            }
-
-           /* $table = 'ext_resource_data';
-            $sql = "DROP TABLE IF EXISTS $table ";
-            $results = $modx->query($sql);
-            while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
-            };
-            
-            $table = 'ext_user_data';
-            $sql = "DROP TABLE IF EXISTS $table";
-            $results = $modx->query($sql);
-            while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
-            };*/
 
             $modx->log(modX::LOG_LEVEL_INFO, "To prevent the possible loss of important data, the database tables have not been removed. Remove them manually if you don't need them");
 
-            /* Remove modExtensionPackage objects in > 2.3 */
-            if (class_exists($prefix . 'modExtensionPackage')) {
-                /** @var $rec xPDOObject */
-                $recs = $modx->getCollection($prefix . 'modExtensionPackage',
-                    array('namespace' => 'extendeduser'));
-                foreach ($recs as $rec) {
-                    $rec->remove();
-                }
-                $recs = $modx->getCollection($prefix . 'modExtensionPackage',
-                    array('namespace' => 'extendedresource'));
-                foreach ($recs as $rec) {
-                    $rec->remove();
+            /* Remove modExtensionPackage objects
+               and their corresponding namespaces */
+
+            $query = $modx->newQuery($prefix . 'modExtensionPackage');
+            /* Get records with 'classextender' in path */
+            $criteria = array(
+                'path:LIKE' => '%' . 'classextender' . '%',
+            );
+
+            $query->where($criteria);
+
+            $extensionPackages = $modx->getCollection($prefix . 'modExtensionPackage', $query);
+
+            foreach ($extensionPackages as $extensionPackage) {
+                $namespaceName = $extensionPackage->get('namespace');
+
+                /* Don't remove core ns or classextender ns */
+                $delete = ($namespaceName !== 'classextender' &&
+                    $namespaceName !== 'core');
+                $nameSpaceObject = $modx->getObject($prefix .
+                    'modNamespace', array('name' => $namespaceName));
+                if ($delete) {
+                    if ($nameSpaceObject) {
+                            $nameSpaceObject->remove();
+                    }
+                    $extensionPackage->remove();
                 }
             }
+
             foreach($chunks as $chunk) {
                 $newName = 'My' . $chunk;
                 $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
@@ -153,24 +150,6 @@ if ($transport) {
                     $obj->remove();
                 }
             }
-
-            /* Remove extensionPackage objects and namespaces */
-            $packages = array(
-                'extendeduser',
-                'extendedresource',
-            );
-
-            foreach ($packages as $name) {
-                $extPackage = $modx->getObject($prefix . 'modExtensionPackage', array('name' => $name));
-                if ($extPackage) {
-                    $extPackage->remove();
-                }
-                $nameSpace = $modx->getObject($prefix . 'modNamespace', array('name' => $name));
-                if ($nameSpace) {
-                    $nameSpace->remove();
-                }
-            }
-
             $cm = $modx->getCacheManager();
             $cm->refresh();
 
