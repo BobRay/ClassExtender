@@ -40,7 +40,7 @@ $modx->lexicon->load('login:updateprofile');
 $modx->lexicon->load('classextender:default');
 
 if (! $modx->user->hasSessionContext($modx->context->get('key'))) {
-    return "<h3>" . $modx->lexicon('ce_login_required') . "</h3>";
+    return "<h3>" . $modx->lexicon('ce.login_required') . "</h3>";
 }
 $cssFile = $modx->getOption('cssFile', $scriptProperties,
     '', true);

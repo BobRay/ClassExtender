@@ -60,26 +60,26 @@ $_lang['ce.table_prefixes_do_not_match'] = 'Table prefix in snippet property doe
 
 
 /* Used in getextresources.snippet.php */
-$_lang['ce.no_resources_found'] = 'No Resources Found';
+$_lang['ce.no_resources_found'] = 'No Resources Found, or no resources have custom fields set';
 
 /* Used in setresourceplaceholders.snippet.php */
-$_lang['ce.resource_not_found'] = 'Resource not found';
+$_lang['ce.resource_not_found'] = 'Resource not found, or has no custom fields set';
 
 /* Used in setuserplaceholders.snippet.php */
-$_lang['ce.user_not_found'] = 'User not found';
+$_lang['ce.user_not_found'] = 'User not found, or has no custom fields set';
 
 /* Used in getextusers.snippet.php */
-$_lang['ce.no_users_found'] = 'No Users Found';
+$_lang['ce.no_users_found'] = 'No Users Found, or no user has custom fields set';
 
 /* Used in extusersearchformtpl.chunk.html */
-$_lang['user_search_first_name_caption'] = 'First Name';
-$_lang['user_search_last_name_caption'] = 'Last Name';
+$_lang['ce.user_search_first_name_caption'] = 'First Name';
+$_lang['ce.user_search_last_name_caption'] = 'Last Name';
 
 /* Used in usersearchform.snippet.php */
-$_lang['ce_user_search_results_heading'] = 'Results';
+$_lang['ce.user_search_results_heading'] = 'Results';
 
 /* Used in upDateProfile.snippet.php */
-$_lang['ce_login_required'];
+$_lang['ce.login_required'] = 'Login Required';
 
 /* System Settings */
 $_lang['setting_ce_autoload_directories'] = 'Autoload directories';

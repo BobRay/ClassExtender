@@ -47,7 +47,7 @@ if ($modx->user->hasSessionContext($modx->context->get('key'))) {
     $chunk = $modx->getOption('loggedInChunk', $scriptProperties, '');
 } else {
     $modx->lexicon->load('classextender:default');
-    $msg = '<h3>' . $modx->getOption('notLoggedInMsg', $scriptProperties, $modx->lexicon('ce_login_required')) . '</h3>';
+    $msg = '<h3>' . $modx->getOption('notLoggedInMsg', $scriptProperties, $modx->lexicon('ce.login_required')) . '</h3>';
     $chunk =  $modx->getOption('notLoggedInChunk', $scriptProperties, '');
 }
 

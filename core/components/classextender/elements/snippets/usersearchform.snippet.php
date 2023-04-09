@@ -74,7 +74,7 @@ if (isset($_POST['submit-var']) && $_POST['submit-var'] == 'etaoinshrdlu') {
 
 if (!empty ($results)) {
     $modx->SetPlaceholder('user_search.results_heading',
-        $modx->lexicon('ce_user_search_results_heading'));
+        $modx->lexicon('ce.user_search_results_heading'));
     $modx->setPlaceholder('user_search.results', $results);
 }
 return $output;

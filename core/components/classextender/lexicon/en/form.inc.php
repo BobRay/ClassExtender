@@ -34,16 +34,13 @@
  * @package classextender
  **/
 
-
-
 /* Used in ClassExtender form */
-$_lang['ce_schema_tpl_name_caption'] = 'Schema Tpl chunk';
-$_lang['ce_package_name_caption'] = 'Package Name';
-$_lang['ce_parent_object_caption'] = 'Base Class (class to be extended)';
-$_lang['ce_table_prefix_caption'] = 'Table Prefix';
+$_lang['ce.schema_tpl_name_caption'] = 'Schema chunk';
+$_lang['ce.package_name_caption'] = 'Package Name';
+$_lang['ce.base_class_caption'] = 'Base Class (class to be extended)';
+$_lang['ce.table_prefix_caption'] = 'Table Prefix';
 
 /* Used in CreateSchema Form */
-$_lang['ce_base_class_caption'] = 'Base Class (class to be extended)';
-$_lang['ce_chunk_name_caption'] = 'Chunk name to write schema to';
-$_lang['ce_file_name_caption'] = 'File name to write schema to';
+$_lang['ce.chunk_name_caption'] = 'Chunk name to write schema to';
+$_lang['ce.file_name_caption'] = 'File name to write schema to';
 
