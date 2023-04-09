@@ -69,14 +69,14 @@ class ClassExtender {
 
         if (empty($this->ce_table_prefix)) {
             $this->addOutput('' .
-                $this->modx->lexicon('ce.empty_table_prefix~~Table prefix is empty') , true);
+                $this->modx->lexicon('ce.empty_table_prefix') , true);
         }
 
         $this->ce_package_name = $this->modx->getOption('package', $this->props,
             '', true);
 
         if (empty($this->ce_package_name)) {
-            $this->addOutput('' . $this->modx->lexicon('ce.package_name_is_empty~~Package name is empty'), true);
+            $this->addOutput('' . $this->modx->lexicon('ce.package_name_is_empty'), true);
         }
 
         $this->dirPermission = (int)$this->modx->getOption('dirPermission',
@@ -131,7 +131,7 @@ class ClassExtender {
         if ($finalVal !== null) {
             $ss->set('value', $finalVal);
             if (!$ss->save()) {
-                $this->addOutput($this->modx->lexicon('ce.could_not_update_system_setting~~Could not update System Setting'), true);
+                $this->addOutput($this->modx->lexicon('ce.could_not_update_system_setting'), true);
                 return false;
             }
         }
@@ -141,10 +141,10 @@ class ClassExtender {
 
     public function process() {
 
-        $this->addOutput($this->modx->lexicon('ce.generating_class_files~~Generating class files'));
+        $this->addOutput($this->modx->lexicon('ce.generating_class_files'));
 
         if (empty($this->schemaChunk)) {
-            $this->addOutput($this->modx->lexicon('ce.schema_chunk_is_empty~~schemaChunk is empty'), true);
+            $this->addOutput($this->modx->lexicon('ce.schema_chunk_is_empty'), true);
             return;
         }
 
@@ -207,7 +207,7 @@ class ClassExtender {
 
         $success = true;
 
-        $this->addOutput($this->modx->lexicon('ce.saving_schema~~Saving schema'));
+        $this->addOutput($this->modx->lexicon('ce.saving_schema'));
 
         $path = $this->modelPath . 'schema';
         if (!is_dir($path)) {
@@ -215,7 +215,7 @@ class ClassExtender {
         }
         $content = $this->modx->getChunk($this->schemaChunk);
         if (empty($content)) {
-            $this->addOutput($this->modx->lexicon('ce.could_not_find_schema_chunk~~Could not find schema chunk') .
+            $this->addOutput($this->modx->lexicon('ce.could_not_find_schema_chunk') .
                 ': ' . $this->schemaChunk, true);
             return false;
         } else {
@@ -226,7 +226,7 @@ class ClassExtender {
                 $this->ce_package_name = $matches[1];
                 $this->packageLower = strtolower($this->ce_package_name);
             } else {
-                $this->addOutput($this->modx->lexicon('ce.could_not_get_package_name_from_schema~~Could not get package name from schema'), true);
+                $this->addOutput($this->modx->lexicon('ce.could_not_get_package_name_from_schema'), true);
             }
 
             /* Convert schema to MODX 3 format -- should not alter
@@ -265,7 +265,7 @@ class ClassExtender {
 
             if (!$fp) {
                 $success = false;
-                $this->addOutput($this->modx->lexicon('ce.could_not_open_schema_file~~Could not open schema file'), true);
+                $this->addOutput($this->modx->lexicon('ce.could_not_open_schema_file'), true);
             } else {
                 fwrite($fp, $content);
                 fclose($fp);
@@ -283,7 +283,7 @@ class ClassExtender {
         if (is_dir($dir)) {
             $this->rrmdir($dir);
             $this->addOutput(
-                $this->modx->lexicon('ce.old_class_files_removed~~Old class files removed'));
+                $this->modx->lexicon('ce.old_class_files_removed'));
         } else {
             mkdir($dir, $this->dirPermission, true);
         }
@@ -291,9 +291,9 @@ class ClassExtender {
         $success = $this->generator->parseSchema($path, $this->modelPath);
 
         if (!$success) {
-            $this->addOutput($this->modx->lexicon('ce.parse_schema_failed~~parseSchema() failed'), true);
+            $this->addOutput($this->modx->lexicon('ce.parse_schema_failed'), true);
         } else {
-            $this->addOutput($this->modx->lexicon('ce.schema_parsed~~Schema parsed'));
+            $this->addOutput($this->modx->lexicon('ce.schema_parsed'));
         }
         return $success;
     }
@@ -307,7 +307,9 @@ class ClassExtender {
         if (!empty($matches[1])) {
             return $matches[1];
         } else {
-            $this->addOutput($this->modx->lexicon('ce.could_not_find_classes_in_schema_file~~Could not find classes in schema file'), true);
+            $this->addOutput(
+                $this->modx->lexicon('ce.could_not_find_classes_in_schema_file'),
+                true);
             return (array());
         }
 
@@ -324,12 +326,12 @@ class ClassExtender {
             $this->modelPath, $this->ce_table_prefix);
 
         if (!$success) {
-            $this->addOutput($this->modx->lexicon('ce.add_package_failed~~addPackage() failed'), true);
+            $this->addOutput($this->modx->lexicon('ce.add_package_failed'), true);
             $success = false;
         } else {
             $manager = $this->modx->getManager();
             if (!$manager) {
-                $this->addOutput($this->modx->lexicon('ce.getmanager_failed~~getManager() failed'), true);
+                $this->addOutput($this->modx->lexicon('ce.getmanager_failed'), true);
                 $success = false;
             } else {
                 $files = $this->getClassFiles();
@@ -347,10 +349,11 @@ class ClassExtender {
                     $success = $manager->createObjectContainer($finalClass);
                     if (!$success) {
                         $this->addOutput(
-                            $this->modx->lexicon('ce.create_object_container_failed~~createObjectContainer() failed'), true);
+                            $this->modx->lexicon('ce.create_object_container_failed'), true);
                         return false;
                     } else {
-                        $this->addOutput($this->modx->lexicon('ce.table_created~~Created Table for: ' . $class));
+                        $this->addOutput(
+                            $this->modx->lexicon('ce.table_created') . $class);
                     }
                 }
             }
@@ -368,7 +371,7 @@ class ClassExtender {
             $namespace->set('path', '{core_path}' . 'components/classextender/');
             $namespace->set('assets_path' . '{assets_path}' . 'components/classextender/');
             if (!$namespace->save()) {
-                $this->addOutput($this->modx->lexicon('ce.could_not_save_namespace~~Could not save namespace'), true);
+                $this->addOutput($this->modx->lexicon('ce.could_not_save_namespace'), true);
                 return false;
             }
         }
@@ -416,7 +419,7 @@ class ClassExtender {
                 $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not save extension package object');
                 return false;
             } else {
-                $this->addOutput($this->modx->lexicon('ce.created_extension_package_object~~Created extension package object'));
+                $this->addOutput($this->modx->lexicon('ce.created_extension_package_object'));
             }
         }
         return true;
@@ -436,9 +439,11 @@ class ClassExtender {
         if ($pluginObj) {
             $pluginObj->set('disabled', false);
             if ($pluginObj->save()) {
-                $this->addOutput($this->modx->lexicon('ce.plugin_enabled~~Enabled plugin: ' . $plugin));
+                $this->addOutput(
+                    $this->modx->lexicon('ce.plugin_enabled')
+                    . $plugin);
             } else {
-                $this->addOutput($this->modx->lexicon('ce.could_not_enable~~Could not enable plugin: ') .
+                $this->addOutput($this->modx->lexicon('ce.could_not_enable') .
                     $plugin, true);
                 return false;
             }

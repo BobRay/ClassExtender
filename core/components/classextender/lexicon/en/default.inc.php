@@ -41,23 +41,28 @@ $_lang['ce.no_class_extender'] = 'Could not instantiate ClassExtender';
 
 
 /* Used in classextender.class.php */
+$_lang['ce.add_package_failed'] = 'addPackage() failed';
+$_lang['ce.addpackage_failed'] = 'addPackage() failed';
+$_lang['ce.could_not_enable'] = 'Could not enable plugin: ';
+$_lang['ce.could_not_find_classes_in_schema_file'] = 'Could not find classes in schema file';
 $_lang['ce.could_not_find_schema_chunk'] = 'Could not find schema chunk';
+$_lang['ce.could_not_get_package_name_from_schema'] = 'Could not get package name from schema';
+$_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
+$_lang['ce.could_not_save_namespace'] = 'Could not save namespace';
+$_lang['ce.could_not_update_system_setting'] = 'Could not update System Setting';
+$_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
+$_lang['ce.created_extension_package_object'] = 'Created extension package object';
+$_lang['ce.empty_table_prefix'] = 'Table prefix is empty';
 $_lang['ce.generating_class_files'] = 'Generating class and map files';
+$_lang['ce.getmanager_failed'] = 'getManager() failed';
+$_lang['ce.old_class_files_removed'] = 'Old class and map files removed';
+$_lang['ce.package_name_is_empty'] = 'Package name is empty';
+$_lang['ce.parse_schema_failed'] = 'parse_schema() failed';
+$_lang['ce.plugin_enabled'] = 'plugin enabled';
+$_lang['ce.saving_schema'] = 'Saving schema';
+$_lang['ce.schema_chunk_is_empty'] = 'schemaChunk is empty';
 $_lang['ce.schema_parsed'] = 'Schema parsed';
 $_lang['ce.table_created'] = 'Table created';
-$_lang['ce.extension_package_registered'] = 'Extension package registered';
-$_lang['ce.old_class_files_removed'] = 'Old class and map files removed';
-$_lang['ce.could_not_open_schema_file'] = 'Could not open schema file';
-$_lang['ce.parse_schema_failed'] = 'parse_schema() failed';
-$_lang['ce.no_classes_in_schema'] = 'No classes found in schema file';
-$_lang['ce.no_table_prefix_in schema'] = 'No Table prefix in schema file';
-$_lang['ce.addpackage_failed'] = 'addPackage() failed';
-$_lang['ce.getmanager_failed'] = 'getManager() failed';
-$_lang['ce.create_object_container_failed'] = 'createObjectContainer() failed';
-$_lang['ce.saving_schema'] = 'Saving schema';
-$_lang['ce.plugin_enabled'] = 'plugin enabled';
-$_lang['ce.table_prefixes_do_not_match'] = 'Table prefix in snippet property does not match prefix in schema';
-
 
 /* Used in getextresources.snippet.php */
 $_lang['ce.no_resources_found'] = 'No Resources Found, or no resources have custom fields set';
@@ -85,3 +90,13 @@ $_lang['ce.login_required'] = 'Login Required';
 $_lang['setting_ce_autoload_directories'] = 'Autoload directories';
 
 $_lang['setting_ce_autoload_directories_desc'] = 'Comma-separated list of directories holding class files; default: extendeduser,extendedresource';
+
+/* Used in CreateSchema snippet */
+$_lang['ce.could_not_get_manager'] = 'Could not get Manager';
+$_lang['ce.could_not_get_generator'] = 'Could not get Generator';
+$_lang['ce.schema_written_to_file'] = 'Schema written to file';
+$_lang['write_schema_failed'] = 'Error writing schema file - writeSchema() failed';
+$_lang['ce.creating_chunk'] = 'Creating Chunk';
+$_lang['ce.file_get_contents_failed'] = 'file_get_contents() failed';
+$_lang['ce.could_not_save_chunk'] = 'Could not save chunk: ';
+$_lang['ce.saved_schema'] = 'Saved schema in chunk: ';

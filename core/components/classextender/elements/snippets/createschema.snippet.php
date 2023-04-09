@@ -97,7 +97,7 @@ if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
     $manager = $modx->getManager();
     if (!$manager) {
         $output .= '<h3 style="color:red">' .
-            $modx->lexicon('ce.could_not_get_manager~~Could not get Manager') . '</h3>';
+            $modx->lexicon('ce.could_not_get_manager') . '</h3>';
         return $output;
     }
 
@@ -105,7 +105,7 @@ if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
 
     if (!$generator) {
         $output .= '<h3 style="color:red">' .
-            $modx->lexicon('ce.could_not_get_generator~~Could not get Generator') . '</h3>';
+            $modx->lexicon('ce.could_not_get_generator') . '</h3>';
         return $output;
     }
 
@@ -113,10 +113,10 @@ if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
     if ($generator->writeSchema($fileName,
         $package, $baseClass, $tablePrefix, true)) {
         $output .= '<h3 style="color:green">' .
-            $modx->lexicon('ce.schema_written_to_file~~Schema written to file') . ':<br>' . $displayPath . '</h3>';
+            $modx->lexicon('ce.schema_written_to_file') . ':<br>' . $displayPath . '</h3>';
     } else {
         $output .= '<h3 style="color:red">' .
-            $modx->lexicon('write_schema_failed~~Error writing schema file - writeSchema() failed') . '</h3>';
+            $modx->lexicon('write_schema_failed') . '</h3>';
         return $output;
     }
     $chunk = $modx->getObject($classPrefix . 'modChunk',
@@ -127,7 +127,7 @@ if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
 
     if (!$chunk) {
         $output .= '<h3 style="color:green">' .
-            $modx->lexicon('ce.creating_chunk~~Creating Chunk') .
+            $modx->lexicon('ce.creating_chunk') .
             ': ' . $chunkName . '</h3>';
         $chunk = $modx->newObject($classPrefix . 'modChunk');
         $chunk->set('name', $chunkName);
@@ -137,18 +137,18 @@ if (isset($_POST['submitVar']) && $_POST['submitVar'] == 'submitVar') {
     $content = file_get_contents($fileName);
     if (empty($content)) {
         $output .= '<h3 style="color:red">' .
-            $modx->lexicon('ce.file_get_contents_failed~~file_get_contents() failed') . '' . '</h3>';
+            $modx->lexicon('ce.file_get_contents_failed') . '' . '</h3>';
         return $output;
     }
     $chunk->set('snippet', $content);
 
     if (!$chunk->save()) {
         $output .= '<h3 style="color:red">' .
-            $modx->lexicon('ce.could_not_save_chunk~~Could not save chunk') . ': ' . $chunkName . '</h3>';
+            $modx->lexicon('ce.could_not_save_chunk') . $chunkName . '</h3>';
         return $output;
     } else {
         $output .= '<h3 style="color:green">' .
-            $modx->lexicon('ce.saved_schema~~Saved schema in chunk') . ': ' . $chunkName . '</h3>';
+            $modx->lexicon('ce.saved_schema') . $chunkName . '</h3>';
     }
 
     return $output;
