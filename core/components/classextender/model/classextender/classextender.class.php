@@ -93,19 +93,11 @@ class ClassExtender {
             'components/classextender/model/');
         $this->modelPath = $modelPath;
 
-        $this->ce_package_name = isset($_POST['ce_package'])
-            ? $_POST['ce_package']
-            : $this->modx->getOption('package', $this->props, '');
 
-        if (empty($this->ce_package_name)) {
-            $this->addOutput($this->modx->lexicon('ce.package_name_is_empty'), true);
-        }
 
         $this->packageLower = strtolower($this->ce_package_name);
 
-        $this->schemaChunk = isset($_POST['ce_schema_tpl_name']) && (!empty($_POST['ce_schema_tpl_name']))
-            ? $_POST['ce_schema_tpl_name']
-            : $this->modx->getOption('schemaTpl', $this->props, '');
+        $this->schemaChunk = $this->modx->getOption('schemaTpl', $this->props, '');
 
         /* File to be written containing schema */
         $path = $this->modelPath . 'schema';
