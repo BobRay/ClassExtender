@@ -64,7 +64,7 @@ $cePrefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'
     : '';
 
-$userClass = $modx->getOption('userDataClass', $sp, 'userData');
+$userClass = $modx->getOption('UserDataClass', $sp, 'UserData');
 
 $where = $modx->getOption('where', $sp, array());
 $where = !empty($where)

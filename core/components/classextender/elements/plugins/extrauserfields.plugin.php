@@ -60,18 +60,18 @@ $prefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'
     : '';
 
-// $table = $modx->getTableName($prefix . 'userData');
+// $table = $modx->getTableName($prefix . 'UserData');
 // $modx->log(modX::LOG_LEVEL_ERROR, 'Table: ' . $table);
 
 /* Make sure we have an extUser object to work with */
 if (isset($user)) {
-    $data = $modx->getObject($prefix . 'userData', array('userdata_id' => $user->get('id')));
+    $data = $modx->getObject($prefix . 'UserData', array('userdata_id' => $user->get('id')));
 }
-/* @var $data userData */
+/* @var $data UserData */
 
 /* Create related object if it doesn't exist */
 if (!$data) {
-    $data = $modx->newObject($prefix . 'userData');
+    $data = $modx->newObject($prefix . 'UserData');
 }
 
 if ($data) {
@@ -156,7 +156,7 @@ switch ($modx->event->name) {
 
         break;
     case 'OnUserRemove':
-        $extData = $modx->getObject($prefix . 'userData', array('userdata_id' => $user->get('id')));
+        $extData = $modx->getObject($prefix . 'UserData', array('userdata_id' => $user->get('id')));
         if ($extData) {
             $extData->remove();
         }

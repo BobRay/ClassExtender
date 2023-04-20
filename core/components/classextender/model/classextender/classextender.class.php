@@ -237,10 +237,10 @@ class ClassExtender {
                         'extends="xPDO\Om\xPDOSimpleObject"',
                     'extends="modResource"' =>
                         'extends="MODX\Revolution\modResource"',
-                    'class="resourceData" foreign' =>
-                        'class="extendedresource\resourceData" foreign',
-                    'class="userData" foreign' =>
-                        'class="extendeduser\userData" foreign',
+                    'class="ResourceData" foreign' =>
+                        'class="extendedresource\ResourceData" foreign',
+                    'class="UserData" foreign' =>
+                        'class="extendeduser\UserData" foreign',
                     'class="modUserProfile"' =>
                         'class="MODX\Revolution\modUserProfile"',
                 );

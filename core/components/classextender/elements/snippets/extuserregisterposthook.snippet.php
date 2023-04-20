@@ -74,7 +74,7 @@ $userName = NULL;
 $userID = NULL;
 $fields = array();
 
-/* @var $data userData */
+/* @var $data UserData */
 
 if (isset($modx->user)) {
     $usernameField = $modx->getOption('usernameField', $scriptProperties, 'username', true);
@@ -93,12 +93,12 @@ if (isset($modx->user)) {
     $userId = $newUser->get('id');
 
 
-    $data = $modx->getObject($cePrefix . 'userData',
+    $data = $modx->getObject($cePrefix . 'UserData',
         array('userdata_id' => $userId), false);
     if ($data) {
         $fields = $data->toArray();
     } else {
-        $data = $modx->newObject($cePrefix . 'userData');
+        $data = $modx->newObject($cePrefix . 'UserData');
         if ($data) {
             $data->set('userdata_id', $userId);
             $fields = $data->toArray();

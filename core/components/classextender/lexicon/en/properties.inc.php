@@ -42,7 +42,7 @@
 $_lang['ce.get_ext_users_where'] = 'JSON string containing query criteria; default: empty';
 $_lang['ce.get_ext_users_sortby_desc'] = 'Field to sort by (e.g., username, Profile.fullname, Data.lastname); default: username';
 $_lang['ce.get_ext_users_sortdir_desc'] = 'Direction to sort in (ASC, DESC); default: ASC';
-$_lang['ce.class_for_user_data_object'] = 'Class for extended data table (not the user object); default: userData';
+$_lang['ce.class_for_user_data_object'] = 'Class for extended data table (not the user object); default: UserData';
 $_lang['ce.outer_tpl'] = 'Name of outer Tpl chunk to use for user listing; default: extUserOuterTpl';
 $_lang['ce.inner_tpl'] = 'Name of inner Tpl chunk to use for user listing; default: extUserInnerTpl.';
 $_lang['ce.row_tpl'] = 'Name of row Tpl chunk to use for user listing -- displays individual user data; default: extUserRowTpl';

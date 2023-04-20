@@ -1,5 +1,25 @@
 Changelog for ClassExtender
 
+ClassExtender 2.3.3-pl
+---------------------------------
+ * Speed up autoloader
+ * Option to easily create any custom class and/or DB table
+ * Add option to generate schema from existing table(s)
+ * Add Create Schema resource and snippet
+ * Use form in CreateSchema
+ * Make form fields readonly
+ * Handle multiple classes in schema
+ * Improve error handling and error messages
+ * Fix bug with autoloader loading wrong class file
+ * Update ce_autoload_directories System Setting automatically
+ * MODX 3 updates for validator
+ * Preserve enabled status for plugins during upgrades
+ * Leave DB tables in place on uninstall
+ * Normalize lexicon strings
+
+
+
+
 ClassExtender 2.3.1-pl
 ---------------------------------
  * Fully MODX 3 Compatible

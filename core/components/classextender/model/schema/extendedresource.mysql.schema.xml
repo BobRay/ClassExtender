@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="extendedresource" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
 
-    <object class="resourceData" table="resource_data" extends="xPDO\Om\xPDOSimpleObject">
+    <object class="ResourceData" table="resource_data" extends="xPDO\Om\xPDOSimpleObject">
         <field key="resourcedata_id" dbtype="int" precision="11" phptype="integer" null="false" attributes="unsigned"/>
         <field key="name" dbtype="varchar" precision="50" phptype="string" null="true"/>
         <field key="color" dbtype="varchar" precision="50" phptype="string" null="true"/>

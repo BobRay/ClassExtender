@@ -49,15 +49,15 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'resourceDataClass' => 
+  'ResourceDataClass' => 
   array (
-    'name' => 'resourceDataClass',
+    'name' => 'ResourceDataClass',
     'desc' => 'cd.resource_class_desc',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'resourceData',
+    'value' => 'ResourceData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),

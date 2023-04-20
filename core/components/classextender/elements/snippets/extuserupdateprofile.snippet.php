@@ -61,17 +61,17 @@ $data = null;
 $user = null;
 $fields = array();
 
-/* @var $data userData */
+/* @var $data UserData */
 
 if (isset($modx->user)) {
 
     $user =& $modx->user;
-    $data = $modx->getObject($cePrefix . 'userData',
+    $data = $modx->getObject($cePrefix . 'UserData',
         array('userdata_id' => $user->get('id')), false);
     if ($data) {
         $fields = $data->toArray();
     } else {
-        $data = $modx->newObject($cePrefix . 'userData');
+        $data = $modx->newObject($cePrefix . 'UserData');
         if ($data) {
             $data->set('userdata_id', $user->get('id'));
             $fields = $data->toArray();
@@ -108,7 +108,7 @@ if ($submission) {
 
     if ($dirty) {
         if (!$data->save()) {
-            $modx->log(modX::LOG_LEVEL_ERROR, 'could not save userData object');
+            $modx->log(modX::LOG_LEVEL_ERROR, 'could not save UserData object');
         }
     }
 }

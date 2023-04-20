@@ -47,12 +47,12 @@ $data = null;
 /** @var $data xPDOObject */
 /** @var $resource modResource */
 if ($resource) {
-    $data = $modx->getObject($cePrefix . 'resourceData',
+    $data = $modx->getObject($cePrefix . 'ResourceData',
         array('resourcedata_id' => $resource->get('id')));
 }
 
 if (!$data) {
-    $data = $modx->newObject($cePrefix . 'resourceData');
+    $data = $modx->newObject($cePrefix . 'ResourceData');
 }
 if ($data) {
     $fields = $data->toArray();
@@ -117,7 +117,7 @@ switch ($modx->event->name) {
 
         if ($dirty) {
             if (!$data->save()) {
-                $modx->log(modX::LOG_LEVEL_ERROR, 'Could not save resourceData object');
+                $modx->log(modX::LOG_LEVEL_ERROR, 'Could not save ResourceData object');
             }
         }
 
@@ -126,7 +126,7 @@ switch ($modx->event->name) {
     case 'OnEmptyTrash':
         /** @var $resources array() */
         foreach ($resources as $resource) {
-            $data = $modx->getObject($cePrefix . 'resourceData', array('resourcedata_id' => $resource->get('id')));
+            $data = $modx->getObject($cePrefix . 'ResourceData', array('resourcedata_id' => $resource->get('id')));
             if ($data) {
                 $data->remove();
             }

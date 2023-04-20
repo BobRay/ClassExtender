@@ -25,15 +25,15 @@ $properties = array (
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'userDataClass' => 
+  'UserDataClass' => 
   array (
-    'name' => 'userDataClass',
+    'name' => 'UserDataClass',
     'desc' => 'ce.class_for_user_data_object',
     'type' => 'textfield',
     'options' => 
     array (
     ),
-    'value' => 'userData',
+    'value' => 'UserData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),

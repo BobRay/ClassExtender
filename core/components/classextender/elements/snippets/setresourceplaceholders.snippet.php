@@ -72,7 +72,7 @@ if ($resourceId != NULL) {
     $resource = $modx->resource;
 }
 
-$data = $modx->getObject($cePrefix . 'resourceData',
+$data = $modx->getObject($cePrefix . 'ResourceData',
     array('resourcedata_id' => $resource->get('id')));
 
 if ($data) {

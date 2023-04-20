@@ -52,7 +52,7 @@ if (!empty($cssFile)) {
 
 $userId = $modx->getOption('userId', $sp, NULL);
 $prefix = $modx->getOption('prefix', $sp, '');
-$dataClass = $modx->getOption('userDataClass', $sp, 'userData');
+$dataClass = $modx->getOption('UserDataClass', $sp, 'UserData');
 
 $cePrefix = $modx->getVersionData()['version'] >= 3
     ? 'extendeduser\\'

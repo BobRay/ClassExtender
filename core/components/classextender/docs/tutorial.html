@@ -1,213 +1,391 @@
-<p>ClassExtender is designed to make it easy to extend the <code>modUser</code> and <code>modResource</code> objects in MODX. It will not only extend the objects for you (sort of), it also gives you tools to update them in the database, search for your extended data, and display it. I want to acknowledge the support provided by <a href="https://www.jeankindem.com/" target="_blank" rel="noopener nofollow noreferrer">Jean Kindem Design</a> in the initial stages of developing this extra.</p>
+<p>ClassExtender 2.3.3 for MODX Revolution has been completely refactored, with new features and much easier ways to perform each action. It is fully MODX 3 compatible</p>
+
+<style>
+    .quicklink {
+        display: block;
+        padding:0;
+        padding-bottom:15px;
+        margin:0;
+    }
+
+    .column {
+        float: right;
+        width: auto;
+        padding: 10px;
+        height: auto;
+    }
+
+</style>
+
+<div class="column">
+    <h3>Quick Links</h3>
+    <span class="quicklink"><a href="#What does ClassExtender Do">What does Classextender Do?</a></span>
+
+    <span class="quicklink"><a href="#installing">Installing ClassExtender</a></span>
+
+    <span class="quicklink"><a href="#why-extend">Why Extend modUser and modResource?</a></span>
+
+    <span class="quicklink"><a href="#two-approaches">Two Approaches to Extending MODX Objects</a></span>
+
+    <span class="quicklink"><a href="#traditional-approach">The Traditional Approach</a></span>
+
+    <span class="quicklink"><a href="#classextender-approach">The ClassExtender Approach</a></span>
+
+    <span class="quicklink"><a href="#using-traditional-approach-with-classextender">Using the Traditional Approach with ClassExtender</a></span>
+
+    <span class="quicklink"><a href="#what-happens-on-form-submission">What Happens when you Submit the Forms?</a></span>
+
+        <span class="quicklink"><a href="#the-schema">The Schema</a></span>
+
+    <span class="quicklink"><a href="#the-examples">The Examples</a></span>
+
+    <span class="quicklink"><a href="#moduser-examples">modUser Examples</a></span>
+
+    <span class="quicklink"><a href="#modresource-examples">modResource     Examples</a></span>
+
+    <span class="quicklink"><a href="#extending-moduser-steps">Extending modUser Steps</a></span>
+
+    <span class="quicklink"><a href="#extending-modresource-steps">Extending modResource Steps</a></span>
+
+    <span class="quicklink"><a href="#using-your-extended-class">Using your Extended Classes</a></span>
+
+    <span class="quicklink"><a href="#loading-the-autoloader">Loading the Autoloader</a></span>
+
+    <span class="quicklink"><a href="#file-locations">Extended Class File Locations</a></span>
+
+    <span class="quicklink"><a href="#creating-schema-from-existing-table">
+        Creating a Schema and Classes from<br>&nbsp;&nbsp;&nbsp;
+        an Existing Database Table</a></span>
+
+    <span class="quicklink"><a href="#troubleshooting">Troubleshooting</a></span>
+
+    <span class="quicklink"><a href="#classextender-and-modx3">ClassExtender and MODX 3</a></span>
+
+    <span class="quicklink"><a href="#example-utility-details">Example Utility Details</a></span>
+
+    <span class="quicklink"><a href="#where-property-examples">Where Property Examples</a></span>
+
+    <span class="quicklink"><a href="#more-utility-snippets">More Utility Snippets</a></span>
+
+    <span class="quicklink"><a href="#uninstalling classextender warnings">Uninstalling ClassExtender Warnings</a></span>
+
+    <span class="quicklink"><a href="#classextender-system-settings">ClassExtender System Settings</a></span>
+
+    <span class="quicklink"><a href="#snippet-properties">Snippet Properties</a></span>
+
+    <span class="quicklink"><a href="#acknowledgments">Acknowledgments</a></span>
+</div>
+
+<h3 id="What does ClassExtender Do">What does ClassExtender Do?</h3><p>ClassExtender is designed to make it easy create custom database tables and their corresponding xPDO-friendly classes. The two main classes it is designed to create are extended versions of the <code>modUser</code> and <code>modResource</code> objects in MODX, but ClassExtender can create any custom class and a DB table to go with it.</p>
+
+<p>Sometimes you need extra fields that are not included in standard MODX objects like <code>modUser</code>, <code>modUserProfile</code> or <code>modResource</code>. You also need a database table to store the extra data.</p>
+
+<p>As of version 2.3.3-pl, ClassExtender can produce a schema, database tables, and class files for any custom MODX object. And it can handle multiple objects in a single schema, and produce class files and DB tables for all of them.</p>
+
+<p>The extended classes will be xPDO-friendly, which makes it easy to update them in the database, search for your extended data, and display it. There is also an autoloader for you custom classes.</p>
+
+<p>There is a detailed tutorial on creating custom classes and DB tables to store their data on this page <a href="https://bobsguides.com/custom-db-tables.html" target="_blank">this page.</a> If you are new to creating custom classes and schemas, you may want to run through that tutorial before reading the rest of this page. The information below will make a lot more sense to you once you've followed the steps on that page.</p>
+
 
 <div class="box">
-
     <p>If you are upgrading from a version older than ClassExtender 2.0, see <a href="https://bobsguides.com/upgrading-from-classextender-versions-prior-to-2.0.html" target="_blank" rel="noopener nofollow noreferrer">this page</a>.</p>
 </div>
 
-<h3>Installing ClassExtender</h3>
+<h3 id="installing">Installing ClassExtender</h3>
 
 <p>
-    Go to System | Package Management on the main menu in the MODX Manager and click on the &quot;Download Extras&quot; button. That will take you to the Revolution Repository. Put ClassExtender in the search box and press Enter. Click on the &quot;Download&quot; button, and once the package is downloaded, click on the &quot;Back to Package Manager&quot; button. That should bring you back to your Package Management grid. Click on the &quot;Install&quot; button next to ClassExtender in the grid. The ClassExtender package should now be installed.</p>
+    Go to System -> Package Management on the main menu in the MODX Manager and click on the &quot;Download Extras&quot; button. That will take you to the Revolution Repository. Put ClassExtender in the search box and press Enter. Click on the &quot;Download&quot; button, and once the package is downloaded, click on the &quot;Back to Package Manager&quot; button. That should bring you back to your Package Management grid. Click on the &quot;Install&quot; button next to ClassExtender in the grid. The ClassExtender package should now be installed.</p>
+
+<div class="box">
+    <h4>New or Updated Features</h4>
+
+    <ul>
+        <li>Simpler operations for creating tables and classes</li>
+
+        <li>Simplified process to create schemas from existing DB tables
+        </li>
+
+        <li>Ability to handle multiple tables when creating schemas</li>
+
+        <li>Ability to handle multiple classes inside a schema</li>
+
+        <li>Fast autoloader for custom classes</li>
+
+        <li>Automatic configuration of autoloader</li>
+
+        <li>Preserves enabled status for plugins during upgrades</li>
+
+        <li>Leaves DB tables in place on uninstall</li>
+
+        <li>Improves error handling and error messages</li>
+
+        <li>Many added lexicon strings for internationalization</li>
+    </ul>
+</div>
+
+<h3>Guidelines</h3>
+
+<p>Here are some things to keep in mind as you create your classes and tables with ClassExtender:</p>
+
+<ul>
+    <li>All class names must contain the word "Data" so the autoloader can find them (example: UserData)</li>
+
+    <li>Table names should contain the word "data" (example: ext_user_data)</li>
+
+    <li>Table names must be in "snake case" (see previous list item)</li>
+
+    <li>Use a singular noun for table names and class names</li>
+
+    <li>Use a different table prefix than your MODX table prefix.</li>
+
+    <li>Table prefixes should be in lowercase and end with an underscore (<code>ext_</code>)</li>
+
+    <li>Class names must be in PascalCase (example:UserData)</li>
+
+    <li>If you create the database table(s) first (rather than the schema), MODX will derive the class names from the table names by removing the prefix and underscores, and converting what's left to PascalCase (see <a href="https://bobsguides.com/custom-db-tables.html" target="_blank">this page</a> for details</li>
+
+    <li>If you create the DB tables first, and all your custom tables have the same prefix, MODX will put all the classes in one schema, but will create separate class files for each object.</li>
+</ul>
+
+<div class="box">
+    <p>It's important to make sure your table prefix is different from the MODX table prefix. Otherwise, MODX will create a schema containing every MODX class!</p>
+
+    <p>If your table prefix's first letter comes before the first letter of your MODX prefix, your custom tables will appear at the top in PhpMyAdmin.</p>
+
+</div>
+
+<h3 id="why-extend">Why Extend modUser and modResource?</h3>
+
+<p>You probably know the answer to this, otherwise you wouldn't be here. If not, you can see these pages:
+
+<p><a href="https://bobsguides.com/blog.html/2014/05/27/why-extend-moduser/" target="_blank">Why Extend modUser</a></p>
+
+<p><a href="https://bobsguides.com/blog.html/2014/06/02/why-extend-modresource/" target="_blank">Why Extend modResource</a></p>
+
+<h3 id="two-approaches">Two Approaches to Extending MODX objects</h3>
 
 
-<h3>Why Extend modUser and modResource?</h3>
-<p>As you probably know, most of the information on a user is contained in the User Profile. Often, however, you need to store information about a user that won't fit there. Using the Profile's extended fields is an option, but it's very slow and inefficient to search for or sort users based on what is in their extended fields. Extending the <code>modUser</code> object essentially gives you an extra user profile with as many fields as you need to store your information. Having the information there will allow you to do extremely fast searches on the extended data and sort the results.</p>
+<p>With ClassExtender, we're not using the word "Extend" in its usual PHP meaning, though the results are almost the same (more on this in a bit).
 
-<p>Using Template Variables (TVs) to store extra resource data has similar drawbacks.</p>
+<p>The <code>modUser</code> object (combined with the <code>modUserProfile</code> object) has many fields, but it may not contain fields you need (for example, fields like height, weight, or age). You want to add extra fields for the object, and save them in the DB, without changing any original MODX object. We might want to do the same thing with <code>modResource</code>.</p>
 
-<p>The traditional method of extending <code>modUser</code> is documented <a href="https://docs.modx.com/current/en/extending-modx/custom-users" target="_blank">here</a>. Extending <code>modResource</code> is documented <a href="https://docs.modx.com/current/en/extending-modx/custom-resources" target="_blank"> here</a>. You don't need to consult those pages to use ClassExtender, but doing so may help you understand what it's doing, though ClassExtender takes a slightly different approach. It will also give you an appreciation of how much time and trouble ClassExtender is saving you, by creating and autoloading all classes and tables in your schema.</p>
-<br />
+<p>There are two ways to reach our goal: the traditional approach, and the ClassExtender approach. With either approach, you get to save, search, and sort the data quickly and efficiently. Either one is far superior to storing resource data in TVs, or storing user data in the `extended` field of the user profile. We'll discuss the two methods in the two sections below.</p>
 
-<h3>Two Approaches</h3>
+<h3 id="traditional-approach">The Traditional Approach</h3>
 
-<p>There are two ways to store extra data fields related to users and/or resources in custom DB tables: the traditional approach, and the ClassExtender approach. The first is described in detail in the links above.</p>
+<p>The traditional method of extending <code>modUser</code> is documented <a href="https://docs.modx.com/current/en/extending-modx/custom-users" target="_blank">here</a>, and the traditional method of extending <code>modResource</code> is documented <a href="https://docs.modx.com/current/en/extending-modx/custom-resources" target="_blank"> here</a>.</p>
 
-<p>With either method, you get to save, search, and sort the data quickly and efficiently. Either one is far superior to storing resource data in TVs, or storing user data in the `extended` field of the user profile.</p>
+<p>You don't need to consult those pages to use ClassExtender, but doing so may help you understand what it's doing, though ClassExtender takes a slightly different approach. It will also give you an appreciation of how much time and trouble ClassExtender is saving you, by creating and autoloading all the classes and tables you need.</p>
 
-<h4>The Traditional Approach</h4>
+<p>The methods described in the two links just above actually extend the <code>modUser</code> and <code>modResource</code> objects in the strict PHP sense of the word. A new class extends the MODX object. The new object inherits the fields of the <code>modUser</code> object, and adds some of its own.</p>
 
-<p>The methods described in the links above actually extend the <code>modUser</code> and <code>modResource</code> objects. The resulting objects have a new class key, but the added fields are stored in a separate, custom database table. The advantage of this method is that once you have either object, you can get its extra field data by calling <code>$object->getOne('Data')</code>. The downside is that your objects may not play nice with other custom objects that extend <code>modUser</code> or <code>modResource</code>, and you have to selectively use that alternate class keys in some situations.</p>
+<p>The resulting new objects have a new class key, but the added fields are stored in a separate, custom database table. The advantage of this method is that once you have either object, you can get its extra field data by calling <code>$object->getOne('Data')</code>. The downside is that your objects may not play nice with other custom objects that extend <code>modUser</code> or <code>modResource</code>, and you have to selectively use the alternate class keys in some situations.</p>
 
-<h4>The ClassExtender Approach</h4>
+<h3 id="classextender-approach">The ClassExtender Approach</h3>
 
-<p>ClassExtender basically does the opposite of the traditional method. It doesn't really extend the <code>modUser</code> or <code>modResource</code> objects, though the result is the same.  With ClassExtender, the object that holds the extra fields (<code>userData</code> or <code>resourceData</code>) is the primary object and no class keys are changed.</p>
+<p>ClassExtender basically does the opposite of the traditional method. It doesn't really extend the <code>modUser</code> or <code>modResource</code> objects, though the result is the same.  With ClassExtender, the new class object (<code>UserData</code> or <code>ResourceData</code>) holds the extra fields (as it does in the traditional approach), but it is a primary object that stands alone and no class keys are changed. In other words, the <code>modUser</code> and <code>modResource</code> class keys remains as <code>modUser</code> and <code>modResource</code>.</p>
 
-<p>This approach makes the transition to MODX 3 much simpler because there are no custom class keys that need to be modified.</p>
+<p>Our two new classes (<code>UserData</code> and <code>ResourceData</code>) extend <code>XPDOSimpleObject</code>, and they inherit fields and methods from it. They have no class key because all they hold is data.</p>
 
-<p>If you have the <code>userData</code> object you can call $object->getOne('User') to get the related <code>modUser</code> object, or <code>$object->getOne('Profile')</code> to get the related <code>modUserProfile</code> object. If you have the <code>resourceData</code> object, you can call <code>$object->getOne('Resource')</code> to get the related resource.</p>
+<p>The <code>id</code> field is inherited, and so are the methods you need to use the objects (for example, <code>save()</code>, <code>load()</code>, <code>duplicate()</code>, <code>get()</code>, <code>set()</code>, etc.).</p>
 
-<p>You can get the <code>userData</code> or <code>resourceData</code> objects directly given the ID of the user or resource like this:</p>
+<p>This approach makes the transition to MODX 3 simpler because there are no custom class keys to deal with.</p>
+
+<p>If you have the <code>UserData</code> object you can call $object->getOne('User') to get the related <code>modUser</code> object, or <code>$object->getOne('Profile')</code> to get the related <code>modUserProfile</code> object.</p>
+
+<p>Similarly, if you have the <code>ResourceData</code> object, you can call <code>$object->getOne('Resource')</code> to get the related resource.</p>
+
+<p>You can get the <code>UserData</code> or <code>ResourceData</code> objects directly given the ID of the user or resource like this:</p>
 
 <pre class="brush: html; toolbar: false;"><fixedpre>
-$userDataObject = $modx->getObject('userData', array('userdata_id' => $userId));
+$userDataObject = $modx->getObject('UserData', array('userdata_id' => $userId));
 
 $resourceDataObject = $modx->getObject('resourceData', array('resourcedata_id' => $resourceId));
 </fixedpre></pre>
 
-<p>(This is similar to the <code>modUserProfile</code> containing the user's ID in its internalKey field.)</p>
+<p>(This is similar to the way the <code>modUserProfile</code> object contains the user's ID in its internalKey field.)</p>
 
 
-<h4>Combo Approach</h4>
+<h3 id="using-traditional-approach-with-classextender">Using the Traditional Approach with ClassExtender</h3>
 
-<p>If you prefer, you can use the traditional method with ClassExtender simply by using the schemas found at the links above in the &quot;MyExtUserSchema&quot; and &quot;MyExtResourceSchema&quot; chunks. Double check to make sure that the exact spelling of classes in the schema (including all aliases) and code are consistent. Class loading is case-sensitive.</p>
+<p>If you prefer, you can use the traditional method with ClassExtender simply by using the traditional schemas found at the links above. Put the traditional schema in the &quot;MyExtUserSchema&quot; or &quot;MyExtResourceSchema&quot; chunk. Double check to make sure that the exact spelling of classes in the schema (including all aliases) and code are consistent. Class loading is case-sensitive.</p>
 
 
 <div class="box">
-<p>It's *very* strongly recommended that you not change any of the values in the ClassExtender forms or snippet tags used to extend the <code>modUser</code> and <code>modResource</code> objects if you are using the ClassExtender approach described above. There's really no reason to change them. Just view the &quot;Extend modUser&quot;  or &quot;Extend modResource&quot;  resources, and click on the &quot;Submit&quot; button. This tutorial will assume that you've left the input fields and properties at their default values.</p>
-
-<p>Once you submit the form, ClassExtender will call the xPDO method <code>parseSchema()</code> to create the class and map file and the <code>createObjectContainer()</code>method to create the custom database tables. It will also create modExtension package and modNamespace records for all classes, which will be loaded automatically on every page request (including Manager requests).</p>
+    <p>If you are using the ClassExtender approach described above, it's *very* strongly recommended that you not change any of the values in the ClassExtender forms or snippet tags used to extend the <code>modUser</code> and <code>modResource</code> objects, unless you have a very good reason to do so.</p>
 </div>
 
-<br />
-<p>Once the class and map files have been created and the data is in the extra fields in the custom database table, getting the data in those extra fields is quite easy (see below).</p>
+<h3 id="what-happens-on-form-submission">What Happens when you Submit the ClassExtender "Extend ModUser or Extend ModResource Forms?</h3>
 
+<p>Once you submit either form, ClassExtender will call the xPDO method <code>parseSchema()</code> to create the class and map files. Then, it will call the <code>createObjectContainer()</code>method to create the custom database tables.</p>
 
-<h3>Overview</h3>
+<p>ClassExtender will also create <code>modExtensionPackage</code> and <code>modNamespace</code> records for all classes, which will be loaded automatically on every page request (including Manager requests). It will also remove any extendeduser or extendedresource record from the <code>extension_packages</code> System Setting, which is now deprecated.</p>
 
-<p>We'll cover this in more detail below, but the basic process for extending either object is to modify the appropriate schema chunk (*all* editing of schemas should be done in the &quot;MyExtUserSchema&quot; chunk or the &quot;MyExtResourceSchema&quot; chunk).</p>
+<p>Finally, ClassExtender will activate the related plugin. The plugin will put the extra fields at the bottom of the Create/Edit User or Create/Edit Resource panel, fill them with the DB values (if any), and save them to the DB when you click on the "Save" button.</p>
 
-<p>Edit the appropriate schema chunk, then view either the &quot;Extend modUser&quot; resource or the &quot;Extend modResource&quot; resource. That will present you with a form that, when submitted, will do all the work for you. You shouldn't have to change any of the form fields. Submitting the form will create the class and map files, register the extension package, then create the namespaces, and the custom DB table.</p>
+<p>Once the class and map files have been created and the data is in the extra fields in the custom database table, getting the data in those extra fields is quite easy (more on this in a bit).</p>
 
-<p>Once that's done, all that's left is to modify the chunk used to display the extra fields in the Create/Edit Resource or User panel in the Manager. The appropriate plugin will be enabled automatically. If any of your fields require special handling (e.g., a date field that should be set to today's date), you'll also have to modify the plugin to handle that. There's an example of that in the ClassExtender resource plugin. You may wish to change the DbType of the date in your schema from DATETIME to DATE, or TIMESTAMP depending on how you want to store the date.</p>
-
-<h3>Table Prefix</h3>
-
-<p>By default, the prefix for all your custom tables is <code>ext_</code>. You may wish to change it to match the prefix of your MODX tables. If you do, make sure to change it in both the snippet properties on the &quot;Create Extended ...&quot; page(s) and in your schema.</p>
-
-<p>In spite of warnings you may have seen, I've found that it causes no problems to use the <code>ext_</code> prefix, and doing that will usually put the custom tables at the top when you look at the database, which is convenient during development of your custom classes and tables.</p>
-
-<h3>Object Schema</h3>
-
-<p>In order to add the extra fields to your extended object, you need to create a specification for the fields. Do this by modifying one of the existing schema chunks. There are two example schema chunks in the package: &quot;ExtUserSchema&quot; and &quot;ExtResourceSchema&quot;. You should never modify them. Instead, create or modify the &quot;MyExtUserSchema&quot; and &quot;MyExtResourceSchema&quot; chunks. These are the chunks that are actually used by ClassExtender, and they will not be modified in future upgrades.</p>
-
-<p>Modify them to meet your needs *before* viewing and submitting the forms on the &quot;Extend modUser&quot; or the  &quot;Extend modResource&quot; resources pages. ClassExtender uses a schema file to do its work, but the first thing it does is to dump the appropriate chunk's content to the file.</p>
-
-<p>Important! To repeat: When you edit the schema, edit the schema chunk beginning with "My" in the Manager, not the file. The file will be overwritten with the content of that chunk when you submit the form.</p>
-
-<p>It's recommended that you use MODX 2 style class names in your schema chunk. ClassExtender will convert them automatically, though you may want to check the schema file itself in the <code>core/components/model/schema/</code> file to make sure it has converted all your classes correctly, especially if you are extending objects other than <code>modResource</code> and <code>modUser</code>.</p>
-
-<p>The <code>resourcedata_id</code> or <code>userdata_id</code> field will contain the ID of the user or resource that table row is related to.</p>
-
-<p>If you don't like the results, just drop the <code>ext_user_data</code> and/or <code>ext_resource_data</code> table in the DB, edit your schema chunk, and submit the form again. New class and map files and a new table will be created.  <b>Make very sure that the table is what you want and the schema is correct before using the table to store real data.</b></p>
-
-<h3>A Recommendation</h3>
-
-<p>This is entirely up to you, but I would recommend performing the entire process using the examples provided with ClassExtender. You'll see how everything works and can verify that ClassExtender operates as it should before trying to create your own extended classes. Once the process is completed, you can drop the existing database table(s), <code>ext_user_data</code> and <code>ext_resource_data</code>, and repeat the steps using your own schema.<p>
-
-<p>One way to start all over if things become messed up is to uninstall and re-install ClassExtender. That will remove all traces of ClassExtender. ClassExtender will generate completely new class and map files every time you run either of the main forms. Note that if you uninstall ClassExtender you will lose any data in the custom tables.</p>
-
-<div class="box">
-<p>Important: uninstalling ClassExtender will also delete the 'My...' chunks. If you have modified them for your purposes and want to keep them, rename them before uninstalling ClassExtender.</p>
-</div>
-
-<h3>The Examples</h3>
-
-<p>The snippets and chunks included with ClassExtender that work with the example resources are not finished code. They are minimally styled and will probably not do exactly what you want. You can borrow from them to meet your needs. Create your own snippets and chunks, so they won't be overwritten by upgrades to ClassExtender (except for the ones that start with &quot;My...&quot; &mdash; those are safe to modify).</p>
-
-<p>The user examples are something I did for a client. The client needed extra fields for <code>firstName</code>, <code>lastName</code>, <code>title</code>, <code>registrationDate</code>, and <code>company</code>. The <code>registrationDate</code> field is not shown on the form. It's set to today's date. The MyExtraUserFields chunk contains the HTML to show the fields on the Create/Edit User panel. It will not be modified during future upgrades of ClassExtender.</p>
-
-<p>The ExtraUserFields plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. The plugin will be enabled automatically when you extend the <code>modUser</code> object.</p>
-
-<p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The MyExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. It will not be modified during future upgrades of ClassExtender.</p>
-
-<p>The ExtraResourceFields plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database.
-The plugin will be enabled automatically when you extend the <code>modResource</code> object.</p>
-
-<h3>Extending modUser</h3>
+<h3 id="extending-moduser-steps">Extending modUser Steps</h3>
 
 <p>Here are the basic steps necessary to extend the <code>modUser</code> object. You shouldn't need to modify any fields in the form:
 
 <ol>
-    <li>Modify the MyExtUserSchema chunk to meet your needs. Usually, all you really need to change are the &quot;fields&quot; of the userData object in the schema.</li>
+    <li>Modify the &quot;MyExtUserSchema&quot; chunk to meet your needs. Usually, all you really need to change are the &quot;fields&quot; of the <code>UserData</code> object in the schema.</li>
     <li>View the &quot;Extend modUser&quot; resource.</li>
     <li>Click on Submit.</li>
-    <li>Modify the MyExtraUserFields chunk to display your extra fields. Be sure to use the names specified for the fields in your schema.</li>
-    <li>If necessary, modify the ExtraUserFields plugin to deal with fields that require special handling.</li>
+    <li>Modify the &quot;MyExtraUserFields&quot; chunk to display your extra fields. Be sure to use the exact fields names specified in your schema.</li>
+    <li>If necessary, modify the &quot;ExtraUserFields&quot; plugin to deal with fields that require special handling.</li>
 </ol>
 
 <p>Once you've completed the steps above, you should see your extra fields on the Create/Edit User panel, and they should be saved to the <code>ext_user_data</code> table in the database. Any placeholders require no prefix (unlike earlier versions of ClassExtender).</p>
 
-
-<h3>Extending modResource</h3>
+<h3 id="extending-modresource-steps">Extending modResource Steps</h3>
 
 <p>Here are the basic steps necessary to extend the <code>modResource</code> object. You shouldn't need to modify any fields in the form:
 
 <ol>
-    <li>Modify the MyExtResourceSchema chunk to meet your needs. Usually all you need to modify are the &quot;fields&quot; of the resourceData object in the schema.</li>
+    <li>Modify the MyExtResourceSchema chunk to meet your needs. Usually all you need to modify are the &quot;fields&quot; of the ResourceData object in the schema.</li>
     <li>View the &quot;Extend modResource&quot; resource.</li>
     <li>Click on Submit.</li>
-    <li>Modify the MyExtraResourceFields chunk to display your extra fields. Be sure to use the names specified for the fields in your schema.</li>
-    <li>If necessary, modify the ExtraResourceFields plugin to deal with fields that require special handling.</li>
+    <li>Modify the MyExtraResourceFields chunk to display your extra fields. Be sure to use the exact field names specified in your schema.</li>
+    <li>If necessary, modify the ExtraResourceFields plugin to deal with fields that require special handling (see the plugin for an example).</li>
 </ol>
 
 <p>Once you've completed the steps above, you should see your extra fields on the Create/Edit Resource panel, and they should be saved to the <code>ext_resource_data</code> table in the database. Any placeholders require no prefix (unlike earlier versions of ClassExtender).</p>
 
 <div class="box">
-    <p>Important: Make sure none of your extra fields match existing fields in the modUser, modUserProfile, or modResource objects.</p>
+    <p>Important: Make sure none of the names of your extra fields match existing fields in the modUser, modUserProfile, or modResource objects.</p>
 
-    <p>See <a href="https://bobsguides.com/modx-object-quick-reference.html"> this page</a> to determine which fields are in the <code>modUser</code> object, the <code>modUserProfile</code> object and the <code>modResource</code> object.</p>
+    <p>See <a href="https://bobsguides.com/modx-object-quick-reference.html"> this page</a> to see the built-in fields.</p>
 </div>
 
-<h3>Using Your Extended Class</h3>
+<h3 id="other-classes">Other Custom Classes</h3>
 
-<p>The packages for either extended class are registered in the <code>extension_packages</code> table in the database and a namespace with the appropriate paths is created in the MODX <code>namespaces</code> table. They will be available on every page load (including Manager pages). The <code>addPackage()</code> method is called automatically for each of them. This means that you should almost never need to call <code>addPackage()</code> or <code>loadClass()</code> for them. You just need to "require" the autoloader.</p>
+<p>If you want to create custom Classes other than the UserData and ResourceData classes described above, and DB tables to store their data, see <a href="https://bobsguides.com/custom-db-tables.html" target="_blank">this page for a detailed tutorial.</a></p>
 
-<h3>The Autoloader</h3>
+<h3 id="the-schema">The Schema</h3>
+
+<p>In order to add the extra fields to your extended object or objects, you need to create a specification for the fields. The specification is called a &quot;schema&quot; and is written in Extensible Markup Language (XML). XML is similar to HTML, but not the same. HTML is a &quot;Markup&quot; language that controls how a web page is displayed. XML, is strictly a "Data" language, which describes the structure of a set of data.</p>
+
+<p>There are two example schema chunks in the package: &quot;ExtUserSchema&quot; and &quot;ExtResourceSchema&quot;. You should never modify them! Instead, Modify the &quot;MyExtUserSchema&quot; and &quot;MyExtResourceSchema&quot; chunks. These are the chunks that are actually used by ClassExtender, and they will not be modified in future upgrades. The chunk without the "My" prefix are there for reference only, they won't be used.</p>
+
+<div class="box">
+    <p>The chunks starting with "My" are created on a new install and filled with content from the matching chunk without the "My" prefix. ClassExtender will never modify the "My" chunks. They are there for you to modify to meet your needs, rather than having to create a new chunks from scratch.</p>
+</div>
+
+<p>Important! To repeat: When you edit the schema, edit the schema chunk beginning with "My" in the Manager, *not the file*. The file will be overwritten with the content of that chunk whenever you submit the form.</p>
+
+<p>In MODX 3, it's recommended that you use MODX 2 style class names in your schema chunk. ClassExtender will convert them automatically for MODX 3, though you may want to check the schema file itself in the <code>core/components/model/schema/</code> file to make sure it has converted all your classes correctly. Usually, this is only necessary if you are using ClassExtender to extend MODX objects other than <code>modResource</code> and <code>modUser</code> (e.g., classes for elements, processors, or controllers) *and* those classes require a database table (which they rarely do).</p>
+
+<p>The <code>resourcedata_id</code> or <code>userdata_id</code> field in the table will contain the ID of the user or resource that table row is related to.</p>
+
+<p>If you don't like the results, after submitting one of the two forms,  just drop the <code>ext_user_data</code> and/or <code>ext_resource_data</code> table in the DB, edit your schema chunk, and submit the form again. New class and map files and a new table will be created.  <b>Important: Make very sure that the table is what you want and the schema is correct before using the table to store real data.</b></p>
+
+<p>Remember that MODX ignores all schemas during its normal operation. That means changing a schema will have no effect until you regenerate the class and map files.</p>
+
+<p>For more information about schemas, see this page of the MODX docs:
+<a href="https://docs.modx.com/3.x/en/extending-modx/xpdo/custom-models/defining-a-schema">Defining a Schema</a>
+</p>
+
+<h3 id="the-examples">The Examples</h3>
+
+<p>The snippets and chunks included with ClassExtender that work with the extended <code>modUser</code> and <code>modResource</code> objects are not finished code. They are minimally styled and will probably not do exactly what you want. You can borrow from them to meet your needs. Create your own snippets and chunks, so they won't be overwritten by upgrades to ClassExtender. Use the &quot;My...&quot; prefix to make them easier to find.</p>
+
+<h3 id="moduser-examples">modUser Examples</h3>
+
+<p>The extended user class examples are something I did for a client. The client needed extra fields for <code>firstName</code>, <code>lastName</code>, <code>title</code>, <code>registrationDate</code>, and <code>company</code>. The <code>registrationDate</code> field is not shown on the form. It's set to today's date. The MyExtraUserFields chunk contains the HTML to show the fields on the Create/Edit User panel. The chunk will not be modified during future upgrades of ClassExtender.</p>
+
+<p>The &quot;ExtraUserFields&quot; plugin displays those fields on the Create/Edit user panel and saves the values to the custom table in the database. The plugin will be enabled automatically when you extend the <code>modUser</code> object. It uses the fields in the &quot;MyExtraUserFields&quot; chunk. That chunk will not be modified in upgrades to ClassExtender.</p>
+
+<h3 id="modresource-examples">modResource Examples</h3>
+
+<p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The MyExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. It will not be modified during future upgrades of ClassExtender.</p>
+
+<p>The &quot;ExtraResourceFields&quot; plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database.
+The plugin will be enabled automatically when you extend the <code>modResource</code> object.</p>
+
+<h3 id="using-your-extended-class">Using Your Extended Classes</h3>
+
+<p>The packages for either extended class are registered in the <code>extension_packages</code> table in the database and a namespace with the appropriate paths is created in the MODX <code>namespaces</code> table. They will be available on every page load (including Manager pages). Since the autoloader include the classes, and their metadata you shouldn't need to call <code>addPackage()</code> or <code>loadClass()</code> for them. You just need to "require" the autoloader.</p>
+
+<div class="box">
+    <p>Important: ClassExtender will provide an autoloader for your files, but it will only work if your custom class names contain the word "Data"' (e.g. <code>UserData</code>, or <code>ResourceData</code>), so it's important to always append <code>Data</code> to the class name.</p>
+</div>
+
+<h3 id="loading-the-autoloader">Loading the Autoloader</h3>
 
 <p>You can include the autoloader in any plugin or snippet with this code:</p>
 
 <code>require_once(MODX_CORE_PATH .
     'components/classextender/model/ce_autoload.php');</code>
 
-<p>For MODX 3 only, you can create a <code>bootstrap.php</code> file in the <code>core/components/classextender/</code> directory, put the above code in the file, and remove any code that includes the autoload from the snippets. MODX will load the autoloader for you on every page load with this code in the modX class:</p>
-
-<code>require $namespace['path'] . 'bootstrap.php'</code>
+<p>As an alternative, for MODX 3 and beyond only, you can create a <code>bootstrap.php</code> file in the <code>core/components/classextender/</code> directory, put the above code in the file, and remove any code that includes the autoloader from the snippets or plugins. MODX will load the autoloader for you on every page load. This feature may, or may not, be added to MODX 2 at some point.
 
 <p>Once you have run ClassExtender for an extended class, you can get the user or resource data from the extended table with xPDO anywhere in MODX (see below). The only situation where you would need to load the class or package explicitly might be for part of a CMP (e.g., a connector or processor) or code to be run outside of MODX where there is no request. In those cases, you should call <code>addPackage()</code>, <code>loadClass()</code>, or <code>$modx->getService()</code> as appropriate.</p>
 
-<p>Extending <code>modUser</code> and <code>modResource</code> create two separate packages. The class files are placed in a directory with the same name as the package. By default, the autoloader looks for the class files in both the directories, <code>extendeduser/</code>, and <code>extendedresource/</code>. The directories it will look in are specified in the <code>ce_autoload_directories</code> System Setting. If you change the package name (for example, to extend some other object, or create a series of new database tables), add the new package name to the System Setting and remove any directories that don't exist.</p>
+<p>For details on using your custom classes, see the <a href="#the-examples">Example snippets</a> below.</p>
 
-<p>If you will only be extending one object, you can speed up the autoloader slightly by removing the other one from the <code>ce_autoload_directories</code> System Setting.</p>
+<h3 id="file-locations">Extended Class File Locations</h3>
 
-<h3>Troubleshooting</h3>
+<p>Extending <code>modUser</code> and <code>modResource</code> create two separate packages. The class files are placed in a directory with the same name as the package under the <code>core/components/classextender/model/</code> directory.</p>
+
+<p>The directories the autoloader will look in are entered automatically in the <code>ce_autoload_directories</code> System Setting, which is empty on install, and updated automatically when you run the ClassExtender snippet. This only applies to MODX 2. In MODX 3, the System Setting is ignored, since the namespace provides the path.</p>
+
+<h3 id="creating-schema-from-existing-table">Creating a Schema and Classes from an Existing Database Table</h3>
+
+<p>As of version 2.3.3 of ClassExtender, this is now much easier. If you have an existing table, or prefer to create one rather than creating a schema, you can use the CreateSchema snippet in the ClassExtender package to create the schema, the use the ClassExtender snippet to create the classes. For a detailed example of this method, see <a href="https://bobsguides.com/custom-db-tables.html" target="_blank">this page.</a></p>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
 
 <p>If your extra fields fail to show up in the Create/Edit User or Resource forms in the Manager, make sure the appropriate plugin in the ClassExtender category is enabled.</p>
 
-<p>If the fields are not saved to the database, make sure the field names specified in your MyExtraUserFields or MyExtraResourceFields match those specified in your schema chunk.</p>
+<p>If you end up at the home page or your error page when using one of the utility snippets, it usually means that you do not have the <code>view_unpublished</code> permission. The resources should remain unpublished or hidden by ACL entries, so that bad actors can't create classes on the site. Right after installation, you might have to clear the site cache.  Also, make sure the resource is not hidden by some ACL entry for the context the resource is in (e.g., 'web').</p>
 
-<h3>ClassExtender and MODX 3</h3>
+<p>If the fields are not saved to the database when updating a user or resource, make sure the field names specified in your MyExtraUserFields or MyExtraResourceFields match those specified in your schema chunk and in the database.</p>
+
+<p>Make sure the names of your classes include the word "Data", so the autoloader can find them.</p>
+
+<p>One confusing aspect of the utility snippets is that you can often view them and get them to do what you want when viewing them from the Manager, where you're logged in as an admin. However, when you are logged in to the front-end as another user (which often happens when you test the UpdateProfile utility), you will not see them and will be forwarded to your error page or the login page, because you are no longer you, but the other user. Publishing them will solve this, though you can also just log in to the front end as yourself.</p>
+
+<h3 id="classextender-and-modx3">ClassExtender and MODX 3</h3>
 
 <p>ClassExtender is fully MODX 3 compatible. MODX 3 uses the package name (by default: <code>extendeduser</code> and <code>extendedresource</code>) as a namespace for the classes created by ClassExtender.</p>
 
-<p>ClassExtender will automatically add the namespace to the classes and will translate a MODX 2 style schema to a MODX 3 style schema when you create the classes in MODX 3. It's recommended that you use a MODX 2 style schema even in MODX 3 to avoid having to figure out which parts of the schema require a fully qualified class name.</p>
+<p>ClassExtender will automatically add the namespace to the classes and will translate a MODX 2 style schema to a MODX 3 style schema when you create the classes in MODX 3. It's recommended that you use a MODX 2 style schema even in MODX 3 to avoid having to figure out which parts of the schema require a fully qualified class name. You may want to check the final schema if you're extending something exotic like a processor, mailer class, or a transport package class. If it needs correction, modify the chunk, not the file.</p>
 
-<p>Important: If you have set up your classes in MODX 2 and upgraded your site to MODX 3. You should submit the forms on the &quot;Extend modUser&quot; and/or &quot;Extend modResource&quot; pages to update your class and map files. That should be all you need to do to make the transition.</p>
+<p>Important: If you have set up your classes in MODX 2 and upgraded your site to MODX 3. You should submit the forms on the &quot;Extend modUser&quot; and/or &quot;Extend modResource&quot; pages to update your class and map files. That should be all you need to do to make the transition (assuming that the "My" chunks containing the schemas exist and are correct).</p>
 
-<p>Any code of your own for MODX 3 will have to include a namespace (for example <code>extendeduser</code> and <code>extendedresource</code>) and you will need either a <code>use</code> statement or fully qualified class names. Without a <code>use</code> statement MODX classes need the MODX/Revolution/ prefix and your own classes need to be prefixed by their namespace (<code>extendeduser/</code> or <code>extendedresource/</code>. </p>
+<p>In MODX 3, your package name (e.g. <code>extendeduser</code>) will be used as a namespace. So, for example, your fully qualified class name would be <code>extendeduser\UserData</code>. If you don't specify the full class name (or add a <code>use</code> use statement -- see below), MODX won't find the class, and the autoloader won't be able to find the file.<p>
+
+<p>You could add <code>namespace extendeduser;</code> at the top of your script, but then that namespace will be applied to any MODX classes that appear in the script. The best way to avoid this, is to leave out the namespace and add a <code>use</code> statement, like this:
+
+<pre class="brush:php; toolbar:false;"><fixedpre>
+  use extendeduser\UserData;
+  $quote = $modx->newObject('UserData');
+  </fixedpre></pre>
+
+<p>That won't affect any other classes in the script.</p>
 
 <p>If you are writing your own snippets, be sure to check out the example snippets (which will run in either MODX 2 or MODX 3) to see the use of the MODX and ClassExtender prefixes used to let them run in MODX 3.</p>
 
-<h3>Examples</h3>
+<h3 id="example-utility-details">Example Utility Details</h3>
 
 <p>There are several example utility snippets included with ClassExtender. They may do what you want, or you may need to modify them.</p>
 
-<p>The simplest of the utilities are SetUserPlaceholders and SetResourcePlaceholders. These simply set placeholders for the extra fields, as well as the native MODX fields. Both take a property (<code>&userId</code> or <code>&resourceId</code>) that lets you select the user or resource to get the fields for. If those are omitted, the current user or current resource is assumed.</p>
+<p>The simplest of the utilities are <b>SetUserPlaceholders</b> and <b>SetResourcePlaceholders</b>. These simply set placeholders on a web page for the extra fields, as well as the native MODX fields. Both take a property (<code>&userId</code> or <code>&resourceId</code>) that lets you select the user or resource to get the fields for. If those are omitted, the current user or current resource is assumed.</p>
 
-<p>SetUserPlaceholders will set placeholders for all fields of the User object (except sensitive fields like password), the User Profile object, and the extended fields from ClassExtender. It will not set placeholders for the traditional user profile extended fields, since you should replace those with fields in your custom table.</p>
+<p><b>SetUserPlaceholders</b> will set placeholders for all fields of the User object (except sensitive fields like password), the User Profile object, and the extended fields from ClassExtender. It will not set placeholders for the traditional user profile extended fields, since you should replace those with fields in your custom table.</p>
 
-<p>SetResourcePlaceholders will set placeholders for all resource fields and all extended fields from ClassExtender. It will not set placeholders for TVs.</p>
+<p><b>SetResourcePlaceholders</b> will set placeholders for all resource fields and all extended fields from ClassExtender. It will not set placeholders for TVs, but you can use TV tags [[*TvName]] as you normally would.</p>
 
-<p><b>Important! If you are using SetResourcePlaceholders to show a user other than the current user, be sure to use a prefix for the placeholders, so they won't conflict with the placeholders for the current page set by MODX.</b></p>
+<p>The package also includes two snippets: <b>GetExtUsers</b> and <b>GetExtResources</b>. These operate a little like getResources, only without some of the bells and whistles. They use Tpl chunks to display sorted, aggregated Users or Resources based on some search criteria. You can specify the Tpl chunks, sorting, and selection criteria in the properties of the snippet tag. The placeholders should match the field names of your custom fields.<p>
 
-<p>The package also includes two snippets: GetExtUsers and GetExtResources. These operate a little like getResources, only without some of the bells and whistles. They use Tpl chunks to display sorted, aggregated Users or Resources based on some search criteria. You can specify the Tpl chunks, sorting, and selection criteria in the properties of the snippet tag.<p>
-
-<h3>Where Property Examples</h3>
+<h3 id="where-property-examples">Where Property Examples</h3>
 
 <pre class="brush: php; toolbar: false;"><fixedpre>
 
 /* Get all active users with the first name 'Bob' in the
-    sorted by last name custom fields: */
+    custom fields, sorted by last name: */
 
 [[!GetExtUsers?
     &where=`{"firstName:=":"Bob","active:="1"}`
@@ -235,52 +413,56 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 ]]
 </fixedpre></pre>
 
-<p>The content of the <code>&where</code> property is just as it is for other xPDO-based snippets like getResources or PdoResources. There are some examples <a href="https://rtfm.modx.com/extras/revo/getresources#getResources-Examples" target="_blank"> here</a>.</p>
+<p>The content of the <code>&where</code> property just as it does is for other xPDO-based snippets like getResources or PdoResources. There are some examples <a href="https://rtfm.modx.com/extras/revo/getresources#getResources-Examples" target="_blank"> here</a>.</p>
 
 <p>With the GetExtUsers snippet, you can use the username, active, and all fields in the Profile and Data tables as placeholders in the Tpl chunks.</p>
 
 <p>With the GetExtResources snippet, you can use all standard resource fields and all fields in the Data tables as placeholders in the Tpl chunks.</p>
 
-<p>The GetExtResources snippet will not select or display Template Variables (TVs). Adding generic TV capability would have made the snippet quite slow and would defeat the purpose of moving TV data into the extra fields. If you absolutely need TVs, it will be much more efficient to modify the GetExtResources snippet code to display the particular TVs you need, and searching or sorting by TVs is a bad idea to begin with.</p>
+<p>The GetExtResources snippet will not select or display Template Variables (TVs), though you can use standard TV tags to display them.</p>
+
+<p>Adding generic TV capability would have made the snippet quite slow and would defeat the purpose of moving TV data into the extra fields. If you absolutely need TVs, it will be much more efficient to modify the GetExtResources snippet code to display the particular TVs you need, and searching or sorting by TVs is a bad idea to begin with.</p>
 
 <p>Similarly, the GetExtUsers snippet will not handle the traditional user extended fields, since performance will be much better if you make them custom Data fields using ClassExtender.</p>
 
-<h3>More Utility Snippets</h3>
+<h3 id="more-utility-snippets">More Utility Snippets</h3>
 
-<p>There are three other utility snippets: ExtUserUpdateProfile, ExtUserRegisterPosthook, and UserSearchForm. The first is used to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. In simple cases, you should be able to just: 1) add the custom fields to the loggedInChunkTpl chunk used on the Update Profile page and 2) specify that chunk in the <code>&loggedInChunk</code> property.</p>
+<p>There are three other utility snippets: <b>ExtUserUpdateProfile</b>, <b>ExtUserRegisterPosthook</b>, and <b>UserSearchForm</b>. The first is used to extend the UpdateProfile snippet (part of the Login package) to display and update the extra user fields. In simple cases, you should be able to just: 1) add the custom fields to the loggedInChunkTpl chunk used on the Update Profile page and 2) specify that chunk in the <code>&loggedInChunk</code> property.</p>
 
-<p>Be sure the ExtUserUpdateProfile tag is above the UpdateProfile tag and that both snippets are called uncached (with the exclamation point). If any form fields require special handling (e.g., date fields), you'll have to modify the snippet to deal with them. When you are testing the Update Profile form, you may see some odd behavior if either your browser, or a password manager like LastPass, is trying to be helpful by filling in the forms for you. This generally won't affect real users.
+<div class="box">
+<p>Important: Make sure the resources are published, otherwise the user will end up at your error page.</p>
+</div>
+
+<p>Be sure the ExtUserUpdateProfile tag is above the UpdateProfile tag and that both snippets are called uncached (with the exclamation point). If any form fields require special handling (e.g., date fields), you'll have to modify the snippet to deal with them (make a copy and edit the copy).</p>
+
+<p>When you are testing the Update Profile form, you may see some odd behavior if either your browser, or a password manager like LastPass, is trying to be helpful by filling in the forms for you. This generally won't affect real users.</p>
 
 <p>The second snippet (ExtUserRegisterPosthook) is very similar. It saves the custom fields to the database when a user registers. Add your custom fields to the registration form.</p>
 
 <p>Because of the way the Register snippet is written and the way it handles posthooks, there is no way to introduce a CSS file in the process. As a result, you either need to include the CSS file in the page template, or use inline style information (as done in the example, though it's not valid HTML code).
 
-<p>There is also an optional <code>&usernameField</code> property in case you use a custom field for the username</p>
+<p>Note: The <code>activation</code> property works the opposite of the way you might expect it to. If it's <code>1</code> (<code>true</code>), the created user's `modUser` record will be saved as inactive, and the user will have to respond to an email (sent automatically) to become an active user, or the active field will have to be set manually.</p>
+
+<p>There is also an optional <code>&usernameField</code> property in case you use a custom field for the username.</p>
 
 <p>The third snippet (UserSearchForm) serves as an example of how to search for users using the custom fields. You will have to modify it to meet your needs.</p>
 
 
-<h3>Uninstalling ClassExtender</h3>
+<h3 id="uninstalling classextender warnings">Uninstalling ClassExtender Warnings</h3>
 
-<p><b>Important</b>: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any extended classes. The class and map files, all chunks (including the 'My..." chunks), the namespace, and any database tables will be removed during the uninstall.</p>
+<p><b>Important</b>: Even though ClassExtender only needs to be run once to create the class and map files for the extended classes, DO NOT uninstall it unless you will not be using any of the extended classes. The class and map files, all chunks (including the 'My..." chunks), and the namespace, will be removed during the uninstall.</p>
 
-<p>When you uninstall ClassExtender, you may see some error messages. This is normal. There may also be some spurious error messages in the MODX Error Log.</p>
+<p>If you want to save the chunks or the class files, rename the chunks and move them out of the ClassExtender folder. Move the class files outside of the <code>core/components/classextender</code> directory.</p>
 
-<p>During the uninstall, ClassExtender will remove its various components and namespace, de-register the extension package(s), and drop any tables it created. When the uninstall is finished, there should be no trace of ClassExtender left on your site. Note that any data stored in the ClassExtender tables will be lost.</p>
+<p>To prevent the possible loss of critical data, the custom database tables are not removed. You can delete them manually in PhpMyAdmin.</p>
 
-<h3>Your Own Code</h3>
+<p>When you uninstall ClassExtender, you may see some error messages. This is normal. There may also be some spurious error messages in the MODX Error Log. As long as the process is completed, you can ignore them.</p>
 
-<p>You may find it necessary to create your own code to deal with the custom tables created by ClassExtender. Use the example resources and the existing Classextender snippet and plugins as a guide.</p>
+<p>During the uninstall, ClassExtender will remove its various components and namespace, and de-register the extension package(s). When the uninstall is finished, there should be no trace of ClassExtender left on your site, except for any custom database tables.</p>
 
+<h3 id="classextender-system-settings">ClassExtender System Settings</h3>
 
-<p>When using the ClassExtender approach described above, the saved user or resource object is just a regular <code>modUser</code> or <code>modDocument</code> object, since we have set its <code>class_key</code> field to one of those.</p>
-
-
-<h3>A Word of Warning</h3>
-
-<p>In order to get the most out of the extended objects created by ClassExtender, you may need some knowledge of PHP, so you can modify the code to do what you want. You'll also need to either modify the XML schema or create your own PHP table to hold the data, though neither of these is particularly difficult. Standard MODX extras like getResources won't know about your extra fields, so they'll need to be modified to include them, though they'll still work fine in cases where you don't need to display the extra fields.</p>
-
-<h3>ClassExtender System Settings</h3>
+<p>ClassExtender has only one System Setting. You shouldn't need to modify this setting, because its value is managed automatically by ClassExtender. This setting is ignored in MODX 3.</p>
 
 <table class="properties">
     <tr>
@@ -293,15 +475,16 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     </tr>
     <tr>
         <td>ce_autoload_directories</td>
-        <td>Comma-separated list of directories holding class files</td>
-        <td>extendeduser,extendedresource</td>
+        <td>Comma-separated list of directories holding class files; set automatically</td>
+        <td></td>
     </tr>
 </table>
 
+<p id="snippet-properties">&nbsp;</p>
 
-<h3>ClassExtender Snippet Properties</h3>
+<h3 id="classextender-snippet-properties">ClassExtender Snippet Properties</h3>
 
-<p>Note: With the exception of the table prefix, these do not show up on the Properties tab of the snippet. The other properties should never be set there because the snippet is used for extending both <code>modUser</code> and <code>modResource</code>. You can put them in a property set, but it's usually easier just to set them with properties in the snippet tag, as in the ClassExtender example resources.</p>
+<p>Note: The properties do not show up on the Properties tab of the snippet. The properties should never be set there, because the snippet is used for extending both <code>modUser</code> and <code>modResource</code>, and any other classes you create with ClassExtender. Just set them with properties in the snippet tag, as in the ClassExtender example resources.</p>
 
 <table class="properties">
     <tr>
@@ -312,23 +495,32 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 
     <tr>
         <td>package</td>
-        <td>Name of the package being created (e.g., extendeduser, extendedresource)</td>
-        <td>empty</td>
+        <td>Lowercase name of the package being created (e.g., extendeduser, extendedresource)</td>
+        <td>(empty)</td>
+    </tr>
+    <tr>
+        <td>tablePrefix</td>
+        <td>Prefix for table</td>
+        <td>ext_</td>
     </tr>
     <tr>
         <td>schemaTpl</td>
         <td>Name of the Tpl chunk to use for the schema</td>
-        <td>empty</td>
+        <td>(empty)</td>
     </tr>
-
     <tr>
-        <td>tablePrefix</td>
-        <td>Table prefix for new DB table</td>
-        <td>ext_</td>
+        <td>dirPermission</td>
+        <td>Directory Permission</td>
+        <td>0755</td>
+    </tr>
+    <tr>
+        <td>cssFile</td>
+        <td>Path to CSS file to load</td>
+        <td>(empty)</td>
     </tr>
 </table>
 
-<h3>GetExtUsers Snippet Properties</h3>
+<h3 id="getextusers-snippet-properties">GetExtUsers Snippet Properties</h3>
 
 <table class="properties">
     <tr>
@@ -353,9 +545,9 @@ The plugin will be enabled automatically when you extend the <code>modResource</
         <td>extUserRowTpl</td>
     </tr>
     <tr>
-        <td>userDataClass</td>
-        <td>Class for user object</td>
-        <td>userData</td>
+        <td>User Data Class</td>
+        <td>Class for user object (e.g., UserData)</td>
+        <td>UserData</td>
     </tr>
     <tr>
         <td>where</td>
@@ -390,13 +582,13 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 </table>
 
 <div class="box">
-<p>The <code>&cssFile</code> properties for all the snippets are empty by default so that you can use your site's default CSS file for the styling to speed up page loading. You can see the default CSS file path on the example pages. You may want to copy it, include it in your snippet calls, and modify it during development. </p>
+<p>The <code>&cssFile</code> properties for all the example snippets are empty by default so that you can use your site's default CSS file for the styling to speed up page loading. You can see the default CSS file path on the example pages. You may want to copy it, include it in your snippet calls, and modify it during development. </p>
 </div>
 
 <p>The optional <code>offset</code> and <code>limit</code> properties are for when you have a very large number of users and want to retrieve them in batches with <code>$modx->runSnippet('getExtUsers', $properties)</code>. The <code>$properties</code> variable will hold an array of property keys and values. By default (without these two properties), all users that match your criteria will be retrieved.</p>
 
 
-<h3>GetExtResources Snippet Properties</h3>
+<h3 id="getextresources-snippet-properties">GetExtResources Snippet Properties</h3>
 
 <table class="properties">
     <tr>
@@ -421,9 +613,9 @@ The plugin will be enabled automatically when you extend the <code>modResource</
         <td>ExtResourceRowTpl</td>
     </tr>
     <tr>
-        <td>resourceDataClass</td>
+        <td>ResourceDataClass</td>
         <td>Name of extended resource class</td>
-        <td>resourceData</td>
+        <td>ResourceData</td>
     </tr>
     <tr>
         <td>sortby</td>
@@ -438,7 +630,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     <tr>
         <td>where</td>
         <td>JSON string with search criteria</td>
-        <td>empty</td>
+        <td>(empty)</td>
     </tr>
     <tr>
         <td>cssFile</td>
@@ -447,7 +639,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     </tr>
 </table>
 
-<h3>SetUserPlaceholders Snippet Properties</h3>
+<h3 id="setuserplaceholsers-snippet properties">SetUserPlaceholders Snippet Properties</h3>
 
 <table class="properties">
     <tr>
@@ -464,7 +656,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     <tr>
         <td>prefix</td>
         <td>Prefix for placeholders</td>
-        <td>empty</td>
+        <td>(empty)</td>
     </tr>
     <tr>
         <td>cssFile</td>
@@ -473,7 +665,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     </tr>
 </table>
 
-<h3>SetResourcePlaceholders Snippet Properties</h3>
+<h3 id="setresourceplaceholders-snippet-properties">SetResourcePlaceholders Snippet Properties</h3>
 
 <table class="properties">
     <tr>
@@ -490,7 +682,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     <tr>
         <td>prefix</td>
         <td>Prefix for placeholders</td>
-        <td>empty</td>
+        <td>(empty)</td>
     </tr>
     <tr>
         <td>cssFile</td>
@@ -499,7 +691,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     </tr>
 </table>
 
-<h3>UserSearchForm Snippet Properties</h3>
+<h3 id="usersearchform-snippet-properties">UserSearchForm Snippet Properties</h3>
 
 <table class="properties">
     <tr>
@@ -520,5 +712,8 @@ The plugin will be enabled automatically when you extend the <code>modResource</
     </tr>
 </table>
 
+<h3 id="acknowledgments">Acknowledgments</h3>
+
+I want to acknowledge the generous support provided by <a href="https://www.jeankindem.com/" target="_blank" rel="noopener nofollow noreferrer">Jean Kindem Design</a> in the initial stages of developing this extra.
 
 <p>&nbsp;</p>

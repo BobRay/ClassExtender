@@ -2,7 +2,7 @@
 <model package="extendeduser" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
 
 
-    <object class="userData" table="user_data" extends="xPDOSimpleObject">
+    <object class="UserData" table="user_data" extends="xPDOSimpleObject">
         <field key="userdata_id" dbtype="int" precision="11" phptype="integer" null="false" attributes="unsigned"/>
         <field key="firstName" dbtype="varchar" precision="50" phptype="string" null="true"/>
         <field key="lastName" dbtype="varchar" precision="50" phptype="string" null="true"/>

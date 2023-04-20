@@ -63,7 +63,7 @@ if (!empty($cssFile)) {
     $modx->regClientCSS($cssFile);
 }
 
-$resourceClass = $modx->getOption('resourceDataClass', $sp, 'resourceData');
+$resourceClass = $modx->getOption('ResourceDataClass', $sp, 'ResourceData');
 
 if (strpos($resourceClass, '\\') === false) {
     $resourceClass = $cePrefix . $resourceClass;
