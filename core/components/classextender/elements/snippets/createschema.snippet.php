@@ -44,7 +44,8 @@
 $classPrefix = $modx->getVersionData()['version'] >= 3
     ? 'MODX\Revolution\\'
     : '';
-
+$modx->lexicon->load('classextender:default');
+$modx->lexicon->load('classextender:form');
 $output = '';
 $sp = $scriptProperties;
 $package = $modx->getOption('package', $sp);
