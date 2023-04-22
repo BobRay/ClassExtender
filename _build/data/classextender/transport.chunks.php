@@ -165,7 +165,7 @@ $chunks[14]->fromArray(array (
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[14]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/ExtUpdateProfileLoggedIn.chunk.html'));
+$chunks[14]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extupdateprofileloggedin.chunk.html'));
 
 $chunks[15] = $modx->newObject('modChunk');
 $chunks[15]->fromArray(array (
@@ -175,7 +175,7 @@ $chunks[15]->fromArray(array (
   'description' => 'Chunk',
   'properties' => NULL,
 ), '', true, true);
-$chunks[15]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/ExtUpdateProfileNotLoggedIn.chunk.html'));
+$chunks[15]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/extupdateprofilenotloggedin.chunk.html'));
 
 $chunks[16] = $modx->newObject('modChunk');
 $chunks[16]->fromArray(array (
