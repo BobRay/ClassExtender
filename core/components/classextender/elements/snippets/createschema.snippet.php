@@ -1,7 +1,7 @@
 <?php
 /**
  * CreateSchema Snippet
- * Copyright 2023 Bob Ray
+ * Copyright 2023 Bob Ray <https://bobsguides.com>
  * Created on 03/01/2023
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
