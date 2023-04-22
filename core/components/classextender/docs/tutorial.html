@@ -140,6 +140,8 @@
     <li>If you create the database table(s) first (rather than the schema), MODX will derive the class names from the table names by removing the prefix and underscores, and converting what's left to PascalCase (see <a href="https://bobsguides.com/custom-db-tables.html" target="_blank">this page</a> for details</li>
 
     <li>If you create the DB tables first, and all your custom tables have the same prefix, MODX will put all the classes in one schema, but will create separate class files for each object.</li>
+
+    <li>If a table already exists, ClassExtender will leave it alone.</li>
 </ul>
 
 <div class="box">
