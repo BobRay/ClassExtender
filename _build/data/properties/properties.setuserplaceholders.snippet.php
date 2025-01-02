@@ -9,40 +9,37 @@
  * @subpackage build
  */
 
-
-
-
 $properties = array (
-  'prefix' => 
+  'prefix' =>
   array (
     'name' => 'prefix',
     'desc' => 'ce.user_prefix_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => '',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'UserDataClass' => 
+  'UserDataClass' =>
   array (
     'name' => 'UserDataClass',
     'desc' => 'ce.class_for_user_data_object',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'UserData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'userId' => 
+  'userId' =>
   array (
     'name' => 'userId',
     'desc' => 'ce.user_id_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => '',
@@ -52,4 +49,3 @@ $properties = array (
 );
 
 return $properties;
-
