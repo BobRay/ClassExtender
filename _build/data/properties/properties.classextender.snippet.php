@@ -2,7 +2,7 @@
 /**
  * Properties file for ClassExtender snippet
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 04-15-2014
  *
  * @package classextender
@@ -13,12 +13,12 @@
 
 
 $properties = array (
-  'tablePrefix' => 
+  'tablePrefix' =>
   array (
     'name' => 'tablePrefix',
     'desc' => 'ce.table_prefix_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'ext_',
@@ -28,4 +28,3 @@ $properties = array (
 );
 
 return $properties;
-

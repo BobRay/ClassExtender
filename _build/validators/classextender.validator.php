@@ -2,7 +2,7 @@
 /**
  * Validator for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 08-13-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the

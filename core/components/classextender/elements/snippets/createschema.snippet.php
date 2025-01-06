@@ -1,7 +1,7 @@
 <?php
 /**
  * CreateSchema Snippet
- * Copyright 2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2025 Bob Ray <https://bobsguides.com>
  * Created on 03/01/2023
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -56,8 +56,8 @@ $baseClass = $modx->getOption('baseClass', $sp,
     'xPDOSimpleObject', true);
 $fileName = $modx->getOption('fileName', $sp, $packageLower .
     '.mysql.schema.xml', true);
-    
-   
+
+
 
 $defaultChunk = $packageLower . 'SchemaTpl';
 $chunkName = $modx->getOption('chunkName', $sp, $defaultChunk, true);

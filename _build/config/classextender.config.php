@@ -23,7 +23,7 @@ $components = array(
     'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'https://bobsguides.com/classextender-tutorial.html',
-    'copyright' => '2012-2023',
+    'copyright' => '2012-2025',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -309,7 +309,7 @@ $components = array(
                 'name'     => 'ExtResourceRowTpl',
                 'filename' => 'extresourcerowtpl.chunk.html',
             ),
-            
+
             'ExtUserSearchFormTpl' => array(
                 'category' => 'ClassExtender',
                 'name' => 'ExtUserSearchFormTpl',

@@ -2,7 +2,7 @@
 /**
 * Resolver to connect plugins to system events for ClassExtender extra
 *
-* Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+* Copyright 2012-2025 Bob Ray <https://bobsguides.com>
 * Created on 12-11-2013
 *
  * ClassExtender is free software; you can redistribute it and/or modify it under the

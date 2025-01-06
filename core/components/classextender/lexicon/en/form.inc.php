@@ -2,7 +2,7 @@
 /**
  * en:form.inc.php topic lexicon file for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 04-03-2014
  *
  * ClassExtender is free software; you can redistribute it and/or modify it under the
@@ -43,4 +43,3 @@ $_lang['ce.table_prefix_caption'] = 'Table Prefix';
 /* Used in CreateSchema Form */
 $_lang['ce.chunk_name_caption'] = 'Chunk name to write schema to';
 $_lang['ce.file_name_caption'] = 'File name to write schema to';
-

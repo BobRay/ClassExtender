@@ -2,7 +2,7 @@
 /**
  * Properties file for UserSearchForm snippet
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 04-16-2014
  *
  * @package classextender
@@ -13,12 +13,12 @@
 
 
 $properties = array (
-  'extFormTpl' => 
+  'extFormTpl' =>
   array (
     'name' => 'extFormTpl',
     'desc' => 'ce.ext_form_tpl_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'ExtUserSearchFormTpl',
@@ -28,4 +28,3 @@ $properties = array (
 );
 
 return $properties;
-

@@ -2,7 +2,7 @@
 /**
  * ExtUserRegisterPosthook snippet for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 05-04-2015
  *
  * Thanks to MODX Forum contributor Karl Forsyth for his contributions to this code.

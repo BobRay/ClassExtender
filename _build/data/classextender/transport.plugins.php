@@ -2,7 +2,7 @@
 /**
  * plugins transport file for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 12-10-2013
  *
  * @package classextender
@@ -31,7 +31,7 @@ $plugins[1]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ExtraResourceFields',
   'description' => 'Add and process extra fields in Create/Edit Resource form',
-  'properties' => 
+  'properties' =>
   array (
   ),
   'disabled' => true,
@@ -44,7 +44,7 @@ $plugins[2]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ExtraUserFields',
   'description' => 'Add and process extra fields in Create/Edit User form',
-  'properties' => 
+  'properties' =>
   array (
   ),
   'disabled' => true,

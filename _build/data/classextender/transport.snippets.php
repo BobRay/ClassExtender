@@ -2,7 +2,7 @@
 /**
  * snippets transport file for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 11-10-2013
  *
  * @package classextender
@@ -145,7 +145,7 @@ $snippets[10]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'CreateSchema',
   'description' => 'Creates a schema based on an existing DB table. Writes the schema to a file and to a chunk specified in the snippet properties. See the CreateSchema Resource.',
-  'properties' => 
+  'properties' =>
   array (
   ),
 ), '', true, true);

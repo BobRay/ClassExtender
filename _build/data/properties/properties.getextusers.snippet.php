@@ -2,7 +2,7 @@
 /**
  * Properties file for GetExtUsers snippet
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 01-07-2014
  *
  * @package classextender
@@ -13,84 +13,84 @@
 
 
 $properties = array (
-  'extUserInnerTpl' => 
+  'extUserInnerTpl' =>
   array (
     'name' => 'extUserInnerTpl',
     'desc' => 'ce.inner_tpl',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'extUserInnerTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extUserOuterTpl' => 
+  'extUserOuterTpl' =>
   array (
     'name' => 'extUserOuterTpl',
     'desc' => 'ce.outer_tpl',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'extUserOuterTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extUserRowTpl' => 
+  'extUserRowTpl' =>
   array (
     'name' => 'extUserRowTpl',
     'desc' => 'ce.row_tpl',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'extUserRowTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'sortby' => 
+  'sortby' =>
   array (
     'name' => 'sortby',
     'desc' => 'ce.get_ext_users_sortby_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'username',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'sortdir' => 
+  'sortdir' =>
   array (
     'name' => 'sortdir',
     'desc' => 'ce.get_ext_users_sortdir_desc',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'ASC',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'UserDataClass' => 
+  'UserDataClass' =>
   array (
     'name' => 'UserDataClass',
     'desc' => 'ce.class_for_user_data_object',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => 'UserData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'where' => 
+  'where' =>
   array (
     'name' => 'where',
     'desc' => 'ce.get_ext_users_where',
     'type' => 'textfield',
-    'options' => 
+    'options' =>
     array (
     ),
     'value' => '',
@@ -100,4 +100,3 @@ $properties = array (
 );
 
 return $properties;
-

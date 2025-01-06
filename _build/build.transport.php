@@ -11,7 +11,7 @@
  *
  * Build Script for MyComponent extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 10-23-2012
  *
  * MyComponent is free software; you can redistribute it and/or modify it under the
@@ -823,7 +823,7 @@ if ($hasMenu) {
 }
 
 /* Next-to-last step - pack in the license file, readme.txt, changelog,
- * and setup options 
+ * and setup options
  */
 $attr = array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),

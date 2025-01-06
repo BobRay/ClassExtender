@@ -2,7 +2,7 @@
 /**
  * chunks transport file for ClassExtender extra
  *
- * Copyright 2012-2023 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2025 Bob Ray <https://bobsguides.com>
  * Created on 12-10-2013
  *
  * @package classextender
@@ -61,7 +61,7 @@ $chunks[4]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ClassExtenderForm',
   'description' => 'Chunk',
-  'properties' => 
+  'properties' =>
   array (
   ),
 ), '', true, true);
@@ -183,7 +183,7 @@ $chunks[16]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'CreateSchemaForm',
   'description' => 'Form for Create Schema to use in creating a schema from an existing DB table',
-  'properties' => 
+  'properties' =>
   array (
   ),
 ), '', true, true);
