@@ -89,8 +89,9 @@ class ClassExtender {
         }
 
         $modelPath = $this->modx->getOption('ce.core_path', NULL,
-            $this->modx->getOption('core_path') .
-            'components/classextender/model/');
+            $this->modx->getOption('core_path') . 'components/classextender/', true) .
+            'model/';
+
         $this->modelPath = $modelPath;
 
 

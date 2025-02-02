@@ -79,7 +79,7 @@ if (!$modx->user->hasSessionContext('mgr')) {
     die ('Unauthorized Access');
 }
 
-require_once $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/classextender/') . 'model/classextender/classextender.class.php';
+require_once $modx->getOption('ce.core_path', NULL, $modx->getOption('core_path') . 'components/classextender/', true) . 'model/classextender/classextender.class.php';
 // include 'classextender.class.php';
 
 $modx->lexicon->load('classextender:default');
