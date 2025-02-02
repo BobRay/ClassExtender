@@ -94,8 +94,6 @@ class ClassExtender {
 
         $this->modelPath = $modelPath;
 
-
-
         $this->packageLower = strtolower($this->ce_package_name);
 
         $this->schemaChunk = $this->modx->getOption('schemaTpl', $this->props, '');
@@ -346,7 +344,7 @@ class ClassExtender {
                         return false;
                     } else {
                         $this->addOutput(
-                            $this->modx->lexicon('ce.table_created') . $class);
+                            $this->modx->lexicon('ce.table_created') . ': ' . $class);
                     }
                 }
             }
@@ -433,7 +431,7 @@ class ClassExtender {
             $pluginObj->set('disabled', false);
             if ($pluginObj->save()) {
                 $this->addOutput(
-                    $this->modx->lexicon('ce.plugin_enabled')
+                    $this->modx->lexicon('ce.plugin_enabled') . ': '
                     . $plugin);
             } else {
                 $this->addOutput($this->modx->lexicon('ce.could_not_enable') .
