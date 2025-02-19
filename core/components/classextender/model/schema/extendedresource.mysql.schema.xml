@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="extendedresource" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
+<model package="extendedresource" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_"
+       version="1.0.0">
 
-    <object class="ResourceData" table="resource_data" extends="xPDO\Om\xPDOSimpleObject">
+    <object class="ResourceData" table="resource_data" extends="xPDOSimpleObject">
         <field key="resourcedata_id" dbtype="int" precision="11" phptype="integer" null="false" attributes="unsigned"/>
         <field key="name" dbtype="varchar" precision="50" phptype="string" null="true"/>
         <field key="color" dbtype="varchar" precision="50" phptype="string" null="true"/>
@@ -11,6 +12,7 @@
         <index alias="resourcedata_id" name="resourcedata_id" primary="false" unique="true" type="BTREE">
             <column key="resourcedata_id" length="" collation="A" null="false"/>
         </index>
-        <aggregate alias="Resource" class="MODX\Revolution\modResource" local="resourcedata_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Resource" class="modResource" local="resourcedata_id" foreign="id" cardinality="one"
+                   owner="foreign"/>
     </object>
 </model>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="extendeduser" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" tablePrefix="ext_" version="1.0.0">
 
-       
-    <object class="UserData" table="user_data" extends="xPDO\Om\xPDOSimpleObject">
+
+    <object class="UserData" table="user_data" extends="xPDOSimpleObject">
         <field key="userdata_id" dbtype="int" precision="11" phptype="integer" null="false" attributes="unsigned"/>
         <field key="firstName" dbtype="varchar" precision="50" phptype="string" null="true"/>
         <field key="lastName" dbtype="varchar" precision="50" phptype="string" null="true"/>
@@ -13,7 +13,7 @@
         <index alias="userdata_id" name="userdata_id" primary="false" unique="true" type="BTREE">
             <column key="userdata_id" length="" collation="A" null="false"/>
         </index>
-        <aggregate alias="User" class="MODX\Revolution\modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
-        <aggregate alias="Profile" class="MODX\Revolution\modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>
+        <aggregate alias="User" class="modUser" local="userdata_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Profile" class="modUserProfile" local="userdata_id" foreign="internalKey" cardinality="one" owner="foreign"/>
     </object>
 </model>
