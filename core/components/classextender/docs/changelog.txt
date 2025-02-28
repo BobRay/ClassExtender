@@ -1,5 +1,10 @@
 Changelog for ClassExtender
 
+ClassExtender 2.3.4-pl
+---------------------------------
+ * Fix potential issue with class names
+ * Update copyrights
+
 ClassExtender 2.3.3-pl
 ---------------------------------
  * Speed up autoloader
@@ -17,9 +22,6 @@ ClassExtender 2.3.3-pl
  * Leave DB tables in place on uninstall
  * Normalize lexicon strings
 
-
-
-
 ClassExtender 2.3.1-pl
 ---------------------------------
  * Fully MODX 3 Compatible
@@ -27,7 +29,7 @@ ClassExtender 2.3.1-pl
  * Add autoloader
  * Create extensionPackage objects for both classes
  * Create namespace objects for both classes
- * Allow multiple classes/tables to be creates in one pass
+ * Allow multiple classes/tables to be created in one pass
  * Clear extension_packages System Setting
  * AddPackage and loadClass automatically called on every request
  * Simplified extend modUser and extend modResource forms
@@ -65,23 +67,19 @@ ClassExtender 2.0.0-pl
  * Removed properties from ClassExtender snippet that shouldn't be set there
  * Tutorial has more detail and examples
 
-
 ClassExtender 1.1.1
 ---------------------------------
  * Workaround for missing extension_packages System Setting
 
-
 ClassExtender 1.1.0
 ---------------------------------
  * Removed option to not register ext. package
-
 
 ClassExtender 1.0.1
 ---------------------------------
  * Added GetExtUsers snippet
  * Added UserSearchForm snippet
  * Added Tpl chunks for search and list
-
 
 ClassExtender 1.0.0
 ---------------------------------

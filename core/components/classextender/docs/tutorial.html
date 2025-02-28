@@ -455,6 +455,8 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 
 <p>Make sure the names of your classes include the word "Data", so the autoloader can find them.</p>
 
+<p>The class names `UserData` and `ResourceData` have been changed to comply with PSR-1 standards. In older versions the first letter was in lower case. Version 2.3.4-pl attempts to correct all of them, but if you have renamed some chunks or files, there's a small chance that it may miss one. If you get a "table not found" error, look through the snippet tags in your resources, the snippet properties, the ClassExtender chunks, and the files under the `core/components/classextender/model/` directory for class names with the old spelling.</p>
+
 <p>One confusing aspect of the utility snippets is that you can often view them and get them to do what you want when viewing them from the Manager, where you're logged in as an admin. However, when you are vising the front-end of the site as the (anonymous) user or another user, you may not see them and will be forwarded to your error page or the login page, because you are no longer you. Publishing them will solve this, though you can also just log in to the front end as yourself. A number of the snippets should not be left in a published state unless they are protected from the public users.</p>
 
 <h3 id="classextender-system-settings">ClassExtender System Settings</h3>
