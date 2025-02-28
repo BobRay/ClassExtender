@@ -10,87 +10,85 @@
  */
 
 
-
-
 $properties = array (
-  'extResourceInnerTpl' =>
+  'extResourceInnerTpl' => 
   array (
     'name' => 'extResourceInnerTpl',
     'desc' => 'ce.get_ext_resources_inner_tpl_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ExtResourceInnerTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extResourceOuterTpl' =>
+  'extResourceOuterTpl' => 
   array (
     'name' => 'extResourceOuterTpl',
     'desc' => 'ce.get_ext_resources_outer_tpl_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ExtResourceOuterTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'extResourceRowTpl' =>
+  'extResourceRowTpl' => 
   array (
     'name' => 'extResourceRowTpl',
     'desc' => 'ce.get_ext_resources_row_tpl_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ExtResourceRowTpl',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'ResourceDataClass' =>
+  'ResourceDataClass' => 
   array (
     'name' => 'ResourceDataClass',
     'desc' => 'cd.resource_class_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ResourceData',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'sortby' =>
+  'sortby' => 
   array (
     'name' => 'sortby',
     'desc' => 'ce.get_ext_resources_sortby_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'pagetitle',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'sortdir' =>
+  'sortdir' => 
   array (
     'name' => 'sortdir',
     'desc' => 'ce.get_ext_resources_sortdir_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ASC',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'where' =>
+  'where' => 
   array (
     'name' => 'where',
     'desc' => 'ce.get_ext_resources_where_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => '',

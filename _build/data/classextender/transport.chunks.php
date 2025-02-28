@@ -61,7 +61,7 @@ $chunks[4]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ClassExtenderForm',
   'description' => 'Chunk',
-  'properties' =>
+  'properties' => 
   array (
   ),
 ), '', true, true);
@@ -183,7 +183,7 @@ $chunks[16]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'CreateSchemaForm',
   'description' => 'Form for Create Schema to use in creating a schema from an existing DB table',
-  'properties' =>
+  'properties' => 
   array (
   ),
 ), '', true, true);

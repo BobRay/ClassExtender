@@ -10,15 +10,13 @@
  */
 
 
-
-
 $properties = array (
-  'tablePrefix' =>
+  'tablePrefix' => 
   array (
     'name' => 'tablePrefix',
     'desc' => 'ce.table_prefix_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ext_',

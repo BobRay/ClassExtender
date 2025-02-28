@@ -31,7 +31,7 @@ $plugins[1]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ExtraResourceFields',
   'description' => 'Add and process extra fields in Create/Edit Resource form',
-  'properties' =>
+  'properties' => 
   array (
   ),
   'disabled' => true,
@@ -44,7 +44,7 @@ $plugins[2]->fromArray(array (
   'property_preprocess' => false,
   'name' => 'ExtraUserFields',
   'description' => 'Add and process extra fields in Create/Edit User form',
-  'properties' =>
+  'properties' => 
   array (
   ),
   'disabled' => true,

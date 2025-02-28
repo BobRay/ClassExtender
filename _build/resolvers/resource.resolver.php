@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License along with
  * ClassExtender; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
+
 * @package classextender
 * @subpackage build
 */
@@ -63,67 +64,67 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_UPGRADE:
 
         $intersects = array (
-                0 =>  array (
-                  'pagetitle' => 'Extend modUser',
-                  'parent' => 'ClassExtender',
-                  'template' => 'default',
-                ),
-                1 =>  array (
-                  'pagetitle' => 'Extend modResource',
-                  'parent' => 'ClassExtender',
-                  'template' => 'default',
-                ),
-                2 =>  array (
-                  'pagetitle' => 'ClassExtender',
-                  'parent' => '0',
-                  'template' => 'default',
-                ),
-                3 =>  array (
-                  'pagetitle' => 'Create Schema',
-                  'parent' => 'ClassExtender',
-                  'template' => 'default',
-                ),
-                4 =>  array (
-                  'pagetitle' => 'Examples',
-                  'parent' => 'ClassExtender',
-                  'template' => 'default',
-                ),
-                5 =>  array (
-                  'pagetitle' => 'ClassExtender Register PostHook',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                6 =>  array (
-                  'pagetitle' => 'ClassExtender Update Profile',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                7 =>  array (
-                  'pagetitle' => 'ClassExtender GetExtUsers',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                8 =>  array (
-                  'pagetitle' => 'ClassExtender GetExtResources',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                9 =>  array (
-                  'pagetitle' => 'ClassExtender Set Resource Placeholders',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                10 =>  array (
-                  'pagetitle' => 'ClassExtender Set User Placeholders',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-                11 =>  array (
-                  'pagetitle' => 'ClassExtender User Search Form',
-                  'parent' => 'Examples',
-                  'template' => 'default',
-                ),
-            );
+            0 =>  array (
+                'pagetitle' => 'Extend modUser',
+                'parent' => 'ClassExtender',
+                'template' => 'default',
+            ),
+            1 =>  array (
+                'pagetitle' => 'Extend modResource',
+                'parent' => 'ClassExtender',
+                'template' => 'default',
+            ),
+            2 =>  array (
+                'pagetitle' => 'ClassExtender',
+                'parent' => 0,
+                'template' => 'default',
+            ),
+            3 =>  array (
+                'pagetitle' => 'Create Schema',
+                'parent' => 'ClassExtender',
+                'template' => 'default',
+            ),
+            4 =>  array (
+                'pagetitle' => 'Examples',
+                'parent' => 'ClassExtender',
+                'template' => 'default',
+            ),
+            5 =>  array (
+                'pagetitle' => 'ClassExtender Register PostHook',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            6 =>  array (
+                'pagetitle' => 'ClassExtender Update Profile',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            7 =>  array (
+                'pagetitle' => 'ClassExtender GetExtUsers',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            8 =>  array (
+                'pagetitle' => 'ClassExtender GetExtResources',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            9 =>  array (
+                'pagetitle' => 'ClassExtender Set Resource Placeholders',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            10 =>  array (
+                'pagetitle' => 'ClassExtender Set User Placeholders',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+            11 =>  array (
+                'pagetitle' => 'ClassExtender User Search Form',
+                'parent' => 'Examples',
+                'template' => 'default',
+            ),
+        );
 
         if (is_array($intersects)) {
             foreach ($intersects as $k => $fields) {

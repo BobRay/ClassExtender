@@ -10,27 +10,25 @@
  */
 
 
-
-
 $properties = array (
-  'resourceId' =>
+  'resourceId' => 
   array (
     'name' => 'resourceId',
     'desc' => 'ce.resource_id_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => '',
     'lexicon' => 'classextender:properties',
     'area' => '',
   ),
-  'prefix' =>
+  'prefix' => 
   array (
     'name' => 'prefix',
     'desc' => 'ce.resource_prefix_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => '',

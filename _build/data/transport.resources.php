@@ -117,7 +117,7 @@ $resources[3]->fromArray(array (
   'introtext' => NULL,
   'richtext' => false,
   'template' => 'default',
-  'menuindex' => 67,
+  'menuindex' => 0,
   'searchable' => true,
   'cacheable' => true,
   'createdby' => 1,

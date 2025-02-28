@@ -10,15 +10,13 @@
  */
 
 
-
-
 $properties = array (
-  'extFormTpl' =>
+  'extFormTpl' => 
   array (
     'name' => 'extFormTpl',
     'desc' => 'ce.ext_form_tpl_desc',
     'type' => 'textfield',
-    'options' =>
+    'options' => 
     array (
     ),
     'value' => 'ExtUserSearchFormTpl',
