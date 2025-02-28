@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License along with
  * ClassExtender; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
+
 * @package classextender
 * @subpackage build
 */
@@ -45,7 +46,7 @@ if (!function_exists('checkFields')) {
 
 
 $newEvents = array (
-            );
+        );
 
 /** @var modTransportPackage $transport */
 if ($transport) {
@@ -63,8 +64,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_UPGRADE:
 
         foreach($newEvents as $k => $fields) {
-
             $event = $modx->getObject($classPrefix . 'modEvent', array('name' => $fields['name']));
+
             if (!$event) {
                 $event = $modx->newObject($classPrefix . 'modEvent');
                 if ($event) {
@@ -75,55 +76,55 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         }
 
         $intersects = array (
-                0 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormPrerender',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                1 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormRender',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                2 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnDocFormSave',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                3 =>  array (
-                  'pluginid' => 'ExtraResourceFields',
-                  'event' => 'OnEmptyTrash',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                4 =>  array (
-                  'pluginid' => 'ExtraUserFields',
-                  'event' => 'OnUserFormPrerender',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                5 =>  array (
-                  'pluginid' => 'ExtraUserFields',
-                  'event' => 'OnUserFormRender',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                6 =>  array (
-                  'pluginid' => 'ExtraUserFields',
-                  'event' => 'OnUserFormSave',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-                7 =>  array (
-                  'pluginid' => 'ExtraUserFields',
-                  'event' => 'OnUserRemove',
-                  'priority' => '0',
-                  'propertyset' => '0',
-                ),
-            );
+            0 =>  array (
+                'pluginid' => 'ExtraResourceFields',
+                'event' => 'OnDocFormPrerender',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            1 =>  array (
+                'pluginid' => 'ExtraResourceFields',
+                'event' => 'OnDocFormRender',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            2 =>  array (
+                'pluginid' => 'ExtraResourceFields',
+                'event' => 'OnDocFormSave',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            3 =>  array (
+                'pluginid' => 'ExtraResourceFields',
+                'event' => 'OnEmptyTrash',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            4 =>  array (
+                'pluginid' => 'ExtraUserFields',
+                'event' => 'OnUserFormPrerender',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            5 =>  array (
+                'pluginid' => 'ExtraUserFields',
+                'event' => 'OnUserFormRender',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            6 =>  array (
+                'pluginid' => 'ExtraUserFields',
+                'event' => 'OnUserFormSave',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+            7 =>  array (
+                'pluginid' => 'ExtraUserFields',
+                'event' => 'OnUserRemove',
+                'priority' => '0',
+                'propertyset' => '0',
+            ),
+        );
 
         if (is_array($intersects)) {
             foreach ($intersects as $k => $fields) {
