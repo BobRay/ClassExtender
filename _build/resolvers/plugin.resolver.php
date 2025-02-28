@@ -64,8 +64,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_UPGRADE:
 
         foreach($newEvents as $k => $fields) {
-            $event = $modx->getObject($classPrefix . 'modEvent', array('name' => $fields['name']));
 
+            $event = $modx->getObject($classPrefix . 'modEvent', array('name' => $fields['name']));
             if (!$event) {
                 $event = $modx->newObject($classPrefix . 'modEvent');
                 if ($event) {
