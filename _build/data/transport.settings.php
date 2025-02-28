@@ -28,7 +28,7 @@ $systemSettings = array();
 $systemSettings[1] = $modx->newObject('modSystemSetting');
 $systemSettings[1]->fromArray(array (
   'key' => 'ce_autoload_directories',
-  'value' => '',
+  'value' => 'extendedresource,extendeduser',
   'xtype' => 'textfield',
   'namespace' => 'classextender',
   'area' => 'classextender',
