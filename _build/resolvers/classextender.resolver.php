@@ -32,6 +32,7 @@ $chunks = array(
     'ExtraResourceFields',
     'ExtResourceSchema',
 );
+
 /** @var modTransportPackage $transport */
 if ($transport) {
     $modx =& $transport->xpdo;
@@ -39,122 +40,156 @@ if ($transport) {
     $modx =& $object->xpdo;
 }
 
-    unset($_SESSION['validator_run']);
+unset($_SESSION['validator_run']);
 
-    $prefix = $modx->getVersionData()['version'] >= 3
-        ?'MODX\Revolution\\'
-        : '';
+$prefix = $modx->getVersionData()['version'] >= 3
+    ?'MODX\Revolution\\'
+    : '';
 
 
-    $catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
-    $categoryId = $catObj? $catObj->get('id') : 0;
+$catObj = $modx->getObject($prefix . 'modCategory', array('category' => 'ClassExtender'));
+$categoryId = $catObj? $catObj->get('id') : 0;
 
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_UPGRADE:
-            if (isset($_SESSION['enable_plugins'])) {
-                $pArray = $_SESSION['enable_plugins'];
-                foreach ($pArray as $pluginId => $pluginDisabled) {
-                    $plugin = $modx->getObject($prefix . 'modPlugin', $pluginId);
-                    if ($plugin->get('disabled') != $pluginDisabled) {
-                        $plugin->set('disabled', $pluginDisabled);
-                        $plugin->save();
-                    }
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_UPGRADE:
+
+        /* Persist plugin enabled status via $_SESSION
+           variable saved in validator */
+        if (isset($_SESSION['enable_plugins'])) {
+            $pArray = $_SESSION['enable_plugins'];
+            foreach ($pArray as $pluginId => $pluginDisabled) {
+                $plugin = $modx->getObject($prefix . 'modPlugin', $pluginId);
+                if ($plugin->get('disabled') != $pluginDisabled) {
+                    $plugin->set('disabled', $pluginDisabled);
+                    $plugin->save();
                 }
             }
-            /* Set class keys back to original values */
-            $modx->updateCollection(
-                'modResource',
-                array('class_key' => 'modDocument'),
-                array('class_key' => 'extResource')
-            );
-            $modx->updateCollection(
-                'modUser',
-                array('class_key' => 'modUser'),
-                array('class_key' => 'extUser')
-            );
-        /* Intentional fallthrough */
-        case xPDOTransport::ACTION_INSTALL:
+        }
+        /* Set class keys back to original values */
+        $modx->updateCollection(
+            'modResource',
+            array('class_key' => 'modDocument'),
+            array('class_key' => 'extResource')
+        );
+        $modx->updateCollection(
+            'modUser',
+            array('class_key' => 'modUser'),
+            array('class_key' => 'extUser')
+        );
+
+        /* Fix incorrect class keys */
+        $file = MODX_CORE_PATH  . 'components/classextender/model/ClassFix.php';
+
+        if (file_exists($file)) {
+            $modx->log(modX::LOG_LEVEL_INFO, 'Checking Class file names');
+            include $file;
+            $cf = new ClassFix($modx);
+            $cf->init();
+            $cf->process();
+        }
+
+        /* Remove dead files */
+        $dir = MODX_CORE_PATH . 'components/classextender/schema/';
+
+        $deadFiles = array(
+            'extendedresource.mysql.schema.xml',
+            'extendeduser.mysql.schema.xml',
+        );
+
+        foreach ($deadFiles as $deadFile) {
+            if (file_exists($dir . $deadFile)) {
+                @unlink($dir . $deadFile);
+            }
+        }
+
+        if (is_dir($dir)) {
+            @rmdir($dir);
+        }
 
 
-            foreach ($chunks as $chunk) {
-                $newName = 'My' . $chunk;
-                $obj = $modx->getObject($prefix . 'modChunk', array('name'=> $newName));
-                if (! $obj) {
-                    $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
-                    if ($oldChunk) {
-                        $newChunk = $modx->newObject($prefix . 'modChunk');
-                        $newChunk->set('name', $newName);
-                        $newChunk->setContent($oldChunk->getContent());
-                        if ($categoryId) {
-                            $newChunk->set('category', $categoryId);
-                        }
-                        $newChunk->save();
+    /* Intentional fallthrough */
+    case xPDOTransport::ACTION_INSTALL:
+
+
+        foreach ($chunks as $chunk) {
+            $newName = 'My' . $chunk;
+            $obj = $modx->getObject($prefix . 'modChunk', array('name'=> $newName));
+            if (! $obj) {
+                $oldChunk = $modx->getObject($prefix . 'modChunk', array('name' => $chunk));
+                if ($oldChunk) {
+                    $newChunk = $modx->newObject($prefix . 'modChunk');
+                    $newChunk->set('name', $newName);
+                    $newChunk->setContent($oldChunk->getContent());
+                    if ($categoryId) {
+                        $newChunk->set('category', $categoryId);
                     }
-                } else {
-                    /* Just set the category */
-                    if ($categoryId && ($obj->get('category') !== $categoryId)) {
-                        $obj->set('category', $categoryId);
-                        $obj->save();
-                    }
+                    $newChunk->save();
+                }
+            } else {
+                /* Just set the category */
+                if ($categoryId && ($obj->get('category') !== $categoryId)) {
+                    $obj->set('category', $categoryId);
+                    $obj->save();
                 }
             }
-            break;
+        }
+        break;
 
-        case xPDOTransport::ACTION_UNINSTALL:
-            $modx->updateCollection(
-                $prefix . 'modResource',
-                           array('class_key' => $prefix . 'modDocument'),
-                           array('class_key' => $prefix . 'extResource')
-            );
-            $modx->updateCollection(
-                $prefix . 'modUser',
-                           array('class_key' => $prefix . 'modUser'),
-                           array('class_key' => $prefix . 'extUser')
-            );
+    case xPDOTransport::ACTION_UNINSTALL:
+        $modx->updateCollection(
+            $prefix . 'modResource',
+                       array('class_key' => $prefix . 'modDocument'),
+                       array('class_key' => $prefix . 'extResource')
+        );
+        $modx->updateCollection(
+            $prefix . 'modUser',
+                       array('class_key' => $prefix . 'modUser'),
+                       array('class_key' => $prefix . 'extUser')
+        );
 
-            $modx->log(modX::LOG_LEVEL_INFO, "To prevent the possible loss of important data, the database tables have not been removed. Remove them manually if you don't need them");
+        $modx->log(modX::LOG_LEVEL_INFO, "To prevent the possible loss of important data, the database tables have not been removed. Remove them manually if you don't need them");
 
-            /* Remove modExtensionPackage objects
-               and their corresponding namespaces */
+        /* Remove modExtensionPackage objects
+           and their corresponding namespaces */
 
-            $query = $modx->newQuery($prefix . 'modExtensionPackage');
-            /* Get records with 'classextender' in path */
-            $criteria = array(
-                'path:LIKE' => '%' . 'classextender' . '%',
-            );
+        $query = $modx->newQuery($prefix . 'modExtensionPackage');
+        /* Get records with 'classextender' in path */
+        $criteria = array(
+            'path:LIKE' => '%' . 'classextender' . '%',
+        );
 
-            $query->where($criteria);
+        $query->where($criteria);
 
-            $extensionPackages = $modx->getCollection($prefix . 'modExtensionPackage', $query);
+        $extensionPackages = $modx->getCollection($prefix . 'modExtensionPackage', $query);
 
-            foreach ($extensionPackages as $extensionPackage) {
-                $namespaceName = $extensionPackage->get('namespace');
+        foreach ($extensionPackages as $extensionPackage) {
+            $namespaceName = $extensionPackage->get('namespace');
 
-                /* Don't remove core ns or classextender ns */
-                $delete = ($namespaceName !== 'classextender' &&
-                    $namespaceName !== 'core');
-                $nameSpaceObject = $modx->getObject($prefix .
-                    'modNamespace', array('name' => $namespaceName));
-                if ($delete) {
-                    if ($nameSpaceObject) {
-                            $nameSpaceObject->remove();
-                    }
-                    $extensionPackage->remove();
+            /* Don't remove core ns or classextender ns */
+            $delete = ($namespaceName !== 'classextender' &&
+                $namespaceName !== 'core');
+            $nameSpaceObject = $modx->getObject($prefix .
+                'modNamespace', array('name' => $namespaceName));
+            if ($delete) {
+                if ($nameSpaceObject) {
+                        $nameSpaceObject->remove();
                 }
+                $extensionPackage->remove();
             }
+        }
 
-            foreach($chunks as $chunk) {
-                $newName = 'My' . $chunk;
-                $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
-                if ($obj) {
-                    $obj->remove();
-                }
+        foreach($chunks as $chunk) {
+            $newName = 'My' . $chunk;
+            $obj = $modx->getObject($prefix . 'modChunk', array('name' => $newName));
+            if ($obj) {
+                $obj->remove();
             }
-            $cm = $modx->getCacheManager();
-            $cm->refresh();
+        }
+        $cm = $modx->getCacheManager();
+        $cm->refresh();
 
-            break;
-    }
+        break;
+}
 
 
 return true;

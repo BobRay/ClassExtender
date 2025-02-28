@@ -28,11 +28,6 @@ class ClassFix {
             ? 'MODX\Revolution\\'
             : '';
 
-        /*$uSearch = 'UserData';
-        $uReplace = 'userData';
-        $rSearch = 'ResourceData';
-        $rReplace = 'resourceData';*/
-
         $this->searchArray = array(
             $this->uSearch,
             $this->rSearch,
@@ -93,7 +88,6 @@ class ClassFix {
         $this->doResources();
         $this->doChunks();
         $this->doSnippets();
-
     }
 
     public function doFiles() {
