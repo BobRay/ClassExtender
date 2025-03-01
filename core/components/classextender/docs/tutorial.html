@@ -3,17 +3,17 @@
 <style>
     .quicklink {
         display: block;
-        padding:0;
-        padding-bottom:15px;
-        margin:0;
+        padding: 0;
+        padding-bottom: 15px;
+        margin: 0;
     }
 
     .column {
         float: right;
         width: auto;
         padding: 10px;
-        padding-top:0;
-        margin-top:0;
+        padding-top: 0;
+        margin-top: 0;
         height: auto;
     }
 
@@ -180,7 +180,7 @@
 
 <h4 id="classextender-approach">The ClassExtender Approach</h4>
 
-<p>ClassExtender basically does the opposite of the traditional method. It doesn't really extend the <code>modUser</code> or <code>modResource</code> objects, though the result is the same.  With ClassExtender, the new class object (<code>UserData</code> or <code>ResourceData</code>) holds the extra fields (as it does in the traditional approach), but it is a primary object that stands alone and no class keys are changed. In other words, the <code>modUser</code> and <code>modResource</code> class keys remains as <code>modUser</code> and <code>modResource</code>.</p>
+<p>ClassExtender basically does the opposite of the traditional method. It doesn't really extend the <code>modUser</code> or <code>modResource</code> objects, though the result is the same. With ClassExtender, the new class object (<code>UserData</code> or <code>ResourceData</code>) holds the extra fields (as it does in the traditional approach), but it is a primary object that stands alone and no class keys are changed. In other words, the <code>modUser</code> and <code>modResource</code> class keys remains as <code>modUser</code> and <code>modResource</code>.</p>
 
 <p>Our two new classes (<code>UserData</code> and <code>ResourceData</code>) extend <code>XPDOSimpleObject</code>, and they inherit fields and methods from it. They have no class key because all they hold is data.</p>
 
@@ -275,12 +275,11 @@ $resourceDataObject = $modx->getObject('ResourceData', array('resourcedata_id' =
 
 <p>The <code>resourcedata_id</code> or <code>userdata_id</code> field in the table will contain the ID of the user or resource that table row is related to.</p>
 
-<p>If you don't like the results, after submitting one of the two forms,  just drop the <code>ext_user_data</code> and/or <code>ext_resource_data</code> table in the DB, edit your schema chunk, and submit the form again. New class and map files and a new table will be created.  <b>Important: Make very sure that the table is what you want and the schema is correct before using the table to store real data.</b></p>
+<p>If you don't like the results, after submitting one of the two forms, just drop the <code>ext_user_data</code> and/or <code>ext_resource_data</code> table in the DB, edit your schema chunk, and submit the form again. New class and map files and a new table will be created. <b>Important: Make very sure that the table is what you want and the schema is correct before using the table to store real data.</b></p>
 
 <p>Remember that MODX ignores all schemas during its normal operation. That means changing a schema will have no effect until you regenerate the class and map files.</p>
 
-<p>For more information about schemas, see this page of the MODX docs:
-<a href="https://docs.modx.com/3.x/en/extending-modx/xpdo/custom-models/defining-a-schema">Defining a Schema</a>
+<p>For more information about schemas, see this page of the MODX docs: <a href="https://docs.modx.com/3.x/en/extending-modx/xpdo/custom-models/defining-a-schema">Defining a Schema</a>
 </p>
 
 <h3 id="creating-schema-from-existing-table">Creating a Schema and Classes from an Existing Database Table</h3>
@@ -350,8 +349,7 @@ $resourceDataObject = $modx->getObject('ResourceData', array('resourcedata_id' =
 
 <p>The Resource examples are for an imaginary site where each resource represents an animal (at, say, a shelter, pet shop, or veterinary clinic). There are extra fields for the <code>name</code>, <code>color</code>, <code>breed</code>, and <code>age</code> of the animal. The MyExtraResourceFields chunk contains the HTML to show the fields on the Create/Edit Resource panel. It will not be modified during future upgrades of ClassExtender.</p>
 
-<p>The &quot;ExtraResourceFields&quot; plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database.
-The plugin will be enabled automatically when you extend the <code>modResource</code> object.</p>
+<p>The &quot;ExtraResourceFields&quot; plugin displays the fields on the Create/Edit Resource panel and saves the values to the custom table in the database. The plugin will be enabled automatically when you extend the <code>modResource</code> object.</p>
 
 <h4 id="example-utility-details">Example Utility Details</h4>
 
@@ -581,7 +579,7 @@ The plugin will be enabled automatically when you extend the <code>modResource</
 </table>
 
 <div class="box">
-<p>The <code>&cssFile</code> properties for all the example snippets are empty by default so that you can use your site's default CSS file for the styling to speed up page loading. You can see the default CSS file path on the example pages. You may want to copy it, include it in your snippet calls, and modify it during development. </p>
+    <p>The <code>&cssFile</code> properties for all the example snippets are empty by default so that you can use your site's default CSS file for the styling to speed up page loading. You can see the default CSS file path on the example pages. You may want to copy it, include it in your snippet calls, and modify it during development. </p>
 </div>
 
 <p>The optional <code>offset</code> and <code>limit</code> properties are for when you have a very large number of users and want to retrieve them in batches with <code>$modx->runSnippet('getExtUsers', $properties)</code>. The <code>$properties</code> variable will hold an array of property keys and values. By default (without these two properties), all users that match your criteria will be retrieved.</p>
